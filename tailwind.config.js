@@ -1,0 +1,80 @@
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        ink: {
+          50: '#e8edf2',
+          100: '#d0d8e3',
+          200: '#a1b1c7',
+          300: '#728aa4',
+          400: '#436380',
+          500: '#1a2a44',
+          600: '#0f1d33',
+          700: '#1c2a3a',
+          800: '#151f2b',
+          900: '#0f1923',
+        },
+        copper: {
+          50: '#fdf5ed',
+          100: '#f9e4ce',
+          200: '#f2c9a0',
+          300: '#e9a96a',
+          400: '#e08e50',
+          500: '#d4783c',
+          600: '#a85522',
+          700: '#8a451c',
+          800: '#6e3817',
+          900: '#4a2610',
+        },
+        steel: {
+          50: '#f5f6f8',
+          100: '#e8eaef',
+          200: '#d1d5df',
+          300: '#b0b6c4',
+          400: '#8e95a7',
+          500: '#737b8f',
+          600: '#5e6578',
+          700: '#485062',
+          800: '#33394b',
+          900: '#22252b',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Outfit', 'system-ui', 'sans-serif'],
+        heading: ['var(--font-heading)', 'system-ui', 'sans-serif'],
+        mono: ['var(--font-mono)', 'monospace'],
+      },
+      animation: {
+        'marquee': 'marquee 40s linear infinite',
+        'grain': 'grain 8s steps(10) infinite',
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0)' },
+          '100%': { transform: 'translateX(-50%)' },
+        },
+        grain: {
+          '0%, 100%': { transform: 'translate(0, 0)' },
+          '10%': { transform: 'translate(-5%, -5%)' },
+          '20%': { transform: 'translate(-10%, 5%)' },
+          '30%': { transform: 'translate(5%, -10%)' },
+          '40%': { transform: 'translate(-5%, 15%)' },
+          '50%': { transform: 'translate(-10%, 5%)' },
+          '60%': { transform: 'translate(15%, 0)' },
+          '70%': { transform: 'translate(0, 10%)' },
+          '80%': { transform: 'translate(-15%, 0)' },
+          '90%': { transform: 'translate(10%, 5%)' },
+        },
+      },
+    },
+  },
+  plugins: [],
+}
