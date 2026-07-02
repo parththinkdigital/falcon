@@ -158,23 +158,23 @@ export default function Footer() {
             <h3 className="font-semibold text-[10px] text-neutral-400 mb-6 uppercase tracking-[0.2em]">Contact Us</h3>
             <div className="p-1.5 rounded-[1.25rem] bg-black/[0.02] ring-1 ring-black/[0.04]">
               <div className="rounded-[calc(1.25rem-0.375rem)] bg-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] p-5 space-y-4">
-                <a href="tel:+1234567890" className="flex items-center gap-3.5 text-sm text-neutral-600 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500 group">
+                <a href="tel:+919022247664" className="flex items-center gap-3.5 text-sm text-neutral-600 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500 group">
                   <span className="w-9 h-9 rounded-xl bg-copper-50 flex items-center justify-center shrink-0 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:bg-copper-100">
                     <FiPhone className="w-4 h-4 text-copper-500" />
                   </span>
-                  <span>+1 (234) 567-890</span>
+                  <span>+91-9022247664 / +91-9226347664</span>
                 </a>
-                <a href="mailto:info@falconchemicals.com" className="flex items-center gap-3.5 text-sm text-neutral-600 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500 group">
+                <a href="mailto:kkd@falchem.in" className="flex items-center gap-3.5 text-sm text-neutral-600 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500 group">
                   <span className="w-9 h-9 rounded-xl bg-copper-50 flex items-center justify-center shrink-0 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:bg-copper-100">
                     <FiMail className="w-4 h-4 text-copper-500" />
                   </span>
-                  <span>info@falconchemicals.com</span>
+                  <span>kkd@falchem.in / skd@falchem.in</span>
                 </a>
                 <div className="flex items-start gap-3.5 text-sm text-neutral-600">
                   <span className="w-9 h-9 rounded-xl bg-copper-50 flex items-center justify-center shrink-0 mt-0.5">
                     <FiMapPin className="w-4 h-4 text-copper-500" />
                   </span>
-                  <span>123 Industrial Boulevard,<br />City, State</span>
+                  <span>499/1/B, Pimpri Road, Off Nashik-Ch. Sambhajinagar Highway, Chittgaon, Taluka Niphad, Dist. Nashik-422 003, Maharashtra (INDIA)</span>
                 </div>
               </div>
             </div>

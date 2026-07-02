@@ -17,17 +17,17 @@ const contactInfo = [
   {
     icon: FiMapPin,
     label: 'Address',
-    lines: ['Plot No. A-12, MIDC Area', 'Niphad, Nashik', 'Maharashtra 422303, India'],
+    lines: ['499/1/B, Pimpri Road, Off Nashik-Ch. Sambhajinagar Highway, Chittgaon, Taluka Niphad, District Nashik-422 003. Maharashtra State (INDIA)'],
   },
   {
     icon: FiPhone,
     label: 'Phone',
-    lines: ['+91 253 6789 012', '+91 253 6789 013'],
+    lines: ['+91-9022247664 ', '+91-9226347664',],
   },
   {
     icon: FiMail,
     label: 'Email',
-    lines: ['info@falconchemicals.in', 'sales@falconchemicals.in'],
+    lines: ['kkd@falchem.in ', 'skd@falchem.in	'],
   },
   {
     icon: FiClock,
@@ -89,7 +89,7 @@ export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false)
   const [activeSubject, setActiveSubject] = useState(null)
   const [activeFaq, setActiveFaq] = useState(null)
-  
+
   const pageRef = useRef(null)
   const formRef = useRef(null)
   const infoRef = useRef(null)
@@ -325,7 +325,7 @@ export default function ContactPage() {
                       title="Falcon Chemicals Niphad Plant Location"
                     />
                   </div>
-                  
+
                   {/* Map footer details */}
                   <div className="p-6 border-t border-steel-100 bg-white">
                     <div className="flex items-start gap-4">
@@ -337,10 +337,10 @@ export default function ContactPage() {
                         <p className="text-xs text-steel-500 mt-1 leading-relaxed">
                           Plot No. A-12, MIDC Industrial Area, Niphad, Nashik, Maharashtra 422303, India
                         </p>
-                        <a 
-                          href="https://maps.google.com/?q=Niphad,+Maharashtra" 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
+                        <a
+                          href="https://maps.google.com/?q=Niphad,+Maharashtra"
+                          target="_blank"
+                          rel="noopener noreferrer"
                           className="inline-flex items-center gap-1.5 text-xs font-semibold text-copper-500 hover:text-copper-600 mt-3 transition-colors group"
                         >
                           Open in Google Maps
@@ -376,7 +376,7 @@ export default function ContactPage() {
       {/* Facility Highlights Block Section */}
       <section className="section-padding bg-ink-900 relative overflow-hidden" ref={facilityRef}>
         <div className="absolute inset-0 bg-grid opacity-[0.04]" />
-        
+
         <div className="container-custom relative z-10">
           <div className="max-w-3xl mb-12">
             <span className="inline-block text-[11px] font-medium uppercase tracking-[0.2em] text-copper-400 mb-3">Facility Focus</span>
@@ -446,7 +446,7 @@ export default function ContactPage() {
             {faqs.map((faq, index) => {
               const isOpen = activeFaq === index
               return (
-                <div 
+                <div
                   key={index}
                   className="faq-item p-[1px] rounded-2xl bg-gradient-to-b from-steel-200/60 to-transparent overflow-hidden transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.01)]"
                 >
@@ -472,7 +472,7 @@ export default function ContactPage() {
                         </svg>
                       </span>
                     </button>
-                    
+
                     <div className={clsx(
                       "transition-all duration-300 ease-in-out overflow-hidden",
                       isOpen ? "max-h-48 border-t border-steel-100" : "max-h-0"

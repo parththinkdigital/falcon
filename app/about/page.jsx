@@ -39,7 +39,7 @@ function StatsCounters() {
   useGSAP(() => {
     const items = ref.current?.querySelectorAll('.counter-item')
     if (!items?.length) return
-    
+
     gsap.fromTo(items,
       { opacity: 0, y: 30, scale: 0.95 },
       {
@@ -160,6 +160,61 @@ function ClientMarquee() {
   )
 }
 
+function VisionMissionSection() {
+  const ref = useRef(null)
+
+  useGSAP(() => {
+    gsap.fromTo('.vm-card',
+      { opacity: 0, y: 40 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        stagger: 0.2,
+        ease: 'power3.out',
+        scrollTrigger: { trigger: ref.current, start: 'top 80%', once: true },
+      }
+    )
+  }, { scope: ref })
+
+  return (
+    <section ref={ref} className="py-20 md:py-28 bg-steel-50/30 relative z-10 border-t border-steel-100">
+      <div className="container-custom">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
+          {/* Vision Card */}
+          <div className="vm-card bg-white p-10 md:p-14 rounded-[2rem] border border-steel-100 shadow-[0_10px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_60px_rgba(180,83,9,0.06)] hover:border-copper-500/20 transition-all duration-500 group relative overflow-hidden">
+            <div className="absolute -top-10 -right-10 w-48 h-48 bg-gradient-to-br from-copper-100/50 to-copper-500/5 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700" />
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-steel-50 border border-steel-100 text-copper-600 mb-8 group-hover:scale-110 group-hover:bg-copper-500 group-hover:text-white group-hover:border-copper-500 transition-all duration-500 shadow-sm">
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-display font-medium text-ink-900 mb-4 group-hover:text-copper-600 transition-colors duration-300">Our Vision</h3>
+            <p className="text-steel-500 leading-relaxed font-sans font-light text-lg">
+              To be the definitive global leader in sustainable pressroom chemistry, driving the evolution of the printing industry through uncompromising quality, forward-thinking innovation, and environmental responsibility.
+            </p>
+          </div>
+
+          {/* Mission Card */}
+          <div className="vm-card bg-white p-10 md:p-14 rounded-[2rem] border border-steel-100 shadow-[0_10px_40px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_60px_rgba(180,83,9,0.06)] hover:border-copper-500/20 transition-all duration-500 group relative overflow-hidden">
+            <div className="absolute -top-10 -left-10 w-48 h-48 bg-gradient-to-br from-copper-100/50 to-copper-500/5 rounded-full blur-2xl -z-10 group-hover:scale-150 transition-transform duration-700" />
+            <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-steel-50 border border-steel-100 text-copper-600 mb-8 group-hover:scale-110 group-hover:bg-copper-500 group-hover:text-white group-hover:border-copper-500 transition-all duration-500 shadow-sm">
+              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 className="text-2xl md:text-3xl font-display font-medium text-ink-900 mb-4 group-hover:text-copper-600 transition-colors duration-300">Our Mission</h3>
+            <p className="text-steel-500 leading-relaxed font-sans font-light text-lg">
+              To engineer advanced, high-performance formulations that solve real production challenges. We empower commercial printers worldwide with reliable solutions that optimize print quality, reduce environmental impact, and streamline daily operations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function AboutPage() {
   const pageRef = useRef(null)
   const visualRef = useRef(null)
@@ -248,19 +303,90 @@ export default function AboutPage() {
               </span>
             </div>
             <h1 className="hero-title text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-display font-light text-ink-900 leading-[1.08] tracking-tight">
-              <span className="block">Smarter Pressroom</span>
-              <span className="block font-semibold">Chemistry for</span>
-              <span className="block bg-gradient-to-r from-copper-500 to-copper-600 bg-clip-text text-transparent font-sans">Printers &amp; Packaging Leaders</span>
+              <span className="block">An Agile young Company</span>
+              <span className="block font-semibold">backed by 30+ years of </span>
+              <span className="block bg-gradient-to-r from-copper-500 to-copper-600 bg-clip-text text-transparent font-sans"> experience with Print!</span>
             </h1>
           </div>
 
-          <div className="hero-sub-box mt-16 md:mt-24 max-w-3xl border-l-2 border-copper-400 pl-6 md:pl-8">
-            <h2 className="text-xl md:text-2xl font-display font-medium text-ink-900 leading-snug">
-              Engineering Precision Chemistry for Tomorrow&rsquo;s Print
-            </h2>
-            <p className="text-steel-500 text-sm md:text-base mt-3 max-w-xl leading-relaxed font-sans font-light">
-              Advanced formulations engineered for commercial printing operations worldwide, focusing on consistency, sustainability, and efficiency.
-            </p>
+          <div className="hero-sub-box mt-16 md:mt-20 w-full">
+            <div className="flex flex-col lg:flex-row gap-8 lg:gap-12">
+              <div className="lg:w-3/5">
+                <div className="relative pl-8 md:pl-10 border-l-2 border-copper-300/60">
+                  <div className="absolute -left-[9px] top-1 w-4 h-4 rounded-full bg-copper-500 border-2 border-white shadow-sm" />
+                  <h2 className="text-xl md:text-2xl font-display font-medium text-ink-900 leading-snug">
+                    Falcon was founded by a Printing Technologist with over 30 years of hands-on experience. His goal has always been to develop pressroom chemicals that address the real production challenges, and every formulation we create is inspired by this philosophy.
+                  </h2>
+                </div>
+
+                <div className="mt-8 pl-8 md:pl-10 relative">
+                  <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-copper-300/60 to-transparent" />
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-5 group">
+                      <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-copper-500/10 flex items-center justify-center text-copper-600 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                      </span>
+                      <div>
+                        <p className="text-steel-500 text-sm leading-relaxed font-sans font-light">
+                          Leveraging his extensive national and international network, we quickly established a strong and robust distribution channel across 50+ countries.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-5 group">
+                      <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-copper-500/10 flex items-center justify-center text-copper-600 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                        </svg>
+                      </span>
+                      <div>
+                        <p className="text-steel-500 text-sm leading-relaxed font-sans font-light">
+                          Our Operations Director receives ongoing training from veteran chemists in Europe and Southeast Asia, incorporating globally recognized manufacturing standards at every stage.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-5 group">
+                      <span className="flex-shrink-0 w-9 h-9 rounded-lg bg-copper-500/10 flex items-center justify-center text-copper-600 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                        <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                      </span>
+                      <div>
+                        <p className="text-steel-500 text-sm leading-relaxed font-sans font-light">
+                          Our Executive Director oversees finance, strategic planning, and corporate governance — ensuring Falcon continues to invest in innovation and deliver consistent value worldwide.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="lg:w-2/5 flex flex-col justify-center">
+                <div className="bg-gradient-to-br from-copper-500 to-copper-600 rounded-[2rem] p-8 md:p-10 text-white relative overflow-hidden">
+                  <div className="absolute -top-8 -right-8 w-40 h-40 bg-white/10 rounded-full blur-2xl" />
+                  <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-black/10 rounded-full blur-2xl" />
+                  <div className="relative z-10">
+                    <div className="text-5xl md:text-6xl font-display font-bold leading-none mb-2">30+</div>
+                    <p className="text-white/80 text-sm uppercase tracking-widest font-semibold">Years of Experience</p>
+                    <div className="w-12 h-0.5 bg-white/30 my-6" />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <div className="text-2xl font-display font-bold">500+</div>
+                        <p className="text-white/70 text-[10px] uppercase tracking-wider">Pressrooms</p>
+                      </div>
+                      <div>
+                        <div className="text-2xl font-display font-bold">50+</div>
+                        <p className="text-white/70 text-[10px] uppercase tracking-wider">Countries</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p className="text-steel-400 text-[10px] uppercase tracking-[0.2em] font-semibold mt-4 text-center">
+                  Trusted by commercial printers worldwide
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -298,6 +424,9 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Vision & Mission */}
+      <VisionMissionSection />
 
       {/* Client logos */}
       <ClientMarquee />

@@ -91,7 +91,7 @@ export default function HomePage() {
     })
 
     // Eyebrow and heading entrance
-    tl.fromTo('.about-eyebrow', 
+    tl.fromTo('.about-eyebrow',
       { opacity: 0, y: 20 },
       { opacity: 1, y: 0, duration: 0.5, ease: 'power3.out' }
     )
@@ -140,16 +140,16 @@ export default function HomePage() {
       { opacity: 0, y: 40 },
       { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
     )
-    .fromTo('.about-border-1',
-      { scale: 0.94, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.5)' },
-      '-=0.4'
-    )
-    .fromTo('.about-border-2',
-      { scale: 0.92, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.5)' },
-      '-=0.4'
-    )
+      .fromTo('.about-border-1',
+        { scale: 0.94, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.5)' },
+        '-=0.4'
+      )
+      .fromTo('.about-border-2',
+        { scale: 0.92, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.5)' },
+        '-=0.4'
+      )
 
     // 3. Gentle looping float for status badge
     gsap.fromTo('.about-badge',
@@ -188,7 +188,7 @@ export default function HomePage() {
           <div className="absolute -top-12 -left-12 w-24 h-24 rounded-full bg-copper-500/10 blur-xl pointer-events-none" />
           <div className="absolute -bottom-12 -right-12 w-24 h-24 rounded-full bg-copper-500/10 blur-xl pointer-events-none" />
         </div>
-        
+
         {/* ===== Hero Section ===== */}
         <Hero />
       </div>
@@ -213,19 +213,17 @@ export default function HomePage() {
                   <path className="about-svg-path" d="M10 50 Q 30 10, 50 50 T 90 50" stroke="currentColor" strokeWidth="1.5" fill="none" />
                 </svg>
                 <h2 className="about-heading text-4xl xs:text-5xl md:text-6xl lg:text-7xl font-light leading-[1.05] tracking-tight text-ink-900">
-                  <span className="inline-block">Built on</span>{' '}
-                  <span className="block font-semibold mt-1">Chemistry.</span>
-                  <span className="inline-block mt-1">Driven by</span>{' '}
-                  <span className="block font-semibold text-copper-500 mt-1">Precision.</span>
+                  <span className="inline-block">Technical Expertise.  </span>{' '}
+                  <span className="block font-semibold mt-1">Strategic Location.</span>
+
+                  <span className="block font-semibold text-copper-500 mt-1"> Better Value.</span>
                 </h2>
               </div>
             </div>
 
             <div className="lg:col-span-5 lg:pt-16">
               <p className="about-desc text-steel-600 leading-relaxed text-lg">
-                Specialised pressroom chemistry trusted by commercial, packaging and newspaper printers worldwide.
-                ISO 9001-certified formulations engineered for consistent ink-water balance, faster makeready,
-                and longer press life.
+                We have the Technical Expertise - We believe that the most effective Printing Chemicals can be formulated by people who understand the printing press as deeply as they understand the chemistry behind it…we qualify well for this!
               </p>
               <div className="flex flex-wrap gap-4 mt-8">
                 <Link href="/about" className="about-btn inline-flex items-center gap-2 px-6 py-3 rounded-full bg-ink-800 text-white text-sm font-semibold hover:bg-ink-700 transition-all active:scale-[0.97] group">
@@ -270,7 +268,7 @@ export default function HomePage() {
             {/* Architectural grid outline decorations */}
             <div className="about-border-1 absolute hidden sm:block -inset-4 border border-steel-200/30 rounded-[2.5rem] pointer-events-none z-0" />
             <div className="about-border-2 absolute hidden sm:block -inset-8 border border-steel-100/10 rounded-[3rem] pointer-events-none z-0" />
-            
+
             <div className="p-[1px] rounded-[2rem] bg-gradient-to-b from-steel-200/60 via-transparent to-steel-200/30 overflow-hidden shadow-2xl relative z-10">
               <div className="aspect-[16/9] lg:aspect-[21/9] rounded-[calc(2rem-1px)] overflow-hidden bg-gradient-to-br from-ink-800 to-ink-900">
                 <img
@@ -279,7 +277,7 @@ export default function HomePage() {
                   className="w-full h-full object-cover opacity-90 about-img transition-transform duration-700 hover:scale-[1.01]"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-ink-950/30 via-transparent to-transparent pointer-events-none" />
-                
+
                 {/* Floating status badge */}
                 <div className="about-badge absolute bottom-4 left-4 md:bottom-8 md:left-8 bg-white/90 backdrop-blur-md border border-steel-200/40 px-4 py-2.5 md:px-5 md:py-3 rounded-xl md:rounded-2xl shadow-lg flex items-center gap-2 md:gap-3">
                   <div className="w-7 h-7 md:w-8 md:h-8 rounded-lg bg-copper-500/10 flex items-center justify-center shrink-0">
@@ -297,7 +295,7 @@ export default function HomePage() {
       </section>
 
       {/* ===== Product Range Section ===== */}
-      <ProductMarquee/>
+      <ProductMarquee />
 
       {/* ===== Testimonials Section ===== */}
       <section className="section-padding bg-ink-800 relative overflow-hidden">
@@ -354,6 +352,138 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ===== Why Choose Us Section ===== */}
+      <section className="section-padding bg-white relative overflow-hidden border-t border-steel-100">
+        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(circle at 25% 40%, #000 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+        <div className="absolute top-0 left-0 w-[400px] h-[400px] rounded-full bg-copper-500/5 blur-[120px] pointer-events-none" />
+        <div className="container-custom relative z-10">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center max-w-3xl mx-auto mb-14">
+              <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full border border-copper-500/20 bg-copper-500/5 mb-4">
+                <span className="w-1.5 h-1.5 rounded-full bg-copper-500 animate-pulse" />
+                <span className="text-[10px] tracking-[0.25em] uppercase text-copper-600 font-semibold">Why Choose Us</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-ink-900 leading-tight">
+                The Difference is in the <span className="text-copper-500">Formulation</span> and <span className="text-copper-500">Trust</span>
+              </h2>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10">
+              <div className="group bg-white rounded-[2rem] border border-steel-100 p-8 md:p-10 hover:shadow-[0_20px_60px_rgba(180,83,9,0.06)] hover:border-copper-500/20 transition-all duration-500 relative overflow-hidden">
+                <div className="absolute -top-12 -right-12 w-40 h-40 bg-gradient-to-br from-copper-100/40 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-2xl bg-copper-500/10 flex items-center justify-center text-copper-600 mb-6 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-display font-semibold text-ink-900 mb-4">For Printers & Industries</h3>
+                  <p className="text-steel-500 leading-relaxed font-sans font-light text-base md:text-lg">
+                    Our customers rely on us as trusted technical consultants. They seek our practical advice on process improvements and solutions to everyday pressroom challenges. Every recommendation we make delivers the best outcome for the printers — not simply by the products that we manufacture.
+                  </p>
+                </div>
+              </div>
+
+              <div className="group bg-white rounded-[2rem] border border-steel-100 p-8 md:p-10 hover:shadow-[0_20px_60px_rgba(180,83,9,0.06)] hover:border-copper-500/20 transition-all duration-500 relative overflow-hidden">
+                <div className="absolute -top-12 -left-12 w-40 h-40 bg-gradient-to-br from-copper-100/40 to-transparent rounded-full blur-2xl group-hover:scale-150 transition-transform duration-700" />
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-2xl bg-copper-500/10 flex items-center justify-center text-copper-600 mb-6 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-display font-semibold text-ink-900 mb-4">For Channel Partners</h3>
+                  <p className="text-steel-500 leading-relaxed font-sans font-light text-base md:text-lg">
+                    Our distributors and channel partners value us as a dependable business partner, built on transparency, ethical practices, and long-term relationships. We are committed to sharing our technical knowledge, supporting their growth, and conducting business with honesty, consistency, and mutual respect.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== Key Benefits / USPs Section ===== */}
+      <section className="section-padding bg-steel-50 relative overflow-hidden border-t border-steel-100">
+        <div className="absolute inset-0 opacity-[0.015]" style={{ backgroundImage: 'radial-gradient(circle at 50% 30%, #000 1px, transparent 1px)', backgroundSize: '48px 48px' }} />
+        <div className="container-custom relative z-10">
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="inline-flex items-center justify-center gap-2 px-3 py-1 rounded-full border border-copper-500/20 bg-copper-500/5 mb-4">
+              <span className="w-1.5 h-1.5 rounded-full bg-copper-500 animate-pulse" />
+              <span className="text-[10px] tracking-[0.25em] uppercase text-copper-600 font-semibold">Our Promise</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-display font-medium text-ink-900 leading-tight">
+              Key Benefits & <span className="text-copper-500">USPs</span>
+            </h2>
+          </div>
+
+          <div className="max-w-4xl mx-auto space-y-5">
+            <div className="group bg-white rounded-2xl border border-steel-100 p-6 md:p-8 hover:shadow-[0_15px_40px_rgba(180,83,9,0.05)] hover:border-copper-500/20 transition-all duration-500">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-2xl bg-copper-500/10 flex items-center justify-center shrink-0 text-copper-600 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg md:text-xl font-display font-semibold text-ink-900">Consistent Batch to Batch Quality</h3>
+                  <p className="text-steel-400 text-sm md:text-base leading-relaxed font-sans font-light mt-1">
+                    Every batch is rigorously tested to deliver the same high standard, every time — no surprises, no deviations.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="group bg-white rounded-2xl border border-steel-100 p-6 md:p-8 hover:shadow-[0_15px_40px_rgba(180,83,9,0.05)] hover:border-copper-500/20 transition-all duration-500">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-2xl bg-copper-500/10 flex items-center justify-center shrink-0 text-copper-600 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg md:text-xl font-display font-semibold text-ink-900">Optimised for Productivity</h3>
+                  <p className="text-steel-400 text-sm md:text-base leading-relaxed font-sans font-light mt-1">
+                    Our formulations are engineered to reduce makeready time and keep your presses running at peak efficiency.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="group bg-white rounded-2xl border border-steel-100 p-6 md:p-8 hover:shadow-[0_15px_40px_rgba(180,83,9,0.05)] hover:border-copper-500/20 transition-all duration-500">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-2xl bg-copper-500/10 flex items-center justify-center shrink-0 text-copper-600 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg md:text-xl font-display font-semibold text-ink-900">Continuous Upgradation</h3>
+                  <p className="text-steel-400 text-sm md:text-base leading-relaxed font-sans font-light mt-1">
+                    We constantly evolve our chemistry to keep pace with the latest printing technologies and industry demands.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="group bg-white rounded-2xl border border-steel-100 p-6 md:p-8 hover:shadow-[0_15px_40px_rgba(180,83,9,0.05)] hover:border-copper-500/20 transition-all duration-500">
+              <div className="flex items-center gap-5">
+                <div className="w-14 h-14 rounded-2xl bg-copper-500/10 flex items-center justify-center shrink-0 text-copper-600 group-hover:bg-copper-500 group-hover:text-white transition-all duration-500">
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                  </svg>
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h3 className="text-lg md:text-xl font-display font-semibold text-ink-900">Modern, Agile & Innovative</h3>
+                  <p className="text-steel-400 text-sm md:text-base leading-relaxed font-sans font-light mt-1">
+                    A young, dynamic team with a fresh approach — combining 30+ years of printing experience with forward-thinking chemistry.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
     </>
   )
