@@ -14,6 +14,12 @@ export default function HomePreloader() {
     const video = videoRef.current
     if (!loader) return undefined
 
+    const isMobile = window.matchMedia('(max-width: 767px)').matches
+    if (isMobile) {
+      setIsVisible(false)
+      return undefined
+    }
+
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     const previousOverflow = document.body.style.overflow
     document.body.style.overflow = 'hidden'

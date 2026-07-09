@@ -139,20 +139,21 @@ export default function Header() {
   }, { scope: mobileMenuRef, dependencies: [mobileOpen] })
 
   const displayCategory = activeCategory || (activeDropdown === 'Products' ? navCategoryItems[0] : null)
+  const isActiveItem = (href) => href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`)
 
   return (
-    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50">
-      <div className="px-4 pt-4">
+    <header ref={headerRef} className="fixed left-0 right-0 top-0 z-50">
+      <div>
         <div
           ref={innerRef}
           className={clsx(
-            'mx-auto max-w-7xl rounded-2xl transition-all duration-500',
+            'w-full border-b transition-all duration-500',
             scrolled
-              ? 'bg-white shadow-[0_4px_24px_rgba(0,0,0,0.06)]'
-              : 'bg-white/70 backdrop-blur-xl shadow-[0_1px_2px_rgba(0,0,0,0.04)]'
+              ? 'border-slate-200 bg-white shadow-[0_8px_28px_rgba(15,23,42,0.08)]'
+              : 'border-white/10 bg-white/95 backdrop-blur-xl shadow-[0_1px_2px_rgba(15,23,42,0.04)]'
           )}
         >
-          <nav className="flex items-center justify-between h-16 lg:h-18 px-4 lg:px-6 bg-white rounded-xl">
+          <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 md:px-6 lg:h-[76px] lg:px-8">
             <Link href="/" className="flex items-center shrink-0">
               <div className="overflow-hidden flex items-center justify-center">
                 <Image
@@ -176,10 +177,10 @@ export default function Header() {
                   <Link
                     href={item.href}
                     className={clsx(
-                      'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-1',
-                      pathname === item.href
-                        ? 'text-copper-600'
-                        : 'text-ink-500 hover:text-ink-800 hover:bg-steel-50'
+                      'relative isolate flex items-center gap-1 overflow-hidden rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200',
+                      isActiveItem(item.href)
+                        ? 'bg-gradient-to-r from-[#06294A] via-[#004B8D] to-[#06294A] text-white shadow-[0_12px_28px_rgba(0,75,141,0.24)] ring-1 ring-[#00B8D9]/25 after:absolute after:inset-y-1 after:left-1 after:w-8 after:rounded-full after:bg-white/15 after:blur-[2px] before:absolute before:bottom-1 before:left-1/2 before:h-1 before:w-8 before:-translate-x-1/2 before:rounded-full before:bg-[#9BD36A] before:shadow-[0_0_14px_rgba(155,211,106,0.9)]'
+                        : 'text-slate-700 hover:bg-[#EAF6FF] hover:text-[#004B8D]'
                     )}
                   >
                     {item.label}
@@ -199,12 +200,12 @@ export default function Header() {
                       onMouseEnter={() => setActiveDropdown(item.label)}
                       onMouseLeave={() => { setActiveDropdown(null); setActiveCategory(null) }}
                     >
-                      <div className="bg-white rounded-2xl shadow-xl border border-steel-100 overflow-hidden">
+                      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl">
                         <div className="grid grid-cols-2 min-h-[350px]">
                           {/* Column 1: Categories */}
-                          <div className="col-span-1 bg-steel-50 py-4">
+                          <div className="col-span-1 bg-slate-50 py-4">
                             <div className="px-3">
-                              <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-steel-400 mb-3 block px-3">Categories</span>
+                              <span className="mb-3 block px-3 text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">Categories</span>
                               {item.mega.map((cat) => {
                                 const Icon = iconMap[cat.icon] || FiDroplet
                                 return (
@@ -212,19 +213,19 @@ export default function Header() {
                                     key={cat.href}
                                     onMouseEnter={() => setActiveCategory(cat)}
                                     className={clsx(
-                                      'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 text-left',
+                                      'w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 text-left',
                                       activeCategory?.label === cat.label
-                                        ? 'bg-white text-copper-600 shadow-sm'
-                                        : 'text-ink-600 hover:bg-white/60 hover:text-copper-600'
+                                        ? 'bg-white text-[#004B8D] shadow-sm'
+                                        : 'text-slate-700 hover:bg-white/80 hover:text-[#004B8D]'
                                     )}
                                   >
                                     <span className={clsx(
                                       'w-8 h-8 rounded-lg flex items-center justify-center shrink-0 transition-colors',
-                                      activeCategory?.label === cat.label ? 'bg-copper-100' : 'bg-steel-200/60'
+                                      activeCategory?.label === cat.label ? 'bg-[#EAF6FF]' : 'bg-slate-200/70'
                                     )}>
                                       <Icon className={clsx(
                                         'w-4 h-4',
-                                        activeCategory?.label === cat.label ? 'text-copper-600' : 'text-ink-400'
+                                        activeCategory?.label === cat.label ? 'text-[#004B8D]' : 'text-slate-500'
                                       )} />
                                     </span>
                                     {cat.label}
@@ -235,19 +236,19 @@ export default function Header() {
                           </div>
 
                           {/* Column 2: Products */}
-                          <div className="col-span-1 border-l border-steel-100 py-4 px-4">
+                          <div className="col-span-1 border-l border-slate-100 px-4 py-4">
                             <div className="mb-3">
-                              <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-steel-400">Products in {displayCategory?.label}</span>
+                              <span className="text-[10px] font-bold uppercase tracking-[0.15em] text-slate-400">Products in {displayCategory?.label}</span>
                             </div>
                             <div className="space-y-0.5">
                               {(displayCategory?.products || []).map((p) => (
                                 <Link
                                   key={p.href}
                                   href={p.href}
-                                  className="flex items-center justify-between px-4 py-2.5 rounded-xl text-sm text-ink-600 hover:text-copper-600 hover:bg-copper-50/50 transition-colors group"
+                                  className="group flex items-center justify-between rounded-xl px-4 py-2.5 text-sm text-slate-700 transition-colors hover:bg-[#EAF6FF] hover:text-[#004B8D]"
                                 >
                                   <span>{p.label}</span>
-                                  <FiArrowRight className="w-3.5 h-3.5 text-steel-300 group-hover:text-copper-500 group-hover:translate-x-0.5 transition-all" />
+                                  <FiArrowRight className="h-3.5 w-3.5 text-slate-300 transition-all group-hover:translate-x-0.5 group-hover:text-[#004B8D]" />
                                 </Link>
                               ))}
                             </div>
@@ -255,14 +256,14 @@ export default function Header() {
                         </div>
 
                         {/* Bottom CTA */}
-                        <div className="border-t border-steel-100 px-5 py-3.5 bg-gradient-to-r from-steel-50 to-white">
+                        <div className="border-t border-slate-100 bg-gradient-to-r from-slate-50 to-white px-5 py-3.5">
                           <Link
                             href="/products"
-                            className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-ink-800 hover:bg-ink-700 group transition-colors"
+                            className="group flex items-center justify-between rounded-xl bg-[#06294A] px-4 py-2.5 transition-colors hover:bg-[#004B8D]"
                           >
                             <div>
                               <span className="text-sm font-semibold text-white">Browse Complete Catalog</span>
-                              <p className="text-xs text-white/40 mt-0.5">24 products across 5 categories</p>
+                              <p className="mt-0.5 text-xs text-white/50">24 products across 5 categories</p>
                             </div>
                             <FiArrowRight className="w-4 h-4 text-white/60 group-hover:text-white group-hover:translate-x-0.5 transition-all" />
                           </Link>
@@ -274,47 +275,46 @@ export default function Header() {
               ))}
               <Link
                 href="/contact"
-                className="contact-btn ml-3 px-5 py-2 rounded-full text-sm font-semibold active:scale-[0.97] relative overflow-hidden group bg-ink-800"
+                className="contact-btn ml-3 rounded-full bg-[#4B8B2B] px-5 py-2 text-sm font-bold text-white shadow-[0_8px_18px_rgba(75,139,43,0.18)] active:scale-[0.97]"
               >
-                <span className="relative z-10 text-white">Contact Us</span>
-                <span className="absolute inset-0 bg-ink-600 clip-reveal" />
+                Contact Us
               </Link>
             </div>
 
             <button
               ref={hamburgerRef}
-              className="lg:hidden relative w-8 h-8 flex items-center justify-center"
+              className="relative flex h-8 w-8 items-center justify-center lg:hidden"
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             >
               <span className={clsx(
-                'absolute w-5 h-[1.5px] rounded-full transition-all duration-300 bg-ink-800',
+                'absolute h-[1.5px] w-5 rounded-full bg-[#06294A] transition-all duration-300',
                 mobileOpen ? 'rotate-45' : '-translate-y-[4px]'
               )} />
               <span className={clsx(
-                'absolute w-5 h-[1.5px] rounded-full transition-all duration-300 bg-ink-800',
+                'absolute h-[1.5px] w-5 rounded-full bg-[#06294A] transition-all duration-300',
                 mobileOpen ? 'opacity-0' : ''
               )} />
               <span className={clsx(
-                'absolute w-5 h-[1.5px] rounded-full transition-all duration-300 bg-ink-800',
+                'absolute h-[1.5px] w-5 rounded-full bg-[#06294A] transition-all duration-300',
                 mobileOpen ? '-rotate-45' : 'translate-y-[4px]'
               )} />
             </button>
           </nav>
 
           {mobileOpen && (
-            <div ref={mobileMenuRef} className="lg:hidden border-t border-steel-100 max-h-[70vh] overflow-y-auto">
-              <div className="px-4 py-4 space-y-2.5">
+            <div ref={mobileMenuRef} className="max-h-[calc(100vh-64px)] overflow-y-auto border-t border-slate-100 bg-white lg:hidden">
+              <div className="mx-auto max-w-7xl space-y-2.5 px-4 py-4">
                 {navItems.map((item) => {
                   const hasSubmenu = item.mega
                   const isSubmenuOpen = mobileProductsOpen && item.label === 'Products'
                   
                   return (
-                    <div key={item.href} className="mobile-nav-item border-b border-steel-100/50 last:border-b-0 pb-2">
+                    <div key={item.href} className="mobile-nav-item border-b border-slate-100 last:border-b-0 pb-2">
                       <div className="flex items-center justify-between py-1.5">
                         <Link
                           href={item.href}
-                          className="text-sm font-semibold text-ink-800 hover:text-copper-600 transition-colors"
+                          className="text-sm font-semibold text-[#071F3D] transition-colors hover:text-[#004B8D]"
                           onClick={() => setMobileOpen(false)}
                         >
                           {item.label}
@@ -323,21 +323,21 @@ export default function Header() {
                           <button
                             type="button"
                             onClick={() => setMobileProductsOpen(!mobileProductsOpen)}
-                            className="w-7 h-7 rounded-lg bg-steel-50 flex items-center justify-center text-steel-500 hover:bg-steel-100 hover:text-ink-800 transition-all"
+                            className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-50 text-slate-500 transition-all hover:bg-slate-100 hover:text-[#004B8D]"
                           >
                             <FiChevronDown className={clsx(
                               'w-3.5 h-3.5 transition-transform duration-200',
-                              mobileProductsOpen && 'rotate-180 text-copper-600'
+                              mobileProductsOpen && 'rotate-180 text-[#004B8D]'
                             )} />
                           </button>
                         )}
                       </div>
 
                       {hasSubmenu && isSubmenuOpen && (
-                        <div className="ml-3 pl-3 border-l-2 border-steel-100 space-y-2 mt-1 pb-3">
+                          <div className="ml-3 mt-1 space-y-2 border-l-2 border-slate-100 pb-3 pl-3">
                           <Link
                             href={item.href}
-                            className="block py-1 text-xs font-bold text-copper-600 uppercase tracking-wider"
+                            className="block py-1 text-xs font-bold uppercase tracking-wider text-[#4B8B2B]"
                             onClick={() => setMobileOpen(false)}
                           >
                             Browse All Products
@@ -351,25 +351,25 @@ export default function Header() {
                                 <button
                                   type="button"
                                   onClick={() => setMobileCategoryOpen(isCatOpen ? null : cat.label)}
-                                  className="w-full flex items-center justify-between py-1.5 text-xs font-semibold text-ink-600 hover:text-copper-600 transition-colors text-left"
+                                  className="flex w-full items-center justify-between py-1.5 text-left text-xs font-semibold text-slate-700 transition-colors hover:text-[#004B8D]"
                                 >
                                   <span className="flex items-center gap-2">
-                                    <Icon className="w-3.5 h-3.5 text-copper-500" />
+                                    <Icon className="h-3.5 w-3.5 text-[#004B8D]" />
                                     {cat.label}
                                   </span>
                                   <FiChevronDown className={clsx(
                                     'w-3 h-3 transition-transform duration-200',
-                                    isCatOpen && 'rotate-180 text-copper-600'
+                                    isCatOpen && 'rotate-180 text-[#004B8D]'
                                   )} />
                                 </button>
                                 
                                 {isCatOpen && (
-                                  <div className="ml-3 pl-3 border-l border-steel-100/50 space-y-1 mt-0.5">
+                                  <div className="ml-3 mt-0.5 space-y-1 border-l border-slate-100 pl-3">
                                     {cat.products.map((p) => (
                                       <Link
                                         key={p.href}
                                         href={p.href}
-                                        className="block py-1 text-xs text-steel-500 hover:text-copper-600 transition-colors"
+                                        className="block py-1 text-xs text-slate-500 transition-colors hover:text-[#004B8D]"
                                         onClick={() => setMobileOpen(false)}
                                       >
                                         {p.label}
@@ -387,11 +387,10 @@ export default function Header() {
                 })}
                 <Link
                   href="/contact"
-                  className="block text-center mt-4 px-5 py-2.5 rounded-full text-sm font-semibold relative overflow-hidden group bg-ink-800"
+                  className="mt-4 block rounded-full bg-[#4B8B2B] px-5 py-2.5 text-center text-sm font-bold text-white"
                   onClick={() => setMobileOpen(false)}
                 >
-                  <span className="relative z-10 text-white">Contact Us</span>
-                  <span className="absolute inset-0 bg-ink-600 clip-reveal" />
+                  Contact Us
                 </Link>
               </div>
             </div>

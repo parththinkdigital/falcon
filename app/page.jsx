@@ -29,9 +29,9 @@ export default function HomePage() {
     <>
       <HomePreloader />
 
-      <section className="h-screen w-full overflow-hidden bg-[#06294A]">
-        <Link href={heroBanner.href} aria-label="View Falcon pressroom chemistry details" className="block h-full w-full">
-          <img src={heroBanner.image} alt="Falcon pressroom chemistry" className="h-full w-full object-cover" />
+      <section className="w-full overflow-hidden bg-[#06294A] pt-16 lg:pt-[76px]">
+        <Link href={heroBanner.href} aria-label="View Falcon pressroom chemistry details" className="block w-full">
+          <img src={heroBanner.image} alt="Falcon pressroom chemistry" className="h-auto w-full object-contain md:h-[calc(100vh-76px)] md:object-cover" />
         </Link>
       </section>
 
