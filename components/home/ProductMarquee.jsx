@@ -6,48 +6,13 @@ import Image from 'next/image'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { productServiceBanners } from '@/lib/product-service-banners'
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger)
 }
 
-const banners = [
-  {
-    title: 'Sheetfed Fountain Solutions',
-    image: '/banners/SHEETFED-BLUE.webp',
-    href: '/solutions/fountain-solutions',
-  },
-  {
-    title: 'Heatset Fountain Solutions',
-    image: '/banners/HEATSET FOUNTS-BLUE.webp',
-    href: '/solutions/fountain-solutions',
-  },
-  {
-    title: 'Coldset Fountain Solutions',
-    image: '/banners/COLDSET FOUNTS-BLUE.webp',
-    href: '/solutions/fountain-solutions',
-  },
-  {
-    title: 'IPA & IPA Replacements',
-    image: '/banners/IPA  IPA REP.webp',
-    href: '/solutions/ipa-replacements',
-  },
-  {
-    title: 'Plate Chemistry',
-    image: '/banners/PLATES BLUE.webp',
-    href: '/solutions/plate-cleaners',
-  },
-  {
-    title: 'Roller & Blanket Washes',
-    image: '/banners/WASHES BLUE.webp',
-    href: '/solutions/roller-blanket-washes',
-  },
-  {
-    title: '303 BGR Cleaner',
-    image: '/banners/303.BGR.webp',
-    href: '/products',
-  },
-]
+const banners = productServiceBanners
 
 export default function ProductMarquee() {
   const sectionRef = useRef(null)

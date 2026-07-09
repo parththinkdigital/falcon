@@ -1,174 +1,112 @@
-'use client'
-
-import { useState, useRef } from 'react'
 import Link from 'next/link'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { FiChevronRight, FiArrowRight, FiCheck, FiDroplet } from 'react-icons/fi'
-import { getCategoryById } from '@/lib/products-data'
-import ScrollReveal from '@/components/shared/ScrollReveal'
+import { ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react'
+import { categories, getCategoryById } from '@/lib/products-data'
 
-gsap.registerPlugin(useGSAP, ScrollTrigger)
+const categoryImages = {
+  'sheetfed-fountain-solutions': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/1-SHEETFED-BANNER-1920X1080.png',
+  'coldset-fountain-concentrates': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/2-COLDSET 1920X1080.png',
+  'heatset-web-fountain-concentrates': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/3-HEATSET-1920X1080.png',
+  'ipa-replacements': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/7-IPA AND IPA REPL-1920X1080.png',
+  'roller-blanket-washes': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/5-BLANKET AND ROLLER WASH-1920X1080.png',
+  'offset-plate-cleaners': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/6-SPECIALITY CLEANERS.png',
+}
 
-const allFilters = ['All', 'Fountain Solutions', 'Plate Cleaners', 'Roller & Blanket Washes', 'IPA Replacements']
+const productPlaceholder = '/product-placholders.png'
 
 export default function ProductCategoryContent({ category }) {
-  const [activeFilter, setActiveFilter] = useState('All')
-  const gridRef = useRef(null)
-
-  const data = getCategoryById(category)
+  const data = getCategoryById(category)  
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-heading font-bold text-ink-800 mb-4">Category Not Found</h1>
-          <p className="text-steel-500 mb-6">The category you are looking for does not exist.</p>
-          <Link href="/products" className="btn-primary">View All Products</Link>
+      <div className="flex min-h-screen items-center justify-center px-6 text-center">
+        <div>
+          <h1 className="text-3xl font-extrabold text-[#071F3D]">Category Not Found</h1>
+          <p className="mt-3 text-slate-600">The category you are looking for does not exist.</p>
+          <Link href="/products" className="mt-6 inline-flex items-center gap-2 bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white">View All Products</Link>
         </div>
       </div>
     )
   }
 
-  const filteredProducts = activeFilter === 'All'
-    ? data.products
-    : data.products.filter((p) => p.name.toLowerCase().includes(activeFilter.toLowerCase()))
-
-  useGSAP(() => {
-    const cards = gridRef.current?.querySelectorAll('.product-card')
-    if (!cards?.length) return
-    gsap.fromTo(cards,
-      { opacity: 0, y: 48, scale: 0.96 },
-      {
-        opacity: 1, y: 0, scale: 1, duration: 0.7,
-        stagger: 0.06, ease: 'power3.out',
-        scrollTrigger: { trigger: gridRef.current, start: 'top 88%', once: true },
-      },
-    )
-  }, [activeFilter])
-
-  const catName = data.title
+  const heroImage = categoryImages[data.id] || '/new-banners/PRODUCT_AND_SERVICES_BANNERS/1-SHEETFED-BANNER-1920X1080.png'
 
   return (
     <>
-      <section className="relative min-h-[45dvh] flex items-center bg-ink-900 overflow-hidden">
-        <div className="absolute inset-0 bg-grid opacity-[0.04]" />
-        <div className="absolute top-1/3 -left-48 w-80 h-80 bg-copper-500/10 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 -right-32 w-64 h-64 bg-copper-500/5 rounded-full blur-[100px]" />
-        <div className="container-custom relative z-10 pt-28 pb-12">
-          <ScrollReveal>
-            <nav className="flex items-center gap-2 text-sm text-steel-400 mb-6">
-              <Link href="/products" className="hover:text-copper-400 transition-colors">Products</Link>
-              <FiChevronRight className="w-3.5 h-3.5" />
-              <span className="text-white font-medium">{catName}</span>
+      <section className="relative min-h-[54vh] overflow-hidden bg-[#06294A]">
+        <img src={heroImage} alt={data.title} className="absolute inset-0 h-full w-full object-cover opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37]/95 via-[#004B8D]/75 to-[#031E37]/30" />
+        <div className="relative mx-auto flex min-h-[54vh] max-w-7xl items-center px-6 py-24 md:px-10">
+          <div className="max-w-4xl text-white">
+            <nav className="mb-6 flex items-center gap-2 text-sm font-semibold text-white/70">
+              <Link href="/products" className="transition hover:text-white">Products</Link>
+              <ChevronRight className="h-4 w-4" />
+              <span>{data.shortTitle}</span>
             </nav>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h1 className="font-heading font-bold text-4xl sm:text-5xl tracking-tight text-white text-balance mb-4 max-w-3xl">
+            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Product Category</p>
+            <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl">
               {data.title}
             </h1>
-            <p className="text-white/50 text-lg leading-relaxed max-w-2xl">
-              {data.description}
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.2}>
-            <div className="flex flex-wrap items-center gap-3 mt-8">
-              <span className="text-sm text-white/30 font-medium">{data.products.length} products</span>
-              <span className="w-px h-4 bg-white/10" />
-              <div className="flex gap-2">
-                {data.products.slice(0, 5).map((p) => (
-                  <span key={p.code} className="px-2.5 py-1 rounded-md bg-white/5 text-white/40 text-[11px] font-mono">
-                    {p.code}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
+            <p className="mt-8 max-w-2xl text-lg font-medium leading-8 text-white/85">{data.description}</p>
+          </div>
         </div>
       </section>
 
-      <section className="section-padding bg-steel-50">
-        <div className="container-custom">
-          
-          <div ref={gridRef} className="grid md:grid-cols-2 gap-6 lg:gap-8">
-            {filteredProducts.map((p) => (
-              <div
-                key={p.code}
-                className="product-card bg-white rounded-2xl shadow-sm border border-steel-200 overflow-hidden transition-all duration-500 hover:shadow-lg h-full"
-              >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
-                  <div className="flex items-center justify-center p-4 sm:p-6 bg-white border-b lg:border-b-0 lg:border-r border-steel-100">
-                    <div className="relative w-full max-w-[180px]">
-                      <div className="w-32 h-44 mx-auto bg-gradient-to-b from-white to-steel-50 rounded-t-2xl rounded-b-xl border border-steel-200 relative flex items-center justify-center shadow-sm">
-                        <div className="absolute -top-2.5 left-1/2 -translate-x-1/2 w-8 h-5 border-2 border-steel-200 rounded-t-full bg-white/50" />
-                        <div className="absolute top-5 inset-x-3 bg-white border border-steel-200 rounded p-1.5 shadow-sm">
-                          <div className="h-0.5 w-full bg-steel-100 rounded mb-1" />
-                          <div className="h-0.5 w-2/3 bg-steel-100 rounded" />
-                        </div>
-                        <div className="relative z-10">
-                          <FiDroplet className="w-12 h-12 text-copper-300/40" strokeWidth={1} />
-                        </div>
-                        <div className="absolute bottom-3 inset-x-0 text-center">
-                          <span className="text-[8px] font-bold font-mono text-steel-400 tracking-widest">{p.code}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+      <section className="border-b border-slate-200 bg-white px-6 py-5 md:px-10">
+        <div className="mx-auto flex max-w-7xl gap-3 overflow-x-auto">
+          {categories.map((cat) => (
+            <Link
+              key={cat.id}
+              href={`/products/${cat.id}`}
+              className={`shrink-0 px-4 py-2 text-xs font-extrabold uppercase tracking-widest ${cat.id === data.id ? 'bg-[#004B8D] text-white' : 'bg-slate-100 text-[#071F3D]'}`}
+            >
+              {cat.shortTitle}
+            </Link>
+          ))}
+        </div>
+      </section>
 
-                  <div className="p-4 sm:p-6 flex flex-col justify-center">
-                    <h2 className="font-heading font-bold text-base sm:text-lg tracking-tight text-ink-800 mb-2">
-                      {p.name}
-                    </h2>
-                    <p className="text-steel-500 leading-relaxed mb-3 line-clamp-3 text-sm">
-                      {p.description}
-                    </p>
-                    <ul className="space-y-1">
-                      {p.features.slice(0, 2).map((f, fi) => (
-                        <li key={fi} className="flex items-start gap-2 text-xs text-steel-600">
-                          <span className="w-3.5 h-3.5 rounded-full bg-copper-500/10 flex items-center justify-center shrink-0 mt-0.5">
-                            <FiCheck className="w-2 h-2 text-copper-500" />
-                          </span>
-                          <span className="leading-relaxed">{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-
-                <div className="bg-steel-50 border-t border-steel-100 px-4 sm:px-6 py-4">
-                  <div className="flex items-center justify-around text-sm">
-                    <Link
-                      href={`/products/${category}/${p.code}`}
-                      className="text-copper-600 hover:text-copper-700 font-semibold transition-colors inline-flex items-center justify-center gap-1.5 px-2 py-1.5 flex-1 text-center"
-                    >
-                      View Details
-                    </Link>
-                    <span className="text-steel-300">|</span>
-                    <Link
-                      href="#"
-                      className="text-copper-600 hover:text-copper-700 font-semibold transition-colors inline-flex items-center justify-center gap-1.5 px-2 py-1.5 flex-1 text-center"
-                    >
-                      View Technical Specification
-                    </Link>
-                    <span className="text-steel-300">|</span>
-                    <Link
-                      href="#"
-                      className="text-copper-600 hover:text-copper-700 font-semibold transition-colors inline-flex items-center justify-center gap-1.5 px-2 py-1.5 flex-1 text-center"
-                    >
-                      Request a Sample
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
+      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:py-24">
+        <div className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">Products</p>
+            <h2 className="mt-5 text-4xl font-extrabold leading-tight text-[#071F3D] md:text-6xl">
+              Explore <span className="text-[#004B8D]">{data.shortTitle}</span>
+            </h2>
           </div>
+          <p className="font-bold text-[#004B8D]">{data.products.length} products available</p>
+        </div>
 
-          {filteredProducts.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-steel-400 text-sm">No products match this filter.</p>
-            </div>
-          )}
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+          {data.products.map((product) => (
+            <article key={product.code} className="border-t-4 border-[#00B8D9] bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.15)] md:p-8">
+              <div className="mb-6 flex items-center justify-center bg-slate-50 p-6">
+                <img src={productPlaceholder} alt={`${product.name} product placeholder`} className="h-40 w-auto object-contain" />
+              </div>
+              <div className="mb-5 flex items-center justify-between gap-4">
+                <span className="bg-[#06294A] px-3 py-1 text-xs font-extrabold tracking-widest text-white">{product.code}</span>
+                <span className="text-xs font-bold uppercase tracking-widest text-[#4B8B2B]">{data.shortTitle}</span>
+              </div>
+              <h3 className="text-2xl font-extrabold text-[#004B8D]">{product.name}</h3>
+              <p className="mt-4 line-clamp-3 leading-7 text-slate-700">{product.description}</p>
+              <ul className="mt-5 space-y-2">
+                {product.features.slice(0, 3).map((feature) => (
+                  <li key={feature} className="flex gap-3 text-sm font-medium text-slate-700">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#4B8B2B]" />
+                    <span>{feature}</span>
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-7 flex flex-wrap gap-3">
+                <Link href={`/products/${data.id}/${product.code}`} className="inline-flex items-center gap-2 bg-[#4B8B2B] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f7624]">
+                  View Details
+                  <ArrowRight className="h-4 w-4" />
+                </Link>
+                <Link href="/contact" className="inline-flex items-center gap-2 border border-[#004B8D] px-5 py-3 text-sm font-bold text-[#004B8D] transition hover:bg-[#004B8D] hover:text-white">
+                  Request Sample
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </section>
     </>

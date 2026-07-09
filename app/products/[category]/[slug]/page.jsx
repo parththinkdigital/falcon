@@ -10,6 +10,8 @@ export function generateStaticParams() {
   )
 }
 
-export default function ProductDetailPage({ params }) {
-  return <ProductDetailContent category={params.category} slug={params.slug} />
+export default async function ProductDetailPage({ params }) {
+  const { category, slug } = await params
+
+  return <ProductDetailContent category={category} slug={slug} />
 }

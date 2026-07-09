@@ -54,38 +54,6 @@ export default function Footer() {
         }}
       />
 
-      {/* CTA Banner */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-copper-500/[0.05] via-transparent to-transparent" />
-        <div className="absolute top-0 left-1/2 w-[700px] h-[700px] bg-copper-400/[0.04] rounded-full blur-[200px] -translate-x-1/2 -translate-y-1/3" />
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-copper-500/[0.03] rounded-full blur-[150px]" />
-        <div className="container-custom relative z-10 py-20 lg:py-28 text-center">
-          <div className="max-w-3xl mx-auto">
-            <div className="inline-flex items-center gap-3 mb-6">
-              <span className="h-px w-8 bg-copper-400/50" />
-              <span className="text-[10px] tracking-[0.28em] uppercase text-copper-500/70 font-semibold">Get in Touch</span>
-              <span className="h-px w-8 bg-copper-400/50" />
-            </div>
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-neutral-900">
-              Ready to optimise your pressroom?
-            </h2>
-            <p className="text-neutral-400 text-base md:text-lg mt-5 max-w-2xl mx-auto leading-relaxed">
-              Our technical team is standing by to help you find the perfect chemistry for your operation.
-            </p>
-            <div className="flex flex-wrap justify-center gap-4 mt-10">
-              <Link href="/contact" className="group relative inline-flex items-center gap-3 px-6 py-3 rounded-full bg-copper-500 text-white text-sm font-semibold transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-copper-600 active:scale-[0.97]">
-                <span>Contact Us</span>
-                <span className="w-7 h-7 rounded-full bg-white/15 flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5 group-hover:-translate-y-[1px] group-hover:scale-105">
-                  <FiArrowRight className="w-3.5 h-3.5" />
-                </span>
-              </Link>
-              <Link href="/contact" className="group relative inline-flex items-center gap-2 px-6 py-3 rounded-full border border-neutral-200 text-neutral-500 text-sm font-medium transition-all duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-neutral-50 hover:text-neutral-900 hover:border-neutral-300 active:scale-[0.97]">
-                Request a Quote
-              </Link>
-            </div>
-          </div>
-        </div>
-      </div>
 
       {/* Divider */}
       <div className="h-px bg-gradient-to-r from-transparent via-neutral-200 to-transparent" />

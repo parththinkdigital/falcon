@@ -1,47 +1,56 @@
 'use client'
 
-import { useRef, useState } from 'react'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { FiMapPin, FiMail, FiPhone, FiClock, FiSend, FiCheck, FiArrowRight, FiSliders, FiShield, FiTruck } from 'react-icons/fi'
-import { clsx } from 'clsx'
+import { useState } from 'react'
 import Link from 'next/link'
-import Hero from '@/components/shared/Hero'
-
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(useGSAP, ScrollTrigger)
-}
+import { clsx } from 'clsx'
+import { FiArrowRight, FiCheck, FiChevronDown, FiClock, FiMail, FiMapPin, FiPhone, FiSend, FiShield, FiSliders, FiTruck } from 'react-icons/fi'
+import { api } from '@/lib/api'
 
 const contactInfo = [
   {
     icon: FiMapPin,
-    label: 'Address',
-    lines: ['499/1/B, Pimpri Road, Off Nashik-Ch. Sambhajinagar Highway, Chittgaon, Taluka Niphad, District Nashik-422 003. Maharashtra State (INDIA)'],
+    label: 'Headquarters',
+    value: 'Nashik, Maharashtra',
+    lines: ['499/1/B, Pimpri Road, Off Nashik-Ch. Sambhajinagar Highway, Chittgaon, Taluka Niphad, District Nashik-422 003. Maharashtra State, India'],
   },
   {
     icon: FiPhone,
-    label: 'Phone',
-    lines: ['+91-9022247664 ', '+91-9226347664',],
+    label: 'Call Us',
+    value: '+91-9022247664',
+    lines: ['+91-7972561459', '+91-9226347664', 'WhatsApp: +91-9226347664 / +91-9029726283'],
   },
   {
     icon: FiMail,
     label: 'Email',
-    lines: ['kkd@falchem.in ', 'skd@falchem.in	'],
+    value: 'kkd@falchem.in',
+    lines: ['skd@falchem.in'],
   },
   {
     icon: FiClock,
-    label: 'Hours',
-    lines: ['Mon – Sat: 9:00 AM – 6:00 PM', 'Sunday: Closed'],
+    label: 'Business Hours',
+    value: 'Mon - Sat',
+    lines: ['9:00 AM - 6:00 PM', 'Sunday: Closed'],
   },
 ]
 
-const subjects = [
-  'Product Inquiry',
-  'Technical Support',
-  'Request a Quote',
-  'Custom Formulation',
-  'General Question',
+const subjects = ['Product Inquiry', 'Technical Support', 'Request a Quote', 'Custom Formulation', 'General Question']
+
+const facilityHighlights = [
+  {
+    icon: FiSliders,
+    title: 'Automated Blending',
+    text: 'Controlled reactor systems help maintain repeatable pH, conductivity, and batch performance across every order.',
+  },
+  {
+    icon: FiShield,
+    title: 'Quality Control',
+    text: 'Incoming raw materials and finished formulations are checked through dedicated laboratory workflows before dispatch.',
+  },
+  {
+    icon: FiTruck,
+    title: 'National Logistics',
+    text: 'Our Nashik location gives Falcon fast freight access for printers across India and export-ready supply requirements.',
+  },
 ]
 
 const faqs = [
@@ -51,436 +60,278 @@ const faqs = [
   },
   {
     question: 'Are your pressroom chemicals compliant with environmental regulations?',
-    answer: 'Yes. All our products manufactured at the Niphad facility are formulated to meet national and international environmental standards, including low-VOC compliance and REACH safety requirements.',
+    answer: 'Yes. Falcon products are formulated to support modern low-VOC and pressroom safety requirements while maintaining consistent print performance.',
   },
   {
     question: 'Do you offer bulk supply and logistics assistance?',
-    answer: 'Absolutely. We supply in standard 20L cans, 200L drums, and 1,000L IBC tanks. Our Nashik logistics desk coordinates direct freight delivery to print houses nationwide.',
+    answer: 'Yes. We support standard cans, drums, and bulk packaging needs, with logistics coordination for direct freight delivery to print houses.',
   },
   {
     question: 'Can we request a product trial or sample?',
-    answer: 'Yes. We encourage trial periods for new clients. Contact our sales department using the form above to coordinate sample shipments and technical operator setup support.',
+    answer: 'Yes. Send your press type, current chemistry, and print requirement through the form and our team will coordinate the right sample or trial recommendation.',
   },
 ]
 
+const emptyForm = { name: '', email: '', phone: '', company: '', subject: subjects[0], message: '' }
+
 function SuccessState() {
   return (
-    <div className="text-center py-16 px-8">
-      <div className="relative inline-block mb-8">
-        <div className="w-20 h-20 rounded-full bg-gradient-to-br from-copper-500 to-amber-500 flex items-center justify-center">
-          <FiCheck className="w-10 h-10 text-white" />
-        </div>
-        <div className="absolute -inset-4 rounded-full bg-copper-500/10 animate-ping" />
+    <div className="rounded-[1.75rem] bg-[#F4FAF0] px-6 py-12 text-center ring-1 ring-[#4B8B2B]/15">
+      <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-[#4B8B2B] text-white shadow-[0_18px_36px_rgba(75,139,43,0.25)]">
+        <FiCheck className="h-10 w-10" />
       </div>
-      <h3 className="font-heading font-bold text-3xl text-ink-800 mb-3">Message Received</h3>
-      <p className="text-steel-500 max-w-sm mx-auto leading-relaxed">
-        Thank you for reaching out. Our technical team in Nashik will review your inquiry and respond within 24 hours.
+      <h3 className="mt-7 text-3xl font-extrabold text-[#004B8D]">Message received</h3>
+      <p className="mx-auto mt-3 max-w-md leading-7 text-slate-700">
+        Thank you for reaching out. Our technical team will review your inquiry and respond as soon as possible.
       </p>
-      <div className="mt-8 flex items-center justify-center gap-2 text-sm text-copper-600">
-        <FiMail className="w-4 h-4" />
-        <span>We'll send a confirmation to your email</span>
-      </div>
     </div>
   )
 }
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', phone: '', company: '', subject: '', message: '' })
+  const [form, setForm] = useState(emptyForm)
   const [submitted, setSubmitted] = useState(false)
-  const [activeSubject, setActiveSubject] = useState(null)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
   const [activeFaq, setActiveFaq] = useState(null)
 
-  const pageRef = useRef(null)
-  const formRef = useRef(null)
-  const infoRef = useRef(null)
-  const facilityRef = useRef(null)
-  const faqRef = useRef(null)
+  const updateForm = (field, value) => setForm((current) => ({ ...current, [field]: value }))
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    gsap.to(formRef.current, {
-      opacity: 0, y: -20, duration: 0.4, ease: 'power2.in',
-      onComplete: () => setSubmitted(true)
-    })
+  const handleSubmit = async (event) => {
+    event.preventDefault()
+    setSubmitting(true)
+    setError('')
+
+    try {
+      await api.submitContact({
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        company: form.company,
+        productInterest: form.subject,
+        message: form.message,
+      })
+      setSubmitted(true)
+      setForm(emptyForm)
+    } catch (submitError) {
+      setError('We could not send your message right now. Please call or email us directly.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
-  useGSAP(() => {
-    const cards = infoRef.current?.querySelectorAll('.info-card')
-    if (cards?.length) {
-      gsap.fromTo(cards,
-        { opacity: 0, y: 30, scale: 0.96 },
-        {
-          opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: infoRef.current, start: 'top 85%', once: true }
-        }
-      )
-    }
-
-    if (formRef.current) {
-      gsap.fromTo(formRef.current,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1, y: 0, duration: 0.8, ease: 'power3.out',
-          scrollTrigger: { trigger: formRef.current, start: 'top 80%', once: true }
-        }
-      )
-    }
-
-    const facilityBlocks = facilityRef.current?.querySelectorAll('.facility-block')
-    if (facilityBlocks?.length) {
-      gsap.fromTo(facilityBlocks,
-        { opacity: 0, y: 30 },
-        {
-          opacity: 1, y: 0, duration: 0.7, stagger: 0.1, ease: 'power3.out',
-          scrollTrigger: { trigger: facilityRef.current, start: 'top 82%', once: true }
-        }
-      )
-    }
-
-    const faqItems = faqRef.current?.querySelectorAll('.faq-item')
-    if (faqItems?.length) {
-      gsap.fromTo(faqItems,
-        { opacity: 0, y: 24 },
-        {
-          opacity: 1, y: 0, duration: 0.6, stagger: 0.08, ease: 'power3.out',
-          scrollTrigger: { trigger: faqRef.current, start: 'top 85%', once: true }
-        }
-      )
-    }
-  }, { scope: pageRef })
-
   return (
-    <div ref={pageRef} className="min-h-screen bg-gradient-to-b from-steel-50 via-white to-steel-50 relative overflow-hidden">
-      {/* Background Architectural Grids */}
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02] select-none z-0">
-        <div className="absolute inset-y-0 left-1/4 w-px bg-black" />
-        <div className="absolute inset-y-0 left-2/4 w-px bg-black" />
-        <div className="absolute inset-y-0 left-3/4 w-px bg-black" />
-      </div>
+    <main className="min-h-screen bg-white">
+      <section className="relative overflow-hidden bg-[#06294A]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37] via-[#004B8D] to-[#06294A]" />
+        <div className="absolute -right-40 top-24 h-96 w-96 rounded-full bg-[#00B8D9]/20 blur-[120px]" />
+        <div className="absolute -left-32 bottom-10 h-80 w-80 rounded-full bg-[#4B8B2B]/25 blur-[110px]" />
+        <div className="relative mx-auto grid min-h-[72vh] max-w-7xl grid-cols-1 gap-10 px-6 py-28 md:px-10 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
+          <div className="text-white">
+            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Contact Us</p>
+            <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
+              Let's Talk
+              <span className="block text-[#00B8D9]">Chemistry</span>
+            </h1>
+            <p className="mt-8 max-w-2xl text-lg font-medium leading-8 text-white/85">
+              Need a quote, technical guidance, product samples, or custom pressroom chemistry? Falcon's team is ready to help you move faster with confidence.
+            </p>
+            <div className="mt-9 flex flex-wrap gap-3">
+              <a href="tel:+919022247664" className="rounded-full bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white shadow-[0_14px_28px_rgba(75,139,43,0.25)]">Call Sales</a>
+              <a href="mailto:kkd@falchem.in" className="rounded-full bg-white px-6 py-3 text-sm font-bold text-[#004B8D]">Email Team</a>
+            </div>
+          </div>
 
-      {/* Subtle Glows */}
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-copper-500/3 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/3 left-0 w-[400px] h-[400px] rounded-full bg-copper-500/2 blur-[100px] pointer-events-none" />
+          <div className="rounded-[2rem] bg-white/10 p-4 ring-1 ring-white/15 backdrop-blur-md">
+            <div className="rounded-[1.5rem] bg-white p-6 shadow-[0_20px_60px_rgba(0,0,0,0.25)]">
+              <p className="text-xs font-extrabold uppercase tracking-widest text-[#4B8B2B]">Fast Response Desk</p>
+              <h2 className="mt-3 text-3xl font-extrabold text-[#004B8D]">Share your requirement.</h2>
+              <p className="mt-3 leading-7 text-slate-700">Tell us about your press type, challenge, and volume. We will route your message to the right technical or sales contact.</p>
+              <div className="mt-6 grid grid-cols-2 gap-3">
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Response</p>
+                  <p className="mt-1 text-xl font-extrabold text-[#071F3D]">24 hrs</p>
+                </div>
+                <div className="rounded-2xl bg-slate-50 p-4">
+                  <p className="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Support</p>
+                  <p className="mt-1 text-xl font-extrabold text-[#071F3D]">Pan India</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      {/* Hero */}
-      <Hero
-        title="Let's Talk Chemistry"
-        subtitle="Whether you need a quote, technical guidance, or want to explore custom formulations — our team is ready to help."
-        eyebrow="Contact Us"
-      />
-
-      {/* Main Content */}
-      <section className="section-padding relative z-10 pt-12">
-        <div className="container-custom">
-          {/* Info cards */}
-          <div ref={infoRef} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+      <section className="bg-gradient-to-b from-white via-slate-50 to-white px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {contactInfo.map((item) => {
               const Icon = item.icon
               return (
-                <div key={item.label} className="info-card p-[1px] rounded-[2rem] bg-gradient-to-b from-steel-200/60 to-transparent overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.01)] transition-all duration-500 hover:-translate-y-1 hover:border-copper-500/20 hover:shadow-[0_20px_50px_rgba(180,83,9,0.04)]">
-                  <div className="rounded-[calc(2rem-1px)] bg-white/70 backdrop-blur-md p-7 h-full flex flex-col justify-start">
-                    <div className="w-10 h-10 rounded-xl bg-copper-50 flex items-center justify-center mb-5">
-                      <Icon className="w-5 h-5 text-copper-500" />
-                    </div>
-                    <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-steel-400 block mb-2">{item.label}</span>
-                    <div className="space-y-1.5">
-                      {item.lines.map((line, i) => (
-                        <p key={i} className="text-sm font-medium text-ink-800 leading-relaxed">{line}</p>
+                <div key={item.label} className="rounded-[1.75rem] bg-white p-6 shadow-[0_14px_36px_rgba(15,23,42,0.1)] ring-1 ring-slate-200/70">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#EAF6FF] text-[#004B8D]">
+                    <Icon className="h-5 w-5" />
+                  </div>
+                  <p className="mt-5 text-[10px] font-extrabold uppercase tracking-widest text-[#4B8B2B]">{item.label}</p>
+                  <h3 className="mt-2 text-xl font-extrabold text-[#004B8D]">{item.value}</h3>
+                  <div className="mt-3 space-y-1.5">
+                    {item.lines.map((line) => <p key={line} className="text-sm leading-6 text-slate-600">{line}</p>)}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-10 lg:grid-cols-[1.08fr_0.92fr] lg:items-start">
+            <div className="rounded-[2rem] bg-white p-6 shadow-[0_18px_45px_rgba(15,23,42,0.12)] ring-1 ring-slate-200/70 md:p-8 lg:p-10">
+              <div className="mb-8">
+                <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">Send a Message</p>
+                <h2 className="mt-3 text-3xl font-extrabold text-[#004B8D] md:text-5xl">How can we help?</h2>
+                <p className="mt-4 leading-7 text-slate-700">Fill in the form and we will get back with product guidance, pricing, or technical support.</p>
+              </div>
+
+              {submitted ? (
+                <SuccessState />
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <label className="block">
+                      <span className="mb-2 block text-[10px] font-extrabold uppercase tracking-widest text-[#071F3D]">Full Name *</span>
+                      <input type="text" required value={form.name} onChange={(event) => updateForm('name', event.target.value)} className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm font-medium text-[#071F3D] outline-none transition focus:border-[#00B8D9] focus:bg-white focus:ring-4 focus:ring-[#00B8D9]/10" placeholder="Rahul Sharma" />
+                    </label>
+                    <label className="block">
+                      <span className="mb-2 block text-[10px] font-extrabold uppercase tracking-widest text-[#071F3D]">Email Address *</span>
+                      <input type="email" required value={form.email} onChange={(event) => updateForm('email', event.target.value)} className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm font-medium text-[#071F3D] outline-none transition focus:border-[#00B8D9] focus:bg-white focus:ring-4 focus:ring-[#00B8D9]/10" placeholder="rahul@printco.in" />
+                    </label>
+                  </div>
+
+                  <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <label className="block">
+                      <span className="mb-2 block text-[10px] font-extrabold uppercase tracking-widest text-[#071F3D]">Phone</span>
+                      <input type="tel" value={form.phone} onChange={(event) => updateForm('phone', event.target.value)} className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm font-medium text-[#071F3D] outline-none transition focus:border-[#00B8D9] focus:bg-white focus:ring-4 focus:ring-[#00B8D9]/10" placeholder="+91 98765 43210" />
+                    </label>
+                    <label className="block">
+                      <span className="mb-2 block text-[10px] font-extrabold uppercase tracking-widest text-[#071F3D]">Company</span>
+                      <input type="text" value={form.company} onChange={(event) => updateForm('company', event.target.value)} className="w-full rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm font-medium text-[#071F3D] outline-none transition focus:border-[#00B8D9] focus:bg-white focus:ring-4 focus:ring-[#00B8D9]/10" placeholder="PrintCo Solutions" />
+                    </label>
+                  </div>
+
+                  <div>
+                    <span className="mb-3 block text-[10px] font-extrabold uppercase tracking-widest text-[#071F3D]">Subject</span>
+                    <div className="flex flex-wrap gap-2">
+                      {subjects.map((subject) => (
+                        <button key={subject} type="button" onClick={() => updateForm('subject', subject)} className={clsx('rounded-full px-4 py-2 text-xs font-extrabold uppercase tracking-wider transition', form.subject === subject ? 'bg-[#004B8D] text-white shadow-[0_8px_20px_rgba(0,75,141,0.2)]' : 'bg-slate-100 text-slate-600 hover:bg-slate-200')}>
+                          {subject}
+                        </button>
                       ))}
                     </div>
                   </div>
+
+                  <label className="block">
+                    <span className="mb-2 block text-[10px] font-extrabold uppercase tracking-widest text-[#071F3D]">Message *</span>
+                    <textarea required rows={6} value={form.message} onChange={(event) => updateForm('message', event.target.value)} className="w-full resize-none rounded-2xl border border-slate-200 bg-slate-50 px-4 py-4 text-sm font-medium text-[#071F3D] outline-none transition focus:border-[#00B8D9] focus:bg-white focus:ring-4 focus:ring-[#00B8D9]/10" placeholder="Tell us about your press type, product requirement, quantity, or technical challenge..." />
+                  </label>
+
+                  {error && <p className="rounded-2xl bg-red-50 px-4 py-3 text-sm font-semibold text-red-700">{error}</p>}
+
+                  <div className="flex flex-col gap-4 pt-2 sm:flex-row sm:items-center sm:justify-between">
+                    <p className="max-w-sm text-xs leading-6 text-slate-500">By submitting, you agree that Falcon may contact you about this inquiry.</p>
+                    <button type="submit" disabled={submitting} className="inline-flex items-center justify-center gap-2 rounded-full bg-[#4B8B2B] px-7 py-4 text-sm font-bold text-white shadow-[0_14px_28px_rgba(75,139,43,0.22)] transition disabled:cursor-not-allowed disabled:opacity-60">
+                      {submitting ? 'Sending...' : 'Send Message'}
+                      <FiSend className="h-4 w-4" />
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+
+            <div className="space-y-6 lg:sticky lg:top-24">
+              <div className="overflow-hidden rounded-[2rem] bg-white shadow-[0_18px_45px_rgba(15,23,42,0.12)] ring-1 ring-slate-200/70">
+                <div className="h-80 bg-slate-100">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14986.711815128035!2d74.10887373809033!3d20.091176045558117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddc4e09f87efd5%3A0xad028dc7f6de311b!2sNiphad%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1719640000000!5m2!1sen!2sin"
+                    width="100%"
+                    height="100%"
+                    style={{ border: 0 }}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
+                    title="Falcon Chemicals Niphad Plant Location"
+                  />
+                </div>
+                <div className="p-6">
+                  <p className="text-xs font-extrabold uppercase tracking-widest text-[#4B8B2B]">Visit Falcon</p>
+                  <h3 className="mt-2 text-2xl font-extrabold text-[#004B8D]">Niphad Manufacturing Facility</h3>
+                  <p className="mt-3 text-sm leading-7 text-slate-600">Located near the Nashik industrial corridor for reliable formulation, QC, and dispatch operations.</p>
+                  <a href="https://maps.google.com/?q=Niphad,+Maharashtra" target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#004B8D] px-5 py-3 text-sm font-bold text-white">
+                    Open in Google Maps
+                    <FiArrowRight className="h-4 w-4" />
+                  </a>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-4 rounded-[2rem] bg-[#06294A] p-6 text-white shadow-[0_18px_45px_rgba(6,41,74,0.18)]">
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="text-[10px] font-extrabold uppercase tracking-widest text-[#9BD36A]">Capacity</p>
+                  <p className="mt-2 text-2xl font-extrabold">2,500+</p>
+                  <p className="text-xs text-white/65">Tons annually</p>
+                </div>
+                <div className="rounded-2xl bg-white/10 p-4">
+                  <p className="text-[10px] font-extrabold uppercase tracking-widest text-[#9BD36A]">R&D Lab</p>
+                  <p className="mt-2 text-2xl font-extrabold">On-Site</p>
+                  <p className="text-xs text-white/65">Testing support</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#06294A] px-6 py-16 text-white md:px-10 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Facility Focus</p>
+            <h2 className="mt-5 text-4xl font-extrabold leading-tight md:text-6xl">Built for dependable pressroom supply.</h2>
+            <p className="mt-5 leading-8 text-white/70">From controlled blending to quality checks and dispatch coordination, Falcon supports printers with reliable chemistry and responsive technical service.</p>
+          </div>
+          <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+            {facilityHighlights.map((item) => {
+              const Icon = item.icon
+              return (
+                <div key={item.title} className="rounded-[2rem] bg-white/10 p-7 ring-1 ring-white/10">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#9BD36A]/15 text-[#9BD36A]">
+                    <Icon className="h-6 w-6" />
+                  </div>
+                  <h3 className="mt-6 text-2xl font-extrabold">{item.title}</h3>
+                  <p className="mt-3 leading-7 text-white/65">{item.text}</p>
                 </div>
               )
             })}
           </div>
-
-          {/* Form + Map Sidebar */}
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-            {/* Form */}
-            <div className="lg:col-span-7">
-              <div className="p-[1px] rounded-[2rem] bg-gradient-to-b from-steel-200/60 to-transparent overflow-hidden shadow-[0_12px_40px_rgba(26,42,68,0.03)]">
-                <div className="rounded-[calc(2rem-1px)] bg-white/70 backdrop-blur-md p-8 sm:p-10" ref={formRef}>
-                  <div className="mb-8">
-                    <h2 className="font-heading font-semibold text-2xl text-ink-900 tracking-tight mb-2">Send Us a Message</h2>
-                    <p className="text-steel-500 text-sm">Fill in the form and we'll get back to you within one business day.</p>
-                  </div>
-
-                  {submitted ? (
-                    <SuccessState />
-                  ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                          <label className="block text-[10px] font-semibold text-ink-900 uppercase tracking-wider mb-2">Full Name *</label>
-                          <input
-                            type="text"
-                            required
-                            value={form.name}
-                            onChange={(e) => setForm({ ...form, name: e.target.value })}
-                            className="w-full px-4 py-3.5 rounded-xl border border-steel-200 bg-steel-50/50 text-ink-800 text-sm placeholder:text-steel-400 focus:outline-none focus:ring-2 focus:ring-copper-500/30 focus:border-copper-400 focus:bg-white transition-all duration-300"
-                            placeholder="Rahul Sharma"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[10px] font-semibold text-ink-900 uppercase tracking-wider mb-2">Email Address *</label>
-                          <input
-                            type="email"
-                            required
-                            value={form.email}
-                            onChange={(e) => setForm({ ...form, email: e.target.value })}
-                            className="w-full px-4 py-3.5 rounded-xl border border-steel-200 bg-steel-50/50 text-ink-800 text-sm placeholder:text-steel-400 focus:outline-none focus:ring-2 focus:ring-copper-500/30 focus:border-copper-400 focus:bg-white transition-all duration-300"
-                            placeholder="rahul.sharma@printco.in"
-                          />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                        <div>
-                          <label className="block text-[10px] font-semibold text-ink-900 uppercase tracking-wider mb-2">Phone</label>
-                          <input
-                            type="tel"
-                            value={form.phone}
-                            onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                            className="w-full px-4 py-3.5 rounded-xl border border-steel-200 bg-steel-50/50 text-ink-800 text-sm placeholder:text-steel-400 focus:outline-none focus:ring-2 focus:ring-copper-500/30 focus:border-copper-400 focus:bg-white transition-all duration-300"
-                            placeholder="+91 98765 43210"
-                          />
-                        </div>
-                        <div>
-                          <label className="block text-[10px] font-semibold text-ink-900 uppercase tracking-wider mb-2">Company</label>
-                          <input
-                            type="text"
-                            value={form.company}
-                            onChange={(e) => setForm({ ...form, company: e.target.value })}
-                            className="w-full px-4 py-3.5 rounded-xl border border-steel-200 bg-steel-50/50 text-ink-800 text-sm placeholder:text-steel-400 focus:outline-none focus:ring-2 focus:ring-copper-500/30 focus:border-copper-400 focus:bg-white transition-all duration-300"
-                            placeholder="PrintCo Solutions India"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Subject selection */}
-                      <div>
-                        <label className="block text-[10px] font-semibold text-ink-900 uppercase tracking-wider mb-2">Subject</label>
-                        <div className="flex flex-wrap gap-2">
-                          {subjects.map((s) => (
-                            <button
-                              key={s}
-                              type="button"
-                              onClick={() => { setActiveSubject(s); setForm({ ...form, subject: s }) }}
-                              className={clsx(
-                                'px-4 py-2 rounded-xl text-xs font-semibold tracking-wide transition-all duration-300',
-                                activeSubject === s
-                                  ? 'bg-ink-800 text-white shadow-md'
-                                  : 'bg-steel-100/70 text-steel-600 hover:bg-steel-200 hover:text-ink-800'
-                              )}
-                            >
-                              {s}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <label className="block text-[10px] font-semibold text-ink-900 uppercase tracking-wider mb-2">Message *</label>
-                        <textarea
-                          required
-                          rows={5}
-                          value={form.message}
-                          onChange={(e) => setForm({ ...form, message: e.target.value })}
-                          className="w-full px-4 py-3.5 rounded-xl border border-steel-200 bg-steel-50/50 text-ink-800 text-sm placeholder:text-steel-400 focus:outline-none focus:ring-2 focus:ring-copper-500/30 focus:border-copper-400 focus:bg-white transition-all duration-300 resize-none"
-                          placeholder="We're interested in requesting a trial of your low-VOC fountain solutions for our pressroom..."
-                        />
-                      </div>
-
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pt-2">
-                        <p className="text-[11px] text-steel-400 leading-relaxed max-w-xs">
-                          By submitting, you agree to our{' '}
-                          <Link href="#" className="text-copper-500 hover:underline">Privacy Policy</Link>.
-                          We'll never share your data.
-                        </p>
-                        <button type="submit" className="btn-accent group inline-flex items-center gap-2 shrink-0">
-                          Send Message
-                          <FiSend className="w-3.5 h-3.5 transition-transform group-hover:translate-x-0.5" />
-                        </button>
-                      </div>
-                    </form>
-                  )}
-                </div>
-              </div>
-            </div>
-
-            {/* Google Map Sidebar */}
-            <div className="lg:col-span-5 space-y-6 lg:sticky lg:top-28">
-              {/* Premium Google Map Card */}
-              <div className="p-[1px] rounded-[2rem] bg-gradient-to-b from-steel-200/60 to-transparent overflow-hidden shadow-[0_12px_40px_rgba(26,42,68,0.03)]">
-                <div className="rounded-[calc(2rem-1px)] bg-white/70 backdrop-blur-md overflow-hidden flex flex-col">
-                  {/* Map Iframe */}
-                  <div className="h-72 w-full relative bg-steel-100">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14986.711815128035!2d74.10887373809033!3d20.091176045558117!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bddc4e09f87efd5%3A0xad028dc7f6de311b!2sNiphad%2C%20Maharashtra!5e0!3m2!1sen!2sin!4v1719640000000!5m2!1sen!2sin"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0, filter: 'grayscale(0.25) contrast(1.1) opacity(0.9)' }}
-                      allowFullScreen=""
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      title="Falcon Chemicals Niphad Plant Location"
-                    />
-                  </div>
-
-                  {/* Map footer details */}
-                  <div className="p-6 border-t border-steel-100 bg-white">
-                    <div className="flex items-start gap-4">
-                      <div className="w-10 h-10 rounded-xl bg-copper-50 flex items-center justify-center shrink-0">
-                        <FiMapPin className="w-5 h-5 text-copper-500" />
-                      </div>
-                      <div>
-                        <h4 className="font-heading font-semibold text-sm text-ink-900 leading-tight">Niphad Headquarters</h4>
-                        <p className="text-xs text-steel-500 mt-1 leading-relaxed">
-                          Plot No. A-12, MIDC Industrial Area, Niphad, Nashik, Maharashtra 422303, India
-                        </p>
-                        <a
-                          href="https://maps.google.com/?q=Niphad,+Maharashtra"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-copper-500 hover:text-copper-600 mt-3 transition-colors group"
-                        >
-                          Open in Google Maps
-                          <FiArrowRight className="w-3 h-3 transition-transform group-hover:translate-x-0.5" />
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Plant highlights */}
-              <div className="p-6 rounded-[2rem] border border-steel-200/50 bg-white/70 backdrop-blur-md shadow-sm">
-                <h3 className="font-heading font-semibold text-sm text-ink-900 mb-4">Niphad Manufacturing Facility</h3>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="p-4 rounded-2xl bg-steel-50 border border-steel-100">
-                    <span className="text-[10px] uppercase font-bold text-steel-400 tracking-wider">Capacity</span>
-                    <p className="text-base font-semibold text-ink-800 mt-1">2,500+ Tons</p>
-                    <span className="text-[9px] text-steel-400 block mt-0.5">Annual formulation output</span>
-                  </div>
-                  <div className="p-4 rounded-2xl bg-steel-50 border border-steel-100">
-                    <span className="text-[10px] uppercase font-bold text-steel-400 tracking-wider">R&D Lab</span>
-                    <p className="text-base font-semibold text-ink-800 mt-1">On-Site</p>
-                    <span className="text-[9px] text-steel-400 block mt-0.5">Advanced testing laboratory</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
-      {/* Facility Highlights Block Section */}
-      <section className="section-padding bg-ink-900 relative overflow-hidden" ref={facilityRef}>
-        <div className="absolute inset-0 bg-grid opacity-[0.04]" />
-
-        <div className="container-custom relative z-10">
-          <div className="max-w-3xl mb-12">
-            <span className="inline-block text-[11px] font-medium uppercase tracking-[0.2em] text-copper-400 mb-3">Facility Focus</span>
-            <h2 className="font-heading font-bold text-3xl sm:text-4xl tracking-tight text-white leading-tight">
-              State-of-the-Art Operations in Nashik
-            </h2>
-            <p className="text-white/40 text-sm sm:text-base mt-3 leading-relaxed font-light">
-              Our Niphad facility houses advanced blending automated reactors, high-purity testing laboratories, and centralized logistics to serve printers across India and the globe.
-            </p>
+      <section className="bg-gradient-to-b from-white to-slate-50 px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto max-w-4xl">
+          <div className="text-center">
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">FAQ</p>
+            <h2 className="mt-4 text-4xl font-extrabold text-[#004B8D] md:text-6xl">Frequently Asked Questions</h2>
+            <p className="mx-auto mt-4 max-w-2xl leading-7 text-slate-700">Quick answers for product trials, compliance, logistics, and custom formulation requests.</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            <div className="facility-block p-8 rounded-[2rem] bg-ink-800 border border-white/5 flex flex-col justify-start">
-              <div className="w-12 h-12 rounded-2xl bg-copper-500/10 flex items-center justify-center mb-6">
-                <FiSliders className="w-6 h-6 text-copper-400" />
-              </div>
-              <h3 className="font-heading font-bold text-lg text-white mb-2">Automated Blending</h3>
-              <p className="text-white/50 text-sm leading-relaxed">
-                Precise automated Reactor tanks maintain exact batch formulation replication, guaranteeing consistent pH and conductivity tolerances on every order.
-              </p>
-            </div>
-
-            <div className="facility-block p-8 rounded-[2rem] bg-ink-800 border border-white/5 flex flex-col justify-start">
-              <div className="w-12 h-12 rounded-2xl bg-copper-500/10 flex items-center justify-center mb-6">
-                <FiShield className="w-6 h-6 text-copper-400" />
-              </div>
-              <h3 className="font-heading font-bold text-lg text-white mb-2">Quality Control</h3>
-              <p className="text-white/50 text-sm leading-relaxed">
-                Our QC lab analyzes incoming raw elements and finished solutions, tracking specific gravities, refractive indices, and surface tensions to military-grade specs.
-              </p>
-            </div>
-
-            <div className="facility-block p-8 rounded-[2rem] bg-ink-800 border border-white/5 flex flex-col justify-start">
-              <div className="w-12 h-12 rounded-2xl bg-copper-500/10 flex items-center justify-center mb-6">
-                <FiTruck className="w-6 h-6 text-copper-400" />
-              </div>
-              <h3 className="font-heading font-bold text-lg text-white mb-2">National Logistics</h3>
-              <p className="text-white/50 text-sm leading-relaxed">
-                Strategically positioned in the Nashik industrial corridor with close highway and rail freight access, enabling fast shipping timelines across the subcontinent.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ Section */}
-      <section className="section-padding bg-gradient-to-b from-white to-steel-50 relative overflow-hidden" ref={faqRef}>
-        {/* Subtle Ambient Background Glows */}
-        <div className="absolute top-1/4 right-0 w-[400px] h-[400px] rounded-full bg-copper-500/3 blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-1/4 left-0 w-[300px] h-[300px] rounded-full bg-copper-500/2 blur-[80px] pointer-events-none" />
-
-        <div className="container-custom relative z-10">
-          <div className="max-w-3xl mx-auto text-center mb-16">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-copper-500/20 bg-copper-500/5 backdrop-blur-sm mb-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-copper-500 animate-pulse" />
-              <span className="text-[9px] tracking-[0.25em] uppercase text-copper-600 font-semibold font-mono">FAQ</span>
-            </div>
-            <h2 className="font-display font-light text-3xl sm:text-4xl md:text-5xl text-ink-900 tracking-tight leading-tight">
-              Frequently Asked <span className="font-bold bg-gradient-to-r from-copper-500 to-copper-600 bg-clip-text text-transparent font-sans">Questions</span>
-            </h2>
-            <p className="text-steel-500 text-sm sm:text-base mt-4 max-w-xl mx-auto leading-relaxed">
-              Find quick answers to common operational, technical, and logistic queries about Falcon Chemicals.
-            </p>
-          </div>
-
-          <div className="max-w-3xl mx-auto space-y-4">
+          <div className="mt-10 space-y-4">
             {faqs.map((faq, index) => {
               const isOpen = activeFaq === index
               return (
-                <div
-                  key={index}
-                  className="faq-item p-[1px] rounded-2xl bg-gradient-to-b from-steel-200/60 to-transparent overflow-hidden transition-all duration-300 shadow-[0_4px_20px_rgba(0,0,0,0.01)]"
-                >
-                  <div className="rounded-[calc(2rem-1px)] bg-white">
-                    <button
-                      type="button"
-                      onClick={() => setActiveFaq(isOpen ? null : index)}
-                      className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none"
-                    >
-                      <span className="font-heading font-medium text-sm sm:text-base text-ink-900 pr-4">
-                        {faq.question}
-                      </span>
-                      <span className={clsx(
-                        "w-6 h-6 rounded-full bg-steel-50 flex items-center justify-center text-steel-500 text-xs shrink-0 transition-transform duration-300",
-                        isOpen && "rotate-180 bg-copper-50 text-copper-600"
-                      )}>
-                        <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2.5">
-                          {isOpen ? (
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M18 12H6" />
-                          ) : (
-                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v12m6-6H6" />
-                          )}
-                        </svg>
-                      </span>
-                    </button>
-
-                    <div className={clsx(
-                      "transition-all duration-300 ease-in-out overflow-hidden",
-                      isOpen ? "max-h-48 border-t border-steel-100" : "max-h-0"
-                    )}>
-                      <p className="px-6 py-5 text-xs sm:text-sm text-steel-500 leading-relaxed bg-steel-50/30">
-                        {faq.answer}
-                      </p>
-                    </div>
+                <div key={faq.question} className="overflow-hidden rounded-[1.5rem] bg-white shadow-[0_10px_28px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70">
+                  <button type="button" onClick={() => setActiveFaq(isOpen ? null : index)} className="flex w-full items-center justify-between gap-4 px-6 py-5 text-left">
+                    <span className="font-bold text-[#071F3D]">{faq.question}</span>
+                    <span className={clsx('flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-slate-100 text-[#004B8D] transition', isOpen && 'rotate-180 bg-[#004B8D] text-white')}>
+                      <FiChevronDown className="h-4 w-4" />
+                    </span>
+                  </button>
+                  <div className={clsx('overflow-hidden transition-all duration-300', isOpen ? 'max-h-48' : 'max-h-0')}>
+                    <p className="border-t border-slate-100 px-6 py-5 leading-7 text-slate-600">{faq.answer}</p>
                   </div>
                 </div>
               )
@@ -488,6 +339,6 @@ export default function ContactPage() {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   )
 }

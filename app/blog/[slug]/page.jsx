@@ -5,6 +5,8 @@ export function generateStaticParams() {
   return Object.keys(blogPostsContent).map((slug) => ({ slug }))
 }
 
-export default function BlogPostPage() {
-  return <BlogPostContent />
+export default async function BlogPostPage({ params }) {
+  const { slug } = await params
+
+  return <BlogPostContent slug={slug} />
 }

@@ -1,157 +1,95 @@
-'use client'
-
-import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { useRef } from 'react'
-import { FiArrowLeft, FiCalendar, FiUser, FiClock, FiChevronRight, FiTwitter, FiLinkedin, FiFacebook } from 'react-icons/fi'
-import { useGSAP } from '@gsap/react'
-import gsap from 'gsap'
-import Hero from '@/components/shared/Hero'
+import { ArrowLeft, ArrowRight, Calendar, CheckCircle2, Clock, Link2, Mail, Share2, User } from 'lucide-react'
 import { blogPostsContent, getFallbackPost } from '@/lib/blog-data'
 
-export default function BlogPostContent() {
-  const { slug } = useParams()
-  const contentRef = useRef(null)
-
+export default function BlogPostContent({ slug }) {
   const post = blogPostsContent[slug] || getFallbackPost(slug)
 
-  useGSAP(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
-    tl.fromTo('.back-link', { x: -15, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5, delay: 0.1 })
-      .fromTo('.article-meta', { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5 }, '-=0.3')
-      .fromTo('.article-main', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.4')
-      .fromTo('.article-sidebar', { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 0.8 }, '-=0.7')
-  }, { scope: contentRef })
-
   return (
-    <article className="min-h-screen bg-gradient-to-b from-steel-50 via-white to-steel-50 relative pb-24 overflow-hidden" ref={contentRef}>
-      <div className="absolute inset-0 pointer-events-none opacity-[0.02] select-none z-0">
-        <div className="absolute inset-y-0 left-1/4 w-px bg-black" />
-        <div className="absolute inset-y-0 left-2/4 w-px bg-black" />
-        <div className="absolute inset-y-0 left-3/4 w-px bg-black" />
-      </div>
-
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] rounded-full bg-copper-500/3 blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-1/3 left-0 w-[400px] h-[400px] rounded-full bg-copper-500/2 blur-[100px] pointer-events-none" />
-
-      <Hero
-        title={post.title}
-        eyebrow={post.category}
-        className="pb-8 md:pb-12"
-      >
-        <div className="article-meta flex flex-wrap items-center gap-5 text-steel-500 text-xs mt-3">
-          <div className="flex items-center gap-1.5">
-            <FiUser className="w-3.5 h-3.5 text-copper-500" />
-            <span>{post.author}</span>
-          </div>
-          <span className="w-1 h-1 rounded-full bg-steel-300" />
-          <div className="flex items-center gap-1.5">
-            <FiCalendar className="w-3.5 h-3.5 text-copper-500" />
-            <span>{post.date}</span>
-          </div>
-          <span className="w-1 h-1 rounded-full bg-steel-300" />
-          <div className="flex items-center gap-1.5">
-            <FiClock className="w-3.5 h-3.5 text-copper-500" />
-            <span>{post.readTime}</span>
+    <article className="min-h-screen bg-white">
+      <section className="relative overflow-hidden bg-[#06294A]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37] via-[#004B8D] to-[#06294A]" />
+        <div className="absolute -right-40 top-1/4 h-96 w-96 rounded-full bg-[#00B8D9]/15 blur-[120px]" />
+        <div className="absolute -left-40 bottom-1/4 h-96 w-96 rounded-full bg-[#4B8B2B]/20 blur-[120px]" />
+        <div className="relative mx-auto flex min-h-[62vh] max-w-7xl items-center px-6 py-28 md:px-10">
+          <div className="max-w-5xl text-white">
+            <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-white/70">
+              <ArrowLeft className="h-4 w-4" />
+              Back to Blog
+            </Link>
+            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">{post.category}</p>
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight md:text-6xl lg:text-7xl">{post.title}</h1>
+            <div className="mt-8 flex flex-wrap gap-5 text-sm font-semibold text-white/75">
+              <span className="inline-flex items-center gap-2"><User className="h-4 w-4 text-[#9BD36A]" />{post.author}</span>
+              <span className="inline-flex items-center gap-2"><Calendar className="h-4 w-4 text-[#9BD36A]" />{post.date}</span>
+              <span className="inline-flex items-center gap-2"><Clock className="h-4 w-4 text-[#9BD36A]" />{post.readTime}</span>
+            </div>
           </div>
         </div>
-      </Hero>
+      </section>
 
-      <div className="container-custom relative z-10 mt-8">
-        <div className="mb-8">
-          <Link href="/blog" className="back-link inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-steel-500 hover:text-copper-600 transition-colors duration-300">
-            <FiArrowLeft className="w-4 h-4" />
-            Back to Blog
-          </Link>
-        </div>
-
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
-          <div className="article-main lg:col-span-8 flex flex-col gap-8">
-            <div className="p-[1px] rounded-[2rem] bg-gradient-to-b from-steel-200/60 to-transparent overflow-hidden shadow-[0_12px_40px_rgba(26,42,68,0.04)]">
-              <div className="rounded-[calc(2rem-1px)] overflow-hidden aspect-[2/1] relative bg-steel-100">
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-full object-cover"
-                />
-              </div>
+      <section className="bg-gradient-to-b from-white via-slate-50 to-white px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-[1fr_360px]">
+          <main className="min-w-0">
+            <div className="overflow-hidden rounded-[2rem] bg-white shadow-[0_18px_45px_rgba(15,23,42,0.14)] ring-1 ring-slate-200/70">
+              <img src={post.image} alt={post.title} className="aspect-[16/8] w-full object-cover" />
             </div>
 
-            <div className="p-8 md:p-12 rounded-[2rem] border border-steel-200/50 bg-white/70 backdrop-blur-md shadow-sm">
-              <div 
-                className="prose-industrial text-steel-600 space-y-6 text-sm sm:text-base leading-relaxed"
+            <div className="mt-8 rounded-[2rem] bg-white p-7 shadow-[0_14px_36px_rgba(15,23,42,0.1)] ring-1 ring-slate-200/70 md:p-10">
+              <div
+                className="space-y-6 text-base leading-8 text-slate-700 [&_.lead]:text-xl [&_.lead]:font-bold [&_.lead]:leading-9 [&_.lead]:text-[#004B8D] [&_blockquote]:border-l-4 [&_blockquote]:border-[#00B8D9] [&_blockquote]:bg-slate-50 [&_blockquote]:p-5 [&_blockquote]:font-bold [&_blockquote]:text-[#071F3D] [&_h3]:pt-4 [&_h3]:text-2xl [&_h3]:font-extrabold [&_h3]:text-[#071F3D] [&_li]:mb-3 [&_ul]:list-disc [&_ul]:pl-6 [&_strong]:text-[#004B8D]"
                 dangerouslySetInnerHTML={{ __html: post.content }}
               />
             </div>
-          </div>
+          </main>
 
-          <div className="article-sidebar lg:col-span-4 flex flex-col gap-8">
+          <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
             {post.takeaways && (
-              <div className="p-[1px] rounded-[2rem] bg-gradient-to-b from-steel-200/60 to-transparent overflow-hidden">
-                <div className="p-7 rounded-[calc(2rem-1px)] border border-steel-100 bg-white/80 backdrop-blur-md">
-                  <h4 className="font-heading font-semibold text-ink-900 text-sm tracking-wide uppercase mb-4 flex items-center gap-2">
-                    <span className="w-1.5 h-3 rounded bg-copper-500" />
-                    Key Takeaways
-                  </h4>
-                  <ul className="space-y-4">
-                    {post.takeaways.map((item, idx) => (
-                      <li key={idx} className="flex items-start gap-3 text-xs md:text-sm text-steel-600 leading-relaxed">
-                        <span className="w-5 h-5 rounded-full bg-copper-500/10 text-copper-600 flex items-center justify-center font-bold text-[10px] shrink-0 mt-0.5">
-                          {idx + 1}
-                        </span>
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+              <div className="rounded-[1.75rem] bg-white p-7 shadow-[0_14px_36px_rgba(15,23,42,0.1)] ring-1 ring-slate-200/70">
+                <h2 className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">Key Takeaways</h2>
+                <ul className="mt-5 space-y-4">
+                  {post.takeaways.map((item) => (
+                    <li key={item} className="flex gap-3 text-sm font-medium leading-6 text-slate-700">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#4B8B2B]" />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
             )}
 
-            <div className="p-7 rounded-[2rem] border border-steel-200/50 bg-white/80 backdrop-blur-md shadow-sm">
-              <h4 className="font-heading font-semibold text-ink-900 text-xs tracking-wider uppercase mb-4">Author</h4>
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-12 rounded-full bg-copper-500/10 border border-copper-500/20 flex items-center justify-center text-copper-600 font-bold font-display">
-                  {post.author.split(' ').map(n => n[0]).join('')}
+            <div className="rounded-[1.75rem] bg-[#06294A] p-7 text-white shadow-[0_18px_45px_rgba(6,41,74,0.2)]">
+              <p className="text-xs font-extrabold uppercase tracking-widest text-[#9BD36A]">Author</p>
+              <div className="mt-5 flex items-center gap-4">
+                <div className="flex h-14 w-14 items-center justify-center rounded-full bg-white text-lg font-extrabold text-[#004B8D]">
+                  {post.author.split(' ').map((name) => name[0]).join('')}
                 </div>
                 <div>
-                  <h5 className="font-heading font-semibold text-sm text-ink-900 leading-tight">{post.author}</h5>
-                  <span className="text-[10px] text-steel-400">Chemical Specialist</span>
+                  <h3 className="font-extrabold">{post.author}</h3>
+                  <p className="text-sm text-white/65">Chemical Specialist</p>
                 </div>
               </div>
-              
-              <hr className="border-steel-100 mb-5" />
-
-              <h4 className="font-heading font-semibold text-ink-900 text-xs tracking-wider uppercase mb-3">Share</h4>
-              <div className="flex items-center gap-3">
-                <button className="w-8 h-8 rounded-full border border-steel-200 text-steel-500 hover:bg-ink-800 hover:text-white hover:border-ink-800 transition-all duration-300 flex items-center justify-center text-sm">
-                  <FiTwitter />
-                </button>
-                <button className="w-8 h-8 rounded-full border border-steel-200 text-steel-500 hover:bg-ink-800 hover:text-white hover:border-ink-800 transition-all duration-300 flex items-center justify-center text-sm">
-                  <FiLinkedin />
-                </button>
-                <button className="w-8 h-8 rounded-full border border-steel-200 text-steel-500 hover:bg-ink-800 hover:text-white hover:border-ink-800 transition-all duration-300 flex items-center justify-center text-sm">
-                  <FiFacebook />
-                </button>
+              <div className="mt-6 flex gap-3">
+                {[Share2, Link2, Mail].map((Icon, index) => (
+                  <span key={index} className="flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-white">
+                    <Icon className="h-4 w-4" />
+                  </span>
+                ))}
               </div>
             </div>
 
-            <div className="p-7 rounded-[2rem] bg-ink-900 text-white relative overflow-hidden shadow-lg">
-              <div className="absolute inset-0 bg-grid opacity-[0.06]" />
-              <div className="absolute -top-1/4 -right-1/4 w-32 h-32 rounded-full bg-copper-500/10 blur-xl pointer-events-none" />
-              
-              <div className="relative z-10">
-                <span className="text-[9px] tracking-[0.25em] uppercase text-copper-400 font-semibold block mb-2">Need Technical Help?</span>
-                <h5 className="font-heading font-bold text-lg leading-snug mb-3">Optimise Your Pressroom Chemistry</h5>
-                <p className="text-white/60 text-xs leading-relaxed mb-5">Our technical engineers can audit your current fountain solutions and help you transition to low-VOC chemistry.</p>
-                <Link href="/contact" className="inline-flex items-center gap-2 px-4 py-2 bg-copper-500 hover:bg-copper-600 text-white text-xs font-semibold rounded-xl transition-all duration-300 shadow-md">
-                  Contact Specialist
-                  <FiChevronRight className="w-3 h-3" />
-                </Link>
-              </div>
+            <div className="rounded-[1.75rem] bg-[#004B8D] p-7 text-white shadow-[0_18px_45px_rgba(0,75,141,0.18)]">
+              <p className="text-xs font-extrabold uppercase tracking-widest text-[#9BD36A]">Need Technical Help?</p>
+              <h3 className="mt-3 text-2xl font-extrabold">Optimise Your Pressroom Chemistry</h3>
+              <p className="mt-4 text-sm leading-7 text-white/75">Our technical engineers can audit your current fountain solutions and help you transition to low-VOC chemistry.</p>
+              <Link href="/contact" className="mt-6 inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-bold text-[#004B8D]">
+                Contact Specialist
+                <ArrowRight className="h-4 w-4" />
+              </Link>
             </div>
-          </div>
+          </aside>
         </div>
-      </div>
+      </section>
     </article>
   )
 }
