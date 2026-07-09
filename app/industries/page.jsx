@@ -1,131 +1,109 @@
-'use client'
-
 import Link from 'next/link'
-import { FiArrowRight } from 'react-icons/fi'
-import Hero from '@/components/shared/Hero'
-import SectionHeader from '@/components/shared/SectionHeader'
-import ScrollReveal from '@/components/shared/ScrollReveal'
+import { FiArrowRight, FiCheckCircle } from 'react-icons/fi'
 
 const industries = [
-  {
-    title: 'Commercial Printing',
-    description: 'Complete chemistry solutions for sheetfed and web offset commercial printers producing brochures, catalogs, and marketing materials.',
-    gradient: 'from-copper-500/20 to-amber-500/20',
-  },
-  {
-    title: 'Publishing',
-    description: 'Specialized formulations for book and magazine printing with precise ink-water balance control for consistent high-volume runs.',
-    gradient: 'from-blue-500/20 to-indigo-500/20',
-  },
-  {
-    title: 'Packaging',
-    description: 'Advanced fountain solutions and plate cleaners designed for carton, flexible, and corrugated packaging applications.',
-    gradient: 'from-emerald-500/20 to-teal-500/20',
-  },
-  {
-    title: 'Newspaper',
-    description: 'High-speed coldset chemistry engineered for the demanding pace of newspaper and insert production environments.',
-    gradient: 'from-violet-500/20 to-purple-500/20',
-  },
-  {
-    title: 'Label Printing',
-    description: 'Precision chemistry for narrow-web and wide-web label presses requiring exceptional dot reproduction and fast color changes.',
-    gradient: 'from-rose-500/20 to-pink-500/20',
-  },
-  {
-    title: 'UV Printing',
-    description: 'Specialized pressroom chemicals compatible with UV ink systems, including roller washes and blanket cleaners.',
-    gradient: 'from-cyan-500/20 to-sky-500/20',
-  },
+  { title: 'Commercial Printing', description: 'Complete chemistry solutions for sheetfed and web offset commercial printers producing brochures, catalogs, and marketing materials.' },
+  { title: 'Publishing', description: 'Specialized formulations for book and magazine printing with precise ink-water balance control for consistent high-volume runs.' },
+  { title: 'Packaging', description: 'Advanced fountain solutions and plate cleaners designed for carton, flexible, and corrugated packaging applications.' },
+  { title: 'Newspaper', description: 'High-speed coldset chemistry engineered for the demanding pace of newspaper and insert production environments.' },
+  { title: 'Label Printing', description: 'Precision chemistry for narrow-web and wide-web label presses requiring exceptional dot reproduction and fast color changes.' },
+  { title: 'UV Printing', description: 'Specialized pressroom chemicals compatible with UV ink systems, including roller washes and blanket cleaners.' },
+]
+
+const metrics = [
+  { value: '22%', label: 'Waste Reduction' },
+  { value: '10+', label: 'Years Partnership' },
+  { value: '50M+', label: 'Impressions Yearly' },
 ]
 
 export default function IndustriesPage() {
   return (
-    <>
-      <Hero
-        title="Industries We Serve"
-        subtitle="From commercial sheetfed to high-speed web, we formulate pressroom chemistry that meets the exacting demands of every printing segment."
-        dark
-      />
-      <section className="section-padding">
-        <div className="container-custom">
-          <ScrollReveal stagger>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {industries.map((ind) => (
-                <div key={ind.title} className="group bg-white rounded-2xl border border-steel-100 overflow-hidden hover:shadow-xl hover:shadow-ink-900/5 transition-all duration-500">
-                  <div className="h-48 relative overflow-hidden">
-                    <img src={`https://picsum.photos/seed/${ind.title.toLowerCase().replace(/\s+/g, '-')}/800/400`} alt={ind.title} className="w-full h-full object-cover" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 to-transparent" />
-                    <div className="absolute inset-0 bg-grid opacity-[0.15]" />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="font-heading font-semibold text-xl text-ink-800 mb-2">{ind.title}</h3>
-                    <p className="text-steel-500 text-sm leading-relaxed mb-4">{ind.description}</p>
-                    <Link href="/contact" className="inline-flex items-center gap-1.5 text-sm font-medium text-copper-500 hover:text-copper-600 group/link">
-                      Learn More
-                      <FiArrowRight className="w-3.5 h-3.5 group-hover/link:translate-x-0.5 transition-transform" />
-                    </Link>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </ScrollReveal>
+    <main className="min-h-screen bg-white">
+      <section className="relative overflow-hidden bg-[#06294A]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37] via-[#004B8D] to-[#06294A]" />
+        <div className="absolute -right-40 top-24 h-96 w-96 rounded-full bg-[#00B8D9]/20 blur-[120px]" />
+        <div className="absolute -left-32 bottom-10 h-80 w-80 rounded-full bg-[#4B8B2B]/25 blur-[110px]" />
+        <div className="relative mx-auto flex min-h-[68vh] max-w-7xl items-center px-6 py-28 md:px-10">
+          <div className="max-w-4xl text-white">
+            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Industries We Serve</p>
+            <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
+              Chemistry For
+              <span className="block text-[#00B8D9]">Every Pressroom</span>
+            </h1>
+            <p className="mt-8 max-w-2xl text-lg font-medium leading-8 text-white/85">
+              From commercial sheetfed to high-speed web, Falcon formulates chemistry that supports the exacting demands of every printing segment.
+            </p>
+          </div>
         </div>
       </section>
-      <section className="section-padding bg-ink-900 text-white overflow-hidden">
-        <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-            <div className="relative">
-              <div className="aspect-[4/3] rounded-2xl relative overflow-hidden">
-                <img src="https://picsum.photos/seed/publishing-partnership/800/600" alt="Printing press partnership" className="absolute inset-0 w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink-900/60 to-transparent" />
-                <div className="absolute inset-0 bg-grid opacity-[0.08]" />
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 mx-auto rounded-full bg-copper-500/20 flex items-center justify-center mb-4">
-                      <span className="text-2xl font-bold text-copper-400">15+</span>
-                    </div>
-                    <p className="text-white/40 text-sm">Years of Partnership</p>
-                  </div>
+
+      <section className="bg-gradient-to-b from-white via-slate-50 to-white px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {industries.map((industry) => (
+              <article key={industry.title} className="overflow-hidden rounded-[2rem] bg-white shadow-[0_14px_36px_rgba(15,23,42,0.12)] ring-1 ring-slate-200/70">
+                <div className="relative h-48 overflow-hidden bg-[#06294A]">
+                  <img src={`https://picsum.photos/seed/${industry.title.toLowerCase().replace(/\s+/g, '-')}/900/520`} alt={industry.title} className="h-full w-full object-cover opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#06294A]/80 to-transparent" />
                 </div>
-              </div>
-              <div className="absolute -bottom-4 -right-4 w-full h-full rounded-2xl border border-copper-500/10 -z-10" />
-            </div>
-            <div>
-              <span className="inline-block text-[11px] font-medium uppercase tracking-[0.18em] text-copper-400 mb-3">Featured Partnership</span>
-              <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl tracking-tight text-balance mb-6">
-                Powering Asia-Pacific&apos;s Largest Publishing Network
-              </h2>
-              <p className="text-white/60 leading-relaxed mb-8">
-                For over a decade, Falcon Chemicals has been the exclusive chemistry partner for one of the region&apos;s most demanding publishing operations. Our custom-blended fountain solutions and plate cleaners helped them achieve a 22% reduction in waste while maintaining sub-1% color variance across millions of impressions.
-              </p>
-              <div className="grid grid-cols-3 gap-8 border-t border-white/10 pt-8">
-                <div>
-                  <span className="block font-heading font-bold text-3xl text-copper-400">22%</span>
-                  <span className="text-white/40 text-sm">Waste Reduction</span>
+                <div className="p-7">
+                  <div className="mb-5 h-1 w-20 rounded-full bg-[#00B8D9]" />
+                  <h2 className="text-2xl font-extrabold text-[#004B8D]">{industry.title}</h2>
+                  <p className="mt-4 leading-7 text-slate-700">{industry.description}</p>
+                  <Link href="/contact" className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#4B8B2B]">
+                    Discuss Requirements
+                    <FiArrowRight className="h-4 w-4" />
+                  </Link>
                 </div>
-                <div>
-                  <span className="block font-heading font-bold text-3xl text-copper-400">10+</span>
-                  <span className="text-white/40 text-sm">Years Partnership</span>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-[#06294A] px-6 py-16 text-white md:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-12 lg:grid-cols-2 lg:items-center">
+          <div className="overflow-hidden rounded-[2rem] bg-white/10 p-3 ring-1 ring-white/10">
+            <img src="https://picsum.photos/seed/printing-partnership/900/700" alt="Printing press partnership" className="aspect-[4/3] w-full rounded-[1.5rem] object-cover" />
+          </div>
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Featured Partnership</p>
+            <h2 className="mt-5 text-4xl font-extrabold leading-tight md:text-6xl">Reliable chemistry for demanding production networks.</h2>
+            <p className="mt-6 leading-8 text-white/70">
+              Falcon works with printers and channel partners to reduce waste, stabilize print quality, and support long-term production growth through practical technical guidance.
+            </p>
+            <div className="mt-8 grid grid-cols-3 gap-4 border-t border-white/10 pt-8">
+              {metrics.map((metric) => (
+                <div key={metric.label}>
+                  <span className="block text-3xl font-extrabold text-[#9BD36A]">{metric.value}</span>
+                  <span className="mt-1 block text-xs leading-5 text-white/55">{metric.label}</span>
                 </div>
-                <div>
-                  <span className="block font-heading font-bold text-3xl text-copper-400">50M+</span>
-                  <span className="text-white/40 text-sm">Impressions Yearly</span>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
-      <section className="section-padding bg-steel-50">
-        <div className="container-custom text-center">
-          <SectionHeader title="Ready to Optimize Your Pressroom?" subtitle="Let our technical team assess your operation and recommend the ideal chemistry package." center />
-          <Link href="/contact" className="btn-accent group inline-flex items-center gap-2">
-            Contact Our Team
-            <FiArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
-          </Link>
+
+      <section className="bg-white px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-center">
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">Pressroom Fit</p>
+            <h2 className="mt-4 text-4xl font-extrabold leading-tight text-[#004B8D] md:text-6xl">Ready to optimise your pressroom?</h2>
+          </div>
+          <div className="rounded-[2rem] bg-slate-50 p-7 ring-1 ring-slate-200/70">
+            {['Assess current chemistry and press conditions', 'Recommend the right formulation package', 'Support trials, samples, and operator setup'].map((item) => (
+              <div key={item} className="flex gap-3 border-b border-slate-200 py-4 last:border-b-0">
+                <FiCheckCircle className="mt-1 h-5 w-5 shrink-0 text-[#4B8B2B]" />
+                <span className="font-medium leading-7 text-slate-700">{item}</span>
+              </div>
+            ))}
+            <Link href="/contact" className="mt-6 inline-flex items-center gap-2 rounded-full bg-[#4B8B2B] px-7 py-4 text-sm font-bold text-white">
+              Contact Our Team
+              <FiArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </section>
-    </>
+    </main>
   )
 }

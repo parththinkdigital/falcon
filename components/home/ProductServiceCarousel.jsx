@@ -34,7 +34,7 @@ export default function ProductServiceCarousel({ banners }) {
 
     const timer = window.setInterval(() => {
       setTransitionEnabled(true)
-      setSlideIndex((current) => current + 1)
+      setSlideIndex((current) => current >= banners.length + 1 ? current : current + 1)
     }, 5000)
 
     return () => window.clearInterval(timer)
@@ -43,25 +43,25 @@ export default function ProductServiceCarousel({ banners }) {
   const goToPrevious = () => {
     if (banners.length < 2) return
     setTransitionEnabled(true)
-    setSlideIndex((current) => current - 1)
+    setSlideIndex((current) => current <= 0 ? current : current - 1)
   }
 
   const goToNext = () => {
     if (banners.length < 2) return
     setTransitionEnabled(true)
-    setSlideIndex((current) => current + 1)
+    setSlideIndex((current) => current >= banners.length + 1 ? current : current + 1)
   }
 
   const handleTransitionEnd = () => {
     if (banners.length < 2) return
 
-    if (slideIndex === 0) {
+    if (slideIndex <= 0) {
       setTransitionEnabled(false)
       setSlideIndex(banners.length)
       requestAnimationFrame(() => requestAnimationFrame(() => setTransitionEnabled(true)))
     }
 
-    if (slideIndex === banners.length + 1) {
+    if (slideIndex >= banners.length + 1) {
       setTransitionEnabled(false)
       setSlideIndex(1)
       requestAnimationFrame(() => requestAnimationFrame(() => setTransitionEnabled(true)))
@@ -87,13 +87,13 @@ export default function ProductServiceCarousel({ banners }) {
             <Link
               key={`${banner.image}-${index}`}
               href={banner.href}
-              className="relative block min-w-full overflow-hidden bg-[#06294A]"
+              className="relative block aspect-[16/9] min-w-full overflow-hidden bg-[#06294A]"
               aria-label={`View ${banner.title}`}
             >
               <img
                 src={banner.image}
                 alt={banner.title}
-                className="block h-auto w-full"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </Link>
           ))}

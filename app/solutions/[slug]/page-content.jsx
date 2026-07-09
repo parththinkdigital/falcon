@@ -1,247 +1,134 @@
-'use client'
-
-import { useParams } from 'next/navigation'
 import Link from 'next/link'
-import { FiArrowLeft, FiCheckCircle } from 'react-icons/fi'
-import Hero from '@/components/shared/Hero'
-import SectionHeader from '@/components/shared/SectionHeader'
-import ScrollReveal from '@/components/shared/ScrollReveal'
+import { FiArrowLeft, FiArrowRight, FiCheckCircle } from 'react-icons/fi'
 import { solutionContent } from '@/lib/solutions-data'
 
-function renderSection(section, i) {
-  switch (section.type) {
-    case 'benefitsList':
-      return (
-        <section key={i} className="section-padding bg-white">
-          <div className="container-custom">
-            <SectionHeader title={section.title} center />
-            <div className={`grid md:grid-cols-2 lg:grid-cols-${section.columns || 2} gap-4 mt-12 max-w-4xl mx-auto`}>
-              {section.items.map((item, j) => (
-                <div key={j} className="flex items-start gap-3 p-5 rounded-xl bg-steel-50 border border-steel-100">
-                  <FiCheckCircle className="w-5 h-5 text-copper-500 mt-0.5 shrink-0" />
-                  <span className="text-steel-700 text-sm leading-relaxed">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-
-    case 'specsTable':
-      return (
-        <section key={i} className="section-padding">
-          <div className="container-custom">
-            <SectionHeader title={section.title} center />
-            <div className="max-w-2xl mx-auto mt-12 divide-y divide-steel-200 border border-steel-200 rounded-xl overflow-hidden">
-              {section.specs.map((spec, j) => (
-                <div key={j} className={`flex justify-between items-center px-6 py-4 ${j % 2 === 0 ? 'bg-white' : 'bg-steel-50'}`}>
-                  <span className="text-sm font-medium text-ink-800">{spec.param}</span>
-                  <span className="text-sm text-steel-500 text-right">{spec.value}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-
-    case 'applicationGrid':
-      return (
-        <section key={i} className="section-padding bg-white">
-          <div className="container-custom">
-            <SectionHeader title={section.title} center />
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-12">
-              {section.items.map((item, j) => (
-                <div key={j} className="text-center p-6 rounded-xl border border-steel-200 bg-white hover:border-copper-500/30 transition-colors duration-300">
-                  <div className="w-10 h-10 rounded-full bg-copper-500/10 flex items-center justify-center mx-auto mb-3">
-                    <FiCheckCircle className="w-5 h-5 text-copper-500" />
-                  </div>
-                  <span className="text-sm font-medium text-ink-800">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-
-    case 'statsRow':
-      return (
-        <section key={i} className="section-padding bg-gradient-to-r from-copper-500/5 to-amber-500/5">
-          <div className="container-custom">
-            <SectionHeader title={section.title} center />
-            <div className="grid md:grid-cols-3 gap-8 mt-12 max-w-3xl mx-auto">
-              {section.items.map((item, j) => (
-                <div key={j} className="text-center p-8 rounded-2xl bg-white border border-steel-200 shadow-sm">
-                  <div className="text-4xl lg:text-5xl font-heading font-bold text-copper-500 mb-2">{item.value}</div>
-                  <div className="text-sm text-steel-500 font-medium">{item.label}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-
-    case 'comparisonTable':
-      return (
-        <section key={i} className="section-padding">
-          <div className="container-custom">
-            <SectionHeader title={section.title} center />
-            <div className="max-w-3xl mx-auto mt-12 overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-ink-800">
-                    {section.headers.map((h, j) => (
-                      <th key={j} className="text-left px-5 py-4 text-white font-heading font-semibold text-sm first:rounded-l-xl last:rounded-r-xl">{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {section.rows.map((row, j) => (
-                    <tr key={j} className={`border-b border-steel-200 ${j % 2 === 0 ? 'bg-white' : 'bg-steel-50'}`}>
-                      {row.map((cell, k) => (
-                        <td key={k} className={`px-5 py-4 text-sm ${k === 0 ? 'font-medium text-ink-800' : 'text-steel-500'}`}>
-                          {k > 0 ? <span dangerouslySetInnerHTML={{ __html: cell }} /> : cell}
-                        </td>
-                      ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </section>
-      )
-
-    case 'featuresGrid':
-      return (
-        <section key={i} className="section-padding bg-white">
-          <div className="container-custom">
-            <SectionHeader title={section.title} center />
-            <div className="grid md:grid-cols-2 gap-6 mt-12 max-w-4xl mx-auto">
-              {section.items.map((item, j) => (
-                <div key={j} className="p-6 rounded-xl border border-steel-200 bg-white hover:border-copper-500/30 transition-colors duration-300">
-                  <div className="w-10 h-10 rounded-lg bg-copper-500/10 flex items-center justify-center mb-4">
-                    <FiCheckCircle className="w-5 h-5 text-copper-500" />
-                  </div>
-                  <h3 className="font-heading font-bold text-lg text-ink-800 mb-2">{item.title}</h3>
-                  <p className="text-steel-500 text-sm leading-relaxed">{item.description}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-
-    case 'stepsList':
-      return (
-        <section key={i} className="section-padding">
-          <div className="container-custom">
-            <SectionHeader title={section.title} center />
-            <div className="max-w-2xl mx-auto mt-12 space-y-6">
-              {section.steps.map((step, j) => (
-                <div key={j} className="flex gap-5 items-start">
-                  <div className="w-8 h-8 rounded-full bg-copper-500 text-white flex items-center justify-center font-heading font-bold text-sm shrink-0">
-                    {j + 1}
-                  </div>
-                  <div className="pt-1.5">
-                    <p className="text-steel-600 text-sm leading-relaxed">{step}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-
-    case 'safetyInfo':
-      return (
-        <section key={i} className="section-padding bg-amber-50/50">
-          <div className="container-custom">
-            <SectionHeader title={section.title} center />
-            <div className="grid sm:grid-cols-2 gap-4 mt-12 max-w-3xl mx-auto">
-              {section.items.map((item, j) => (
-                <div key={j} className="flex items-start gap-3 p-5 rounded-xl bg-white border border-amber-200">
-                  <FiCheckCircle className="w-5 h-5 text-amber-600 mt-0.5 shrink-0" />
-                  <span className="text-steel-700 text-sm leading-relaxed">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )
-
-    default:
-      return null
-  }
+function clean(value) {
+  return String(value).replace(/&ndash;/g, '-').replace(/&micro;/g, 'u').replace(/&gt;/g, '>').replace(/&lt;/g, '<').replace(/&amp;/g, '&').replace(/&deg;/g, 'deg')
 }
 
-export default function SolutionDetailContent() {
-  const { slug } = useParams()
+function renderSection(section) {
+  if (section.type === 'specsTable') {
+    return (
+      <section className="bg-white px-6 py-12 md:px-10 lg:py-16">
+        <div className="mx-auto max-w-4xl rounded-[2rem] bg-white p-6 shadow-[0_14px_36px_rgba(15,23,42,0.1)] ring-1 ring-slate-200/70 md:p-8">
+          <h2 className="text-3xl font-extrabold text-[#004B8D]">{clean(section.title)}</h2>
+          <div className="mt-6 divide-y divide-slate-100 overflow-hidden rounded-2xl border border-slate-200">
+            {section.specs.map((spec) => (
+              <div key={spec.param} className="grid grid-cols-1 gap-2 bg-white px-5 py-4 sm:grid-cols-2 odd:bg-slate-50">
+                <span className="text-sm font-bold text-[#071F3D]">{clean(spec.param)}</span>
+                <span className="text-sm text-slate-600 sm:text-right">{clean(spec.value)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  if (section.type === 'comparisonTable') {
+    return (
+      <section className="bg-white px-6 py-12 md:px-10 lg:py-16">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-center text-3xl font-extrabold text-[#004B8D]">{clean(section.title)}</h2>
+          <div className="mt-8 overflow-x-auto rounded-[1.5rem] bg-white shadow-[0_14px_36px_rgba(15,23,42,0.1)] ring-1 ring-slate-200/70">
+            <table className="w-full min-w-[640px] border-collapse">
+              <thead className="bg-[#06294A] text-white">
+                <tr>{section.headers.map((header) => <th key={header} className="px-5 py-4 text-left text-sm font-bold">{clean(header)}</th>)}</tr>
+              </thead>
+              <tbody>
+                {section.rows.map((row, index) => (
+                  <tr key={index} className="border-b border-slate-100 odd:bg-slate-50">
+                    {row.map((cell, cellIndex) => <td key={cellIndex} className="px-5 py-4 text-sm text-slate-700">{clean(cell)}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  const items = section.items || section.steps || []
+  return (
+    <section className="bg-gradient-to-b from-white to-slate-50 px-6 py-12 md:px-10 lg:py-16">
+      <div className="mx-auto max-w-7xl">
+        <h2 className="text-center text-3xl font-extrabold text-[#004B8D]">{clean(section.title)}</h2>
+        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {items.map((item, index) => {
+            const title = typeof item === 'object' ? item.title : item
+            const description = typeof item === 'object' ? item.description : null
+            return (
+              <div key={`${title}-${index}`} className="rounded-[1.5rem] bg-white p-6 shadow-[0_10px_28px_rgba(15,23,42,0.08)] ring-1 ring-slate-200/70">
+                <FiCheckCircle className="h-6 w-6 text-[#4B8B2B]" />
+                <h3 className="mt-4 text-lg font-extrabold text-[#071F3D]">{clean(title)}</h3>
+                {description && <p className="mt-3 text-sm leading-7 text-slate-600">{clean(description)}</p>}
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default function SolutionDetailContent({ slug }) {
   const data = solutionContent[slug]
 
   if (!data) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <main className="flex min-h-screen items-center justify-center bg-white px-6">
         <div className="text-center">
-          <h1 className="text-2xl font-heading font-bold text-ink-800 mb-4">Solution Not Found</h1>
-          <p className="text-steel-500 mb-6">The solution you are looking for does not exist.</p>
-          <Link href="/solutions" className="btn-primary">Back to Solutions</Link>
+          <h1 className="text-3xl font-extrabold text-[#004B8D]">Solution Not Found</h1>
+          <p className="mt-3 text-slate-600">The solution you are looking for does not exist.</p>
+          <Link href="/solutions" className="mt-6 inline-flex rounded-full bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white">Back to Solutions</Link>
         </div>
-      </div>
+      </main>
     )
   }
 
   return (
-    <>
-      <Hero
-        title={data.title}
-        subtitle={data.subtitle}
-        dark={false}
-        size="md"
-      />
-
-      <ScrollReveal>
-        <section className="section-padding">
-          <div className="container-custom">
-            <SectionHeader title="Overview" />
-            <p className="text-steel-500 leading-relaxed max-w-3xl text-base sm:text-lg">
-              {data.overview}
-            </p>
+    <main className="min-h-screen bg-white">
+      <section className="relative overflow-hidden bg-[#06294A]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37] via-[#004B8D] to-[#06294A]" />
+        <div className="absolute -right-40 top-24 h-96 w-96 rounded-full bg-[#00B8D9]/20 blur-[120px]" />
+        <div className="relative mx-auto flex min-h-[62vh] max-w-7xl items-center px-6 py-28 md:px-10">
+          <div className="max-w-5xl text-white">
+            <Link href="/solutions" className="mb-8 inline-flex items-center gap-2 text-sm font-bold uppercase tracking-widest text-white/70">
+              <FiArrowLeft className="h-4 w-4" />
+              All Solutions
+            </Link>
+            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Solution</p>
+            <h1 className="text-5xl font-extrabold leading-tight tracking-tight md:text-7xl">{clean(data.title)}</h1>
+            <p className="mt-6 max-w-3xl text-lg font-medium leading-8 text-white/82">{clean(data.subtitle)}</p>
           </div>
-        </section>
-      </ScrollReveal>
+        </div>
+      </section>
 
-      {data.sections.map((section, i) => (
-        <ScrollReveal key={i}>
-          {renderSection(section, i)}
-        </ScrollReveal>
-      ))}
-
-      <ScrollReveal>
-        <section className="relative bg-ink-900 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-r from-ink-800 to-ink-900" />
-          <div className="absolute top-1/2 left-1/2 w-[600px] h-[600px] bg-copper-500/5 rounded-full blur-[120px] -translate-x-1/2 -translate-y-1/2" />
-          <div className="container-custom relative z-10 py-20">
-            <div className="text-center max-w-xl mx-auto">
-              <h2 className="text-3xl sm:text-4xl font-heading font-bold text-white mb-4">
-                Interested in This Product?
-              </h2>
-              <p className="text-white/50 leading-relaxed mb-8">
-                Contact our technical sales team for detailed specifications, pricing, and a free pressroom consultation.
-              </p>
-              <Link href="/contact" className="btn-accent">
-                Inquire Now
-              </Link>
-            </div>
+      <section className="bg-white px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">Overview</p>
+            <h2 className="mt-4 text-4xl font-extrabold leading-tight text-[#004B8D] md:text-5xl">Practical chemistry for better control.</h2>
           </div>
-        </section>
-      </ScrollReveal>
+          <p className="text-lg leading-9 text-slate-700">{clean(data.overview)}</p>
+        </div>
+      </section>
 
-      <div className="container-custom py-8">
-        <Link href="/solutions" className="inline-flex items-center gap-2 text-sm text-steel-500 hover:text-copper-500 transition-colors duration-300">
-          <FiArrowLeft className="w-4 h-4" />
-          All Solutions
-        </Link>
-      </div>
-    </>
+      {data.sections.map((section, index) => <div key={`${section.type}-${index}`}>{renderSection(section)}</div>)}
+
+      <section className="bg-[#06294A] px-6 py-16 text-white md:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Technical Consultation</p>
+            <h2 className="mt-4 max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">Interested in this solution?</h2>
+          </div>
+          <Link href="/contact" className="inline-flex w-fit items-center gap-2 rounded-full bg-[#4B8B2B] px-7 py-4 text-sm font-bold text-white">
+            Inquire Now
+            <FiArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      </section>
+    </main>
   )
 }

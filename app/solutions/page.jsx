@@ -1,117 +1,81 @@
-'use client'
-
 import Link from 'next/link'
-import Hero from '@/components/shared/Hero'
-import SectionHeader from '@/components/shared/SectionHeader'
-import ScrollReveal from '@/components/shared/ScrollReveal'
-import { FiDroplet, FiWind, FiLayers, FiRefreshCw } from 'react-icons/fi'
+import { FiArrowRight, FiDroplet, FiLayers, FiRefreshCw, FiWind } from 'react-icons/fi'
 
 const categories = [
-  {
-    icon: FiDroplet,
-    title: 'Fountain Solutions',
-    description: 'Premium fountain solutions engineered for optimal ink-water balance across sheetfed, heatset, and coldset offset presses.',
-    slug: 'fountain-solutions',
-  },
-  {
-    icon: FiWind,
-    title: 'IPA Replacements',
-    description: 'Environmentally responsible IPA alternatives that reduce VOC emissions while maintaining or improving dampening performance.',
-    slug: 'ipa-replacements',
-  },
-  {
-    icon: FiLayers,
-    title: 'Plate Cleaners',
-    description: 'Advanced cleaning solutions for thermal, UV, violet, and conventional plates that extend plate life and maintain image sharpness.',
-    slug: 'plate-cleaners',
-  },
-  {
-    icon: FiRefreshCw,
-    title: 'Roller & Blanket Washes',
-    description: 'High-performance washes for rubber rollers, printing blankets, and press components that clean quickly and safely.',
-    slug: 'roller-blanket-washes',
-  },
+  { icon: FiDroplet, title: 'Fountain Solutions', description: 'Premium chemistry for stable ink-water balance across sheetfed, heatset, and coldset offset presses.', slug: 'fountain-solutions' },
+  { icon: FiWind, title: 'IPA Replacements', description: 'Low-VOC alternatives that reduce alcohol dependency while maintaining reliable dampening performance.', slug: 'ipa-replacements' },
+  { icon: FiLayers, title: 'Plate Cleaners', description: 'Plate-safe cleaners that remove contamination, protect image areas, and help extend plate life.', slug: 'plate-cleaners' },
+  { icon: FiRefreshCw, title: 'Roller & Blanket Washes', description: 'Fast, effective wash chemistry for rollers, blankets, and automatic wash systems.', slug: 'roller-blanket-washes' },
 ]
 
 export default function SolutionsPage() {
   return (
-    <>
-      <Hero
-        title="Pressroom Solutions"
-        subtitle="Comprehensive chemistry solutions engineered for every printing application and press type."
-        dark={false}
-        size="md"
-      />
-
-      <ScrollReveal>
-        <section className="section-padding">
-          <div className="container-custom">
-            <div className="max-w-3xl mx-auto text-center">
-              <SectionHeader
-                eyebrow="Our Products"
-                title="Engineered for Performance"
-                subtitle="Every formulation in our catalog is developed through rigorous R&D, tested in real pressroom conditions, and optimized for consistent, measurable results."
-                center
-              />
-            </div>
+    <main className="min-h-screen bg-white">
+      <section className="relative overflow-hidden bg-[#06294A]">
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37] via-[#004B8D] to-[#06294A]" />
+        <div className="absolute -right-40 top-24 h-96 w-96 rounded-full bg-[#00B8D9]/20 blur-[120px]" />
+        <div className="absolute -left-32 bottom-10 h-80 w-80 rounded-full bg-[#4B8B2B]/25 blur-[110px]" />
+        <div className="relative mx-auto flex min-h-[68vh] max-w-7xl items-center px-6 py-28 md:px-10">
+          <div className="max-w-4xl text-white">
+            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Pressroom Solutions</p>
+            <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
+              Chemistry Built
+              <span className="block text-[#00B8D9]">For Production</span>
+            </h1>
+            <p className="mt-8 max-w-2xl text-lg font-medium leading-8 text-white/85">
+              Practical chemistry systems for printers who need consistent quality, lower waste, faster startups, and dependable support.
+            </p>
           </div>
-        </section>
-      </ScrollReveal>
+        </div>
+      </section>
 
-      <section className="section-padding bg-white -mt-20">
-        <div className="container-custom">
-          <ScrollReveal stagger className="grid md:grid-cols-2 gap-6">
+      <section className="bg-gradient-to-b from-white via-slate-50 to-white px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="max-w-3xl">
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">Our Solutions</p>
+            <h2 className="mt-4 text-4xl font-extrabold leading-tight text-[#004B8D] md:text-6xl">Engineered for everyday pressroom performance.</h2>
+          </div>
+
+          <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2">
             {categories.map((cat) => {
               const Icon = cat.icon
               return (
-                <Link key={cat.slug} href={`/solutions/${cat.slug}`} className="group block">
-                  <div className="relative h-full rounded-2xl overflow-hidden border border-steel-200 hover:border-copper-500/30 transition-all duration-500">
-                    <div className="h-32 bg-gradient-to-br from-ink-700 to-ink-800 overflow-hidden">
-                      <img src={"https://picsum.photos/seed/solution-" + cat.slug + "/400/160"} alt={cat.title} className="w-full h-full object-cover opacity-60" />
+                <Link key={cat.slug} href={`/solutions/${cat.slug}`} className="group overflow-hidden rounded-[2rem] bg-white shadow-[0_14px_36px_rgba(15,23,42,0.12)] ring-1 ring-slate-200/70">
+                  <div className="relative h-44 overflow-hidden bg-[#06294A]">
+                    <img src={`https://picsum.photos/seed/solution-${cat.slug}/900/420`} alt={cat.title} className="h-full w-full object-cover opacity-75" />
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#06294A]/80 to-transparent" />
+                    <div className="absolute left-6 top-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white text-[#004B8D] shadow-lg">
+                      <Icon className="h-6 w-6" />
                     </div>
-                    <div className="p-8">
-                      <div className="w-12 h-12 rounded-full bg-copper-500/10 flex items-center justify-center mb-5 group-hover:bg-copper-500/20 transition-colors duration-300">
-                        <Icon className="w-6 h-6 text-copper-500" />
-                      </div>
-                      <h3 className="font-heading font-bold text-xl text-ink-800 mb-3 group-hover:text-copper-600 transition-colors duration-300">
-                        {cat.title}
-                      </h3>
-                      <p className="text-steel-500 text-sm leading-relaxed mb-6">
-                        {cat.description}
-                      </p>
-                      <span className="inline-flex items-center gap-1.5 text-copper-500 font-medium text-sm group-hover:gap-2.5 transition-all duration-300">
-                        Learn more
-                        <span className="text-lg leading-none">&rarr;</span>
-                      </span>
-                    </div>
+                  </div>
+                  <div className="p-7">
+                    <div className="mb-5 h-1 w-20 rounded-full bg-[#00B8D9]" />
+                    <h3 className="text-2xl font-extrabold text-[#004B8D]">{cat.title}</h3>
+                    <p className="mt-4 leading-7 text-slate-700">{cat.description}</p>
+                    <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#4B8B2B]">
+                      Explore Solution
+                      <FiArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+                    </span>
                   </div>
                 </Link>
               )
             })}
-          </ScrollReveal>
+          </div>
         </div>
       </section>
 
-      <section className="relative bg-ink-900 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-ink-800 to-ink-900" />
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-copper-500/5 rounded-full blur-[120px] -translate-y-1/2 translate-x-1/3" />
-        <div className="container-custom relative z-10 py-20">
-          <ScrollReveal>
-            <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-heading font-bold text-white mb-4">
-                Need a Custom Solution?
-              </h2>
-              <p className="text-white/50 leading-relaxed mb-8">
-                Our technical team can develop specialized formulations for unique printing requirements.
-                We also offer specialty chemicals for press maintenance and optimization.
-              </p>
-              <Link href="/contact" className="btn-accent">
-                Talk to Our Team
-              </Link>
-            </div>
-          </ScrollReveal>
+      <section className="bg-[#06294A] px-6 py-16 text-white md:px-10 lg:py-24">
+        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 md:grid-cols-[1fr_auto] md:items-center">
+          <div>
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Custom Formulation</p>
+            <h2 className="mt-4 max-w-3xl text-4xl font-extrabold leading-tight md:text-6xl">Need chemistry for a specific pressroom challenge?</h2>
+          </div>
+          <Link href="/contact" className="inline-flex w-fit items-center gap-2 rounded-full bg-[#4B8B2B] px-7 py-4 text-sm font-bold text-white">
+            Talk to Our Team
+            <FiArrowRight className="h-4 w-4" />
+          </Link>
         </div>
       </section>
-    </>
+    </main>
   )
 }

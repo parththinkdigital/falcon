@@ -5,6 +5,8 @@ export function generateStaticParams() {
   return Object.keys(solutionContent).map((slug) => ({ slug }))
 }
 
-export default function SolutionDetailPage() {
-  return <SolutionDetailContent />
+export default async function SolutionDetailPage({ params }) {
+  const { slug } = await params
+
+  return <SolutionDetailContent slug={slug} />
 }

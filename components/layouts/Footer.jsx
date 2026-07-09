@@ -5,16 +5,9 @@ import Link from 'next/link'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { FiArrowRight, FiMail, FiMapPin, FiPhone } from 'react-icons/fi'
+import { categories } from '@/lib/products-data'
 
 gsap.registerPlugin(useGSAP)
-
-const productLinks = [
-  { label: 'Fountain Solutions', href: '/solutions/fountain-solutions' },
-  { label: 'IPA Replacements', href: '/solutions/ipa-replacements' },
-  { label: 'Plate Cleaners', href: '/solutions/plate-cleaners' },
-  { label: 'Roller & Blanket Washes', href: '/solutions/roller-blanket-washes' },
-  { label: 'Specialty Chemicals', href: '/solutions/specialty-chemicals' },
-]
 
 const companyLinks = [
   { label: 'About Us', href: '/about' },
@@ -26,6 +19,10 @@ const companyLinks = [
 
 export default function Footer() {
   const ref = useRef(null)
+  const productLinks = categories.map((category) => ({
+    label: category.title,
+    href: `/products/${category.id}`,
+  }))
 
   useGSAP(() => {
     const cols = ref.current?.querySelectorAll('.footer-col')
@@ -75,21 +72,21 @@ export default function Footer() {
                 </div>
               </div>
             </Link>
-            <p className="text-neutral-400 text-sm leading-relaxed max-w-sm">
-              <span className="font-semibold text-sm text-neutral-600">Falcon Chemicals</span><br />
+            <p className="text-neutral-600 text-sm leading-relaxed max-w-sm">
+              <span className="font-semibold text-sm text-neutral-800">Falcon Chemicals</span><br />
               Precision pressroom chemistry engineered for commercial printing operations worldwide. Trusted by printers in 50+ countries.
             </p>
           </div>
 
           {/* Products */}
           <div className="footer-col lg:col-span-2">
-            <h3 className="font-semibold text-[10px] text-neutral-400 mb-6 uppercase tracking-[0.2em]">Products</h3>
+            <h3 className="font-extrabold text-xs text-neutral-800 mb-6 uppercase tracking-[0.22em]">Products</h3>
             <ul className="space-y-3.5">
               {productLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="relative text-sm text-neutral-400 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500"
+                    className="relative text-sm text-neutral-600 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500"
                   >
                     <span className="relative">
                       {link.label}
@@ -103,13 +100,13 @@ export default function Footer() {
 
           {/* Company */}
           <div className="footer-col lg:col-span-2">
-            <h3 className="font-semibold text-[10px] text-neutral-400 mb-6 uppercase tracking-[0.2em]">Company</h3>
+            <h3 className="font-extrabold text-xs text-neutral-800 mb-6 uppercase tracking-[0.22em]">Company</h3>
             <ul className="space-y-3.5">
               {companyLinks.map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="relative text-sm text-neutral-400 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500"
+                    className="relative text-sm text-neutral-600 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500"
                   >
                     <span className="relative">
                       {link.label}
@@ -123,7 +120,7 @@ export default function Footer() {
 
           {/* Contact - Double Bezel */}
           <div className="footer-col lg:col-span-4">
-            <h3 className="font-semibold text-[10px] text-neutral-400 mb-6 uppercase tracking-[0.2em]">Contact Us</h3>
+            <h3 className="font-extrabold text-xs text-neutral-800 mb-6 uppercase tracking-[0.22em]">Contact Us</h3>
             <div className="p-1.5 rounded-[1.25rem] bg-black/[0.02] ring-1 ring-black/[0.04]">
               <div className="rounded-[calc(1.25rem-0.375rem)] bg-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.15)] p-5 space-y-4">
                 <a href="tel:+919022247664" className="flex items-center gap-3.5 text-sm text-neutral-600 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-copper-500 group">
@@ -153,10 +150,10 @@ export default function Footer() {
       {/* Bottom bar */}
       <div className="h-px bg-gradient-to-r from-transparent via-neutral-200 to-transparent" />
       <div className="container-custom py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-        <p className="text-xs text-neutral-400">
+        <p className="text-xs text-neutral-600">
           &copy; {new Date().getFullYear()} Falcon Chemicals. All rights reserved.
         </p>
-        <div className="flex gap-6 text-xs text-neutral-400">
+        <div className="flex gap-6 text-xs text-neutral-600">
           <Link href="/privacy" className="transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-neutral-700">Privacy Policy</Link>
           <Link href="/terms" className="transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:text-neutral-700">Terms of Service</Link>
         </div>
