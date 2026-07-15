@@ -1,12 +1,15 @@
 import Link from 'next/link'
-import { ArrowRight, CheckCircle2 } from 'lucide-react'
-
-const strengths = [
-  'Founded by a Printing Technologist with 30+ years of hands-on print experience.',
-  'Strong distribution network across 50+ countries through national and international partnerships.',
-  'Manufacturing standards shaped by ongoing training from veteran chemists in Europe and Southeast Asia.',
-  'Strategic financial planning and corporate governance focused on long-term product consistency.',
-]
+import { 
+  ArrowRight, 
+  FlaskConical, 
+  MapPin, 
+  Handshake, 
+  Lightbulb, 
+  Award, 
+  Cog, 
+  Layers, 
+  Users 
+} from 'lucide-react'
 
 const stats = [
   { value: '30+', label: 'Years of print experience' },
@@ -18,113 +21,354 @@ const stats = [
 export default function AboutPage() {
   return (
     <>
-      <section className="relative min-h-screen overflow-hidden bg-[#06294A]">
-        <img src="/about-us-img.jpg" alt="Falcon pressroom chemistry facility" className="absolute inset-0 h-full w-full object-cover opacity-55" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37]/95 via-[#004B8D]/70 to-[#031E37]/25" />
-        <div className="relative mx-auto flex min-h-screen max-w-7xl items-center px-6 py-28 md:px-10">
+      {/* Hero Section */}
+      <section className="relative min-h-[70vh] flex items-center overflow-hidden bg-[#06294A] py-24">
+        <img 
+          src="/about/hero.jpg" 
+          alt="Falcon modern agile technically driven team" 
+          className="absolute inset-0 h-full w-full object-cover opacity-30 object-center" 
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37]/95 via-[#004B8D]/65 to-transparent" />
+        
+        <div className="relative mx-auto w-full max-w-7xl px-6 md:px-10 z-10">
           <div className="max-w-4xl text-white">
-            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">About Falcon</p>
-            <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
-              An Agile Young Company
-              <span className="block text-[#00B8D9]">Backed by Print Experience</span>
-            </h1>
-            <p className="mt-8 max-w-2xl text-lg font-medium leading-8 text-white/85">
-              Falcon was founded by a Printing Technologist with over 30 years of hands-on experience. Every formulation we create is inspired by real pressroom challenges and practical printing knowledge.
+            <p className="mb-4 text-sm font-extrabold uppercase tracking-widest text-[#00B8D9]">
+              About Falcon
             </p>
-            <Link href="/contact" className="mt-8 inline-flex items-center gap-2 bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#3f7624]">
-              Talk to Our Team
-              <ArrowRight className="h-4 w-4" />
-            </Link>
+            <h1 className="text-4xl font-extrabold leading-tight text-white md:text-6xl lg:text-7xl">
+              Modern, Agile and <br />
+              <span className="text-[#9BD36A]">Technically Driven.</span>
+            </h1>
+            <div className="mt-8 space-y-6 text-base md:text-lg font-medium leading-relaxed text-white/90 max-w-3xl">
+              <p>
+                More than a manufacturer, Falcon is a team of printing technologists dedicated to solving everyday pressroom challenges through smarter chemistry, continuous innovation, and practical technical support.
+              </p>
+              <p>
+                Every formulation is developed with one objective—to help printers achieve greater consistency, higher productivity, and lower operating costs.
+              </p>
+              <p>
+                By combining real pressroom experience with disciplined manufacturing and ongoing research, we deliver solutions that perform reliably under demanding production conditions.
+              </p>
+              <p>
+                Our customers don't simply buy chemicals from us—they gain a technical partner committed to helping their pressrooms perform at their best.
+              </p>
+            </div>
+            <div className="mt-10">
+              <Link href="/contact" className="inline-flex items-center gap-2 bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#3f7624] shadow-md hover:shadow-lg">
+                Talk to Our Team
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </div>
           </div>
         </div>
       </section>
 
+      {/* Our Story Section */}
       <section className="bg-white px-6 py-16 md:px-10 lg:py-24">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-stretch">
-          <div className="bg-[#06294A] p-8 text-white md:p-12 lg:p-14">
-            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Why Falcon</p>
-            <h2 className="text-4xl font-extrabold leading-tight md:text-5xl lg:text-6xl">
-              Because We Understand
-              <span className="block text-[#00B8D9]">Printing Technology,</span>
-              <span className="mt-8 block">We Create</span>
-              <span className="block text-[#9BD36A]">Better Pressroom Chemistry</span>
-            </h2>
-            <div className="mt-10 h-1 w-40 bg-[#00B8D9]" />
+        <div className="mx-auto max-w-7xl grid grid-cols-1 gap-12 lg:grid-cols-2 items-center">
+          {/* Left Column: KKD Photo */}
+          <div className="relative group">
+            <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-[#004B8D] to-[#4B8B2B] opacity-25 blur transition duration-1000 group-hover:opacity-45" />
+            <div className="relative overflow-hidden rounded-lg bg-white shadow-[0_15px_40px_rgba(0,0,0,0.15)] border border-slate-100">
+              <img 
+                src="/about/kkd-photo.jpg" 
+                alt="Founder printing technologist in Falcon laboratory" 
+                className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" 
+              />
+            </div>
           </div>
-
-          <div className="grid grid-cols-1 gap-5">
-            <article className="border-l-4 border-[#004B8D] bg-slate-50 p-6 md:p-8">
-              <h3 className="text-2xl font-extrabold text-[#004B8D]">Pressroom-First Formulation</h3>
-              <p className="mt-4 font-bold leading-7 text-[#071F3D]">
-                We believe the most effective printing chemicals can be formulated by people who understand the printing press as deeply as they understand the chemistry behind it.
+          
+          {/* Right Column: Story Text */}
+          <div className="lg:pl-8">
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B] mb-3">
+              Our Story
+            </p>
+            <h2 className="text-3xl font-extrabold text-[#06294A] md:text-5xl leading-tight mb-8">
+              Our Journey Began With <br />
+              <span className="text-[#004B8D]">One Simple Belief</span>
+            </h2>
+            <div className="space-y-6 text-slate-700 text-lg leading-relaxed">
+              <p className="font-semibold text-[#071F3D] border-l-4 border-[#4B8B2B] pl-4">
+                Founded by a printing technologist with 30+ years of hands-on industry experience, Falcon brings together technical knowledge, practical insight, and a commitment to create better results on press.
               </p>
-            </article>
-
-            <article className="border-l-4 border-[#4B8B2B] bg-slate-50 p-6 md:p-8">
-              <h3 className="text-2xl font-extrabold text-[#004B8D]">Strategic Manufacturing Access</h3>
-              <p className="mt-4 leading-7 text-slate-700">
-                From our 8,000 sq. ft. facility in Nashik, near Mumbai, we can ship reliably worldwide, from a single pallet to a full container load.
+              <p>
+                Today, we partner with printers and packaging converters to deliver high-performing pressroom solutions that improve print quality, reduce waste, and enhance productivity.
               </p>
-            </article>
-
-            <article className="border-l-4 border-[#00B8D9] bg-slate-50 p-6 md:p-8">
-              <h3 className="text-2xl font-extrabold text-[#004B8D]">Private Label & Partnerships</h3>
-              <p className="mt-4 leading-7 text-slate-700">
-                Falcon also supports confidential private label and contract manufacturing partnerships for distributors, trading companies, and printing industry suppliers across the globe.
-              </p>
-            </article>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#06294A] px-6 py-16 md:px-10 lg:py-24">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-10 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
-          <div className="overflow-hidden border border-white/15 bg-white shadow-[0_20px_50px_rgba(0,0,0,0.28)]">
-            <img src="/why-falcon/technicalexpertise.png" alt="Technical expertise" className="h-auto w-full" />
-          </div>
-          <div className="text-white">
-            <p className="text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Our Foundation</p>
-            <h2 className="mt-5 text-4xl font-extrabold leading-tight md:text-6xl">
-              Practical Expertise.
-              <span className="block text-[#00B8D9]">Reliable Chemistry.</span>
-            </h2>
-            <div className="mt-10 grid grid-cols-1 gap-5">
-              {strengths.map((item) => (
-                <div key={item} className="flex gap-4 border-t border-white/15 pt-5">
-                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-[#9BD36A]" />
-                  <p className="leading-7 text-white/85">{item}</p>
+      {/* Operations & Advantages Section (Split Warehouse Section) */}
+      <section className="bg-slate-50 px-6 py-16 md:px-10 lg:py-24 border-y border-slate-100">
+        <div className="mx-auto max-w-7xl grid grid-cols-1 gap-12 lg:grid-cols-[1.1fr_0.9fr] items-stretch">
+          {/* Left Column: Advantages */}
+          <div className="flex flex-col justify-center space-y-8">
+            <div className="mb-4">
+              <p className="text-sm font-extrabold uppercase tracking-widest text-[#004B8D] mb-3">
+                Our Operations
+              </p>
+              <h2 className="text-3xl font-extrabold text-[#06294A] md:text-4xl">
+                Core Strengths & Manufacturing Advantages
+              </h2>
+            </div>
+
+            <div className="space-y-6">
+              {/* Technical Expertise */}
+              <div className="flex gap-5 items-start bg-white p-6 rounded-xl border border-slate-100 shadow-sm transition hover:shadow-md hover:border-[#004B8D]/30">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#004B8D]/10 text-[#004B8D]">
+                  <FlaskConical className="h-6 w-6" />
                 </div>
-              ))}
+                <div>
+                  <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                    Technical Expertise
+                  </h3>
+                  <p className="mt-2 text-slate-600 leading-relaxed text-sm md:text-base">
+                    We believe that the most effective Printing Chemicals can be formulated by people who understand the printing press as deeply as they understand the chemistry behind it... we qualify well for this!
+                  </p>
+                </div>
+              </div>
+
+              {/* Locational Advantage */}
+              <div className="flex gap-5 items-start bg-white p-6 rounded-xl border border-slate-100 shadow-sm transition hover:shadow-md hover:border-[#00B8D9]/30">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#00B8D9]/10 text-[#00B8D9]">
+                  <MapPin className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                    Locational Advantage
+                  </h3>
+                  <p className="mt-2 text-slate-600 leading-relaxed text-sm md:text-base">
+                    Strategically located in Nashik, near Mumbai, our 8,000 sq. ft. manufacturing facility gives us a distinct competitive advantage. Our proximity to India's major seaports, inland dry ports, and national expressway network allows us to efficiently procure raw materials and serve customers worldwide with consistently high-quality pressroom chemicals. You can bank upon us for reliable turnaround times. Whether shipping a single pallet or a full container load...we can do it!
+                  </p>
+                </div>
+              </div>
+
+              {/* Private Label & Contract Manufacturing */}
+              <div className="flex gap-5 items-start bg-white p-6 rounded-xl border border-slate-100 shadow-sm transition hover:shadow-md hover:border-[#4B8B2B]/30">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#4B8B2B]/10 text-[#4B8B2B]">
+                  <Handshake className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                    Ideal Choice for Contract Manufacturing
+                  </h3>
+                  <p className="mt-2 text-slate-600 leading-relaxed text-sm md:text-base">
+                    Looking to launch your own brand of Printing Chemicals? Falcon Pressroom Solutions provides fully confidential Private Label and Contract Manufacturing services for distributors, trading companies, and printing industry suppliers across the globe. From manufacturing to packaging, labeling, and documentation, we offer complete end-to-end white labelling solutions tailored to your market requirements. Every partnership is governed by a strict Confidentiality and Non-Disclosure Agreement (NDA), ensuring your formulations, branding, commercial strategy, and intellectual property remain fully protected.
+                  </p>
+                  <p className="mt-4 text-xs font-bold text-[#4B8B2B] uppercase tracking-wider">
+                    YOU FOCUS ON BUILDING YOUR BRAND AND GROWING YOUR MARKET AND WE PROVIDE THE MANUFACTURING EXPERTISE COUPLED WITH BETTER VALUE FOR YOUR MARKET!
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Warehouse Image */}
+          <div className="flex items-center justify-center">
+            <img 
+              src="/about/warehouse-clean.jpg" 
+              alt="Falcon Nashik manufacturing facility and warehouse" 
+              className="w-full h-auto object-contain" 
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Stats Ribbon */}
+      <section className="bg-[#06294A] py-16 text-white">
+        <div className="mx-auto max-w-7xl px-6 md:px-10">
+          <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
+            {stats.map((stat) => (
+              <div key={stat.label} className="text-center md:border-r md:last:border-none border-white/10 px-4">
+                <div className="text-4xl font-extrabold text-[#00B8D9] md:text-5xl lg:text-6xl">
+                  {stat.value}
+                </div>
+                <p className="mt-3 text-xs font-bold uppercase tracking-widest text-white/70 leading-relaxed">
+                  {stat.label}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Thinking Chemistry Section */}
+      <section className="bg-white px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto max-w-7xl grid grid-cols-1 gap-12 lg:grid-cols-[0.9fr_1.1fr] items-center">
+          {/* Left Column: Infographic Image */}
+          <div className="relative group">
+            <div className="absolute -inset-1 rounded-lg bg-gradient-to-r from-[#00B8D9] to-[#004B8D] opacity-20 blur transition duration-1000 group-hover:opacity-35" />
+            <div className="relative overflow-hidden rounded-lg bg-slate-50 shadow-[0_15px_40px_rgba(0,0,0,0.12)] border border-slate-100">
+              <img 
+                src="/about/thinking-chemistry.jpg" 
+                alt="Chemistry that thinks before it mixes infographic" 
+                className="h-auto w-full object-cover transition-transform duration-500 group-hover:scale-[1.01]" 
+              />
+            </div>
+          </div>
+          
+          {/* Right Column: Details */}
+          <div className="lg:pl-8">
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#00B8D9] mb-3">
+              Our Philosophy
+            </p>
+            <h2 className="text-3xl font-extrabold text-[#06294A] md:text-4xl leading-tight mb-8">
+              Chemistry That Thinks <br />
+              <span className="text-[#004B8D]">Before It Mixes</span>
+            </h2>
+            <div className="space-y-6 text-slate-700 text-base md:text-lg leading-relaxed">
+              <p className="font-semibold text-[#071F3D]">
+                At Falcon, manufacturing printing chemicals is not just about blending ingredients—it is about understanding what actually happens on the press.
+              </p>
+              <p>
+                Metallic inks do not enjoy acidic fountain solutions, so we developed neutral founts. UV inks behave differently from conventional inks, so we created UV-specific solutions. Soft water, hard water, brush dampening, turbo dampening, NBR rollers, EPDM rollers, old plates, reused plates, drying issues on semi-absorbent substrates—each challenge demands a different answer.
+              </p>
+              <p>
+                That is why our products are not born only in the lab. They are shaped by real pressroom problems, long observation, stubborn trials, and the simple belief that a printer's problem deserves a thoughtful solution.
+              </p>
+              <p className="italic text-[#004B8D] font-medium border-l-4 border-[#00B8D9] pl-4">
+                "A purchase order makes us happy. But a printer's relieved smile after a difficult job runs smoothly—that is what truly makes our day."
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:py-24">
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.label} className="border-t-4 border-[#00B8D9] bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.12)]">
-              <div className="text-4xl font-extrabold text-[#004B8D] md:text-5xl">{stat.value}</div>
-              <p className="mt-3 text-xs font-bold uppercase leading-5 tracking-widest text-slate-500">{stat.label}</p>
+      {/* Why Choose Falcon Section (HTML/CSS implementation of infographic) */}
+      <section className="bg-slate-50 px-6 py-16 md:px-10 lg:py-24 border-y border-slate-100">
+        <div className="mx-auto max-w-7xl">
+          <div className="text-center max-w-3xl mx-auto mb-16">
+            <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B] mb-3">
+              Why Choose Falcon
+            </p>
+            <h2 className="text-3xl font-extrabold text-[#06294A] md:text-5xl">
+              The Falcon Advantage
+            </h2>
+            <div className="mt-4 h-1 w-24 bg-[#4B8B2B] mx-auto rounded" />
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {/* Card 1 */}
+            <div className="bg-white p-8 rounded-xl border border-slate-200/60 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#004B8D]/30 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#004B8D]/10 text-[#004B8D] mx-auto mb-6">
+                <FlaskConical className="h-7 w-7" />
+              </div>
+              <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                Technical Expertise
+              </h3>
+              <p className="mt-4 text-slate-600 text-sm leading-relaxed">
+                30+ years of hands-on experience in printing technology.
+              </p>
             </div>
-          ))}
+
+            {/* Card 2 */}
+            <div className="bg-white p-8 rounded-xl border border-slate-200/60 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#00B8D9]/30 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#00B8D9]/10 text-[#00B8D9] mx-auto mb-6">
+                <Lightbulb className="h-7 w-7" />
+              </div>
+              <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                Strong R & D
+              </h3>
+              <p className="mt-4 text-slate-600 text-sm leading-relaxed">
+                Continuous innovation to solve real pressroom challenges.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="bg-white p-8 rounded-xl border border-slate-200/60 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#4B8B2B]/30 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#4B8B2B]/10 text-[#4B8B2B] mx-auto mb-6">
+                <Award className="h-7 w-7" />
+              </div>
+              <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                Quality Assurance
+              </h3>
+              <p className="mt-4 text-slate-600 text-sm leading-relaxed">
+                Strict quality control ensures consistent performance every time.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="bg-white p-8 rounded-xl border border-slate-200/60 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#F58220]/30 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#F58220]/10 text-[#F58220] mx-auto mb-6">
+                <Cog className="h-7 w-7" />
+              </div>
+              <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                Modern Facility
+              </h3>
+              <p className="mt-4 text-slate-600 text-sm leading-relaxed">
+                Advanced manufacturing with lean processes and efficient systems.
+              </p>
+            </div>
+
+            {/* Card 5 */}
+            <div className="bg-white p-8 rounded-xl border border-slate-200/60 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#004B8D]/30 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#004B8D]/10 text-[#004B8D] mx-auto mb-6">
+                <Layers className="h-7 w-7" />
+              </div>
+              <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                Wide Product Range
+              </h3>
+              <p className="mt-4 text-slate-600 text-sm leading-relaxed">
+                Complete range of pressroom chemicals under one roof.
+              </p>
+            </div>
+
+            {/* Card 6 */}
+            <div className="bg-white p-8 rounded-xl border border-slate-200/60 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-[#4B8B2B]/30 text-center">
+              <div className="flex h-14 w-14 items-center justify-center rounded-full bg-[#4B8B2B]/10 text-[#4B8B2B] mx-auto mb-6">
+                <Users className="h-7 w-7" />
+              </div>
+              <h3 className="text-lg font-bold text-[#06294A] uppercase tracking-wide">
+                Trusted By Printers
+              </h3>
+              <p className="mt-4 text-slate-600 text-sm leading-relaxed">
+                Built on reliability, integrity, and long-term partnerships.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-2">
-        <div className="bg-[#004B8D] px-6 py-16 text-white md:px-10 lg:px-20 lg:py-24">
-          <p className="text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Our Vision</p>
-          <h2 className="mt-5 text-4xl font-extrabold leading-tight md:text-5xl">Creating Value Beyond Chemistry</h2>
-          <p className="mt-6 leading-8 text-white/85">
-            To become a trusted technical partner to the printing industry by delivering high-performance pressroom chemicals, expert guidance, and dependable service that enables our customers to print better.
-          </p>
-        </div>
-        <div className="bg-[#4B8B2B] px-6 py-16 text-white md:px-10 lg:px-20 lg:py-24">
-          <p className="text-sm font-extrabold uppercase tracking-widest text-white/70">Our Mission</p>
-          <h2 className="mt-5 text-4xl font-extrabold leading-tight md:text-5xl">Reducing Carbon Footprints. Raising Standards.</h2>
-          <p className="mt-6 leading-8 text-white/85">
-            We are committed to developing environmentally responsible pressroom chemicals that reduce emissions, conserve resources, and support a cleaner, more sustainable future for the global printing industry.
-          </p>
+      {/* Vision & Mission Infographics Section */}
+      <section className="bg-white px-6 py-16 md:px-10 lg:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+            {/* Vision Card */}
+            <div className="relative group overflow-hidden rounded-xl bg-slate-50 border border-slate-200 shadow-sm transition-all duration-500 hover:shadow-lg hover:border-[#004B8D]/35">
+              <div className="aspect-[1469/809] w-full overflow-hidden">
+                <img 
+                  src="/about/vision.jpg" 
+                  alt="Falcon Vision: Creating Value Beyond Chemistry infographic" 
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" 
+                />
+              </div>
+            </div>
+
+            {/* Mission Card */}
+            <div className="relative group overflow-hidden rounded-xl bg-slate-50 border border-slate-200 shadow-sm transition-all duration-500 hover:shadow-lg hover:border-[#4B8B2B]/35">
+              <div className="aspect-[1457/813] w-full overflow-hidden">
+                <img 
+                  src="/about/mission.jpg" 
+                  alt="Falcon Mission: Reducing Carbon Footprints. Raising Standards. infographic" 
+                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.02]" 
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Commitment Banner Strip */}
+          <div className="mt-16 text-center max-w-3xl mx-auto px-4 border-t border-slate-100 pt-10">
+            <p className="text-xs font-extrabold uppercase tracking-widest text-[#4B8B2B]">
+              Our Dedication
+            </p>
+            <h3 className="mt-3 text-lg md:text-2xl font-bold text-[#06294A] leading-relaxed uppercase tracking-wider">
+              We are committed to delivering performance, safety & sustainability.
+            </h3>
+            <p className="mt-4 text-base md:text-lg font-semibold text-[#004B8D]">
+              Better Chemistry. <span className="text-[#4B8B2B]">Better Results.</span> One Promise.
+            </p>
+          </div>
         </div>
       </section>
     </>
