@@ -29,19 +29,15 @@ export default function HomePage() {
     <>
       <HomePreloader />
 
-      <section className="w-full overflow-hidden bg-[#06294A] pt-16 lg:pt-[76px]">
+      <section className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden bg-[#06294A] pt-16 lg:pt-[76px]">
         <Link href={heroBanner.href} aria-label="View Falcon pressroom chemistry details" className="block w-full">
-          <img src={heroBanner.image} alt="Falcon pressroom chemistry" className="h-auto w-full object-contain md:h-[calc(100vh-76px)] md:object-cover" />
+          <img src={heroBanner.image} alt="Falcon pressroom chemistry" className="h-auto w-full object-contain" />
         </Link>
       </section>
 
       <section className="grid grid-cols-1 md:grid-cols-[360px_1fr]">
         <div className="bg-white p-4">
-          <div className="border border-black p-3 text-black">
-            <p className="text-xs font-bold">THE 10TH ALL IN PRINT CHINA</p>
-            <p className="text-3xl font-extrabold text-red-600">全印展</p>
-            <p className="text-xs leading-5">China International Exhibition for All Printing Technology & Equipment</p>
-          </div>
+          <img src="/hall.png" alt="THE 10TH ALL IN PRINT CHINA" className="w-full h-auto" />
         </div>
         <div className="flex items-center bg-[#004B8D] px-8 py-6">
           <h2 className="text-2xl font-medium tracking-tight text-white md:text-5xl">
@@ -82,14 +78,14 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-6 pb-16 md:px-10 lg:pb-24">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {featureCards.map((card) => (
-            <article key={card.title} className="group">
+            <article key={card.title} className="group flex flex-col items-center">
               <div className="overflow-hidden border border-slate-300 bg-white shadow-[0_10px_25px_rgba(0,0,0,0.25)]">
                 <div className="overflow-hidden bg-[#06294A]">
                   <img src={card.image} alt={card.title} className="h-auto w-full transition duration-700 group-hover:scale-105" />
                 </div>
               </div>
-              <Link href="/about" className="mt-4 inline-flex text-sm font-medium text-[#071F3D] transition hover:text-[#004B8D]">
-                Read more &gt;&gt;
+              <Link href="/about" className="mt-4 inline-flex items-center justify-center gap-1 rounded bg-[#004B8D] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#071F3D]">
+                Read more <span aria-hidden="true">&rarr;</span>
               </Link>
             </article>
           ))}
