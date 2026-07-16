@@ -70,11 +70,11 @@ export default function ProductServiceCarousel({ banners }) {
 
   return (
     <div
-      className="relative overflow-hidden bg-[#06294A]"
+      className="relative overflow-hidden bg-[#06294A] lg:px-20 lg:py-16 xl:px-24 xl:py-20"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="overflow-hidden">
+      <div className="mx-auto overflow-hidden bg-[#06294A] lg:max-w-7xl lg:rounded-[2rem] lg:border lg:border-white/10 lg:shadow-[0_30px_80px_rgba(0,0,0,0.28)]">
         <div
           className="flex"
           onTransitionEnd={handleTransitionEnd}
@@ -100,11 +100,11 @@ export default function ProductServiceCarousel({ banners }) {
         </div>
       </div>
 
-      <div className="absolute inset-x-0 top-1/2 mx-auto flex max-w-[96vw] -translate-y-1/2 justify-between px-3 md:px-6">
+       <div className="absolute inset-x-0 top-1/2 mx-auto flex max-w-[96vw] -translate-y-1/2 justify-between px-3 md:px-6 lg:max-w-[calc(80rem+7rem)] lg:px-0 xl:max-w-[calc(80rem+9rem)]">
         <button
           type="button"
           onClick={goToPrevious}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[#06294A] shadow-lg shadow-black/25 backdrop-blur transition hover:bg-white active:scale-95 md:h-12 md:w-12"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[#06294A] shadow-lg shadow-black/25 backdrop-blur transition hover:bg-white active:scale-95 md:h-12 md:w-12 lg:bg-white lg:shadow-[0_14px_35px_rgba(0,0,0,0.24)]"
           aria-label="Previous product and services banner"
         >
           <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
@@ -112,7 +112,7 @@ export default function ProductServiceCarousel({ banners }) {
         <button
           type="button"
           onClick={goToNext}
-          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[#06294A] shadow-lg shadow-black/25 backdrop-blur transition hover:bg-white active:scale-95 md:h-12 md:w-12"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[#06294A] shadow-lg shadow-black/25 backdrop-blur transition hover:bg-white active:scale-95 md:h-12 md:w-12 lg:bg-white lg:shadow-[0_14px_35px_rgba(0,0,0,0.24)]"
           aria-label="Next product and services banner"
         >
           <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
