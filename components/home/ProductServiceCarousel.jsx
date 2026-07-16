@@ -70,11 +70,11 @@ export default function ProductServiceCarousel({ banners }) {
 
   return (
     <div
-      className="relative bg-[#06294A] py-6 md:px-12 md:py-8"
+      className="relative overflow-hidden bg-[#06294A] lg:px-20 lg:py-16 xl:px-24 xl:py-20"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="overflow-hidden md:rounded-lg">
+      <div className="mx-auto overflow-hidden bg-[#06294A] lg:max-w-7xl lg:rounded-[2rem] lg:border lg:border-white/10 lg:shadow-[0_30px_80px_rgba(0,0,0,0.28)]">
         <div
           className="flex"
           onTransitionEnd={handleTransitionEnd}
@@ -87,42 +87,39 @@ export default function ProductServiceCarousel({ banners }) {
             <Link
               key={`${banner.image}-${index}`}
               href={banner.href}
-              className="relative block min-w-full overflow-hidden bg-[#06294A]"
-              style={{ aspectRatio: '16/9' }}
+              className="relative block aspect-[16/9] min-w-full overflow-hidden bg-[#06294A]"
               aria-label={`View ${banner.title}`}
             >
               <img
                 src={banner.image}
                 alt={banner.title}
-                className="absolute inset-0 h-full w-full object-contain md:object-cover"
+                className="absolute inset-0 h-full w-full object-cover"
               />
             </Link>
           ))}
         </div>
       </div>
 
-      <button
-        type="button"
-        onClick={goToPrevious}
-        className="absolute left-2 top-1/2 z-10 -translate-y-1/2 md:left-4"
-        aria-label="Previous product and services banner"
-      >
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[#06294A] shadow-lg shadow-black/25 backdrop-blur transition hover:bg-white active:scale-95 md:h-12 md:w-12">
+       <div className="absolute inset-x-0 top-1/2 mx-auto flex max-w-[96vw] -translate-y-1/2 justify-between px-3 md:px-6 lg:max-w-[calc(80rem+7rem)] lg:px-0 xl:max-w-[calc(80rem+9rem)]">
+        <button
+          type="button"
+          onClick={goToPrevious}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[#06294A] shadow-lg shadow-black/25 backdrop-blur transition hover:bg-white active:scale-95 md:h-12 md:w-12 lg:bg-white lg:shadow-[0_14px_35px_rgba(0,0,0,0.24)]"
+          aria-label="Previous product and services banner"
+        >
           <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
-        </span>
-      </button>
-      <button
-        type="button"
-        onClick={goToNext}
-        className="absolute right-2 top-1/2 z-10 -translate-y-1/2 md:right-4"
-        aria-label="Next product and services banner"
-      >
-        <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[#06294A] shadow-lg shadow-black/25 backdrop-blur transition hover:bg-white active:scale-95 md:h-12 md:w-12">
+        </button>
+        <button
+          type="button"
+          onClick={goToNext}
+          className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/85 text-[#06294A] shadow-lg shadow-black/25 backdrop-blur transition hover:bg-white active:scale-95 md:h-12 md:w-12 lg:bg-white lg:shadow-[0_14px_35px_rgba(0,0,0,0.24)]"
+          aria-label="Next product and services banner"
+        >
           <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
-        </span>
-      </button>
+        </button>
+      </div>
 
-      <div className="absolute bottom-2 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-black/30 px-3 py-2 backdrop-blur-sm md:bottom-4">
+      <div className="absolute bottom-4 left-1/2 flex -translate-x-1/2 gap-2 rounded-full bg-black/30 px-3 py-2 backdrop-blur-sm md:bottom-6">
         {banners.map((banner, index) => (
           <button
             key={banner.image}

@@ -29,18 +29,18 @@ export default function HomePage() {
     <>
       <HomePreloader />
 
-      <section className="w-screen relative left-1/2 -translate-x-1/2 overflow-hidden bg-[#06294A] pt-16 lg:pt-[76px]">
+      <section className="w-full overflow-hidden bg-[#06294A] pt-16 lg:pt-[76px]">
         <Link href={heroBanner.href} aria-label="View Falcon pressroom chemistry details" className="block w-full">
-          <img src={heroBanner.image} alt="Falcon pressroom chemistry" className="h-auto w-full object-contain" />
+          <img src={heroBanner.image} alt="Falcon pressroom chemistry" className="block h-auto w-full object-contain" />
         </Link>
       </section>
 
-      <section className="grid grid-cols-1 md:grid-cols-[360px_1fr]">
-        <div className="bg-white p-4">
-          <img src="/hall.png" alt="THE 10TH ALL IN PRINT CHINA" className="w-full h-auto" />
+      <section className="grid grid-cols-1 overflow-hidden border-y border-slate-200 bg-white md:grid-cols-[minmax(300px,520px)_1fr]">
+        <div className="flex items-center justify-center bg-white px-5 py-4 md:px-8">
+          <img src="/hall.png" alt="The 10th All in Print China" className="h-auto w-full max-w-[440px] object-contain" />
         </div>
-        <div className="flex items-center bg-[#004B8D] px-8 py-6">
-          <h2 className="text-2xl font-medium tracking-tight text-white md:text-5xl">
+        <div className="flex items-center justify-center bg-[#004B8D] px-6 py-6 text-center md:justify-start md:px-10 md:text-left">
+          <h2 className="text-2xl font-semibold tracking-tight text-white md:text-4xl lg:text-5xl">
             Visit Us in HALL N1 / BOOTH B-453
           </h2>
         </div>
@@ -78,14 +78,15 @@ export default function HomePage() {
       <section className="mx-auto max-w-7xl px-6 pb-16 md:px-10 lg:pb-24">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           {featureCards.map((card) => (
-            <article key={card.title} className="group flex flex-col items-center">
+            <article key={card.title} className="group flex h-full flex-col items-center">
               <div className="overflow-hidden border border-slate-300 bg-white shadow-[0_10px_25px_rgba(0,0,0,0.25)]">
                 <div className="overflow-hidden bg-[#06294A]">
                   <img src={card.image} alt={card.title} className="h-auto w-full transition duration-700 group-hover:scale-105" />
                 </div>
               </div>
-              <Link href="/about" className="mt-4 inline-flex items-center justify-center gap-1 rounded bg-[#004B8D] px-4 py-2 text-sm font-medium text-white transition hover:bg-[#071F3D]">
-                Read more <span aria-hidden="true">&rarr;</span>
+              <Link href="/about" className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-[#4B8B2B] px-5 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#3f7624] hover:shadow-md">
+                Read more
+                <ArrowRight className="h-4 w-4" />
               </Link>
             </article>
           ))}
