@@ -70,11 +70,11 @@ export default function ProductServiceCarousel({ banners }) {
 
   return (
     <div
-      className="relative overflow-hidden bg-[#06294A] lg:px-20 lg:py-16 xl:px-24 xl:py-20"
+      className="relative overflow-hidden bg-[#F8F5EF] lg:px-20 lg:py-16 xl:px-24 xl:py-20"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="mx-auto overflow-hidden bg-[#06294A] lg:max-w-7xl lg:rounded-[2rem] lg:border lg:border-white/10 lg:shadow-[0_30px_80px_rgba(0,0,0,0.28)]">
+      <div className="mx-auto overflow-hidden bg-[#F8F5EF] lg:max-w-7xl lg:rounded-[2rem] lg:border lg:border-[#E8DFD0] lg:shadow-[0_30px_80px_rgba(15,23,42,0.14)]">
         <div
           className="flex"
           onTransitionEnd={handleTransitionEnd}
@@ -87,7 +87,7 @@ export default function ProductServiceCarousel({ banners }) {
             <Link
               key={`${banner.image}-${index}`}
               href={banner.href}
-              className="relative block aspect-[16/9] min-w-full overflow-hidden bg-[#06294A]"
+              className="relative block aspect-[16/9] min-w-full overflow-hidden bg-[#F8F5EF]"
               aria-label={`View ${banner.title}`}
             >
               <img

@@ -29,7 +29,7 @@ export default function HomePage() {
     <>
       <HomePreloader />
 
-      <section className="w-full overflow-hidden bg-[#06294A] pt-16 lg:pt-[76px]">
+      <section className="w-full overflow-hidden bg-[#F8F5EF] pt-16 lg:pt-[76px]">
         <Link href={heroBanner.href} aria-label="View Falcon pressroom chemistry details" className="block w-full">
           <img src={heroBanner.image} alt="Falcon pressroom chemistry" className="block h-auto w-full object-contain" />
         </Link>
@@ -62,12 +62,20 @@ export default function HomePage() {
           <p className="font-bold leading-7 text-[#004B8D]">
             We believe the most effective printing chemicals can be formulated by people who understand the printing press as deeply as they understand the chemistry behind it, and we qualify well for this.
           </p>
-          <p className="mt-6 leading-7 text-slate-700">
-            From our 8,000 sq. ft. facility in Nashik, near Mumbai, we can ship reliably worldwide, from a single pallet to a full container load.
-          </p>
-          <p className="mt-6 leading-7 text-slate-700">
-            Falcon Pressroom Solutions also supports confidential private label and contract manufacturing partnerships for distributors, trading companies, and printing industry suppliers across the globe.
-          </p>
+          <div className="mt-6 space-y-4 leading-7 text-slate-700">
+            <p>
+              Falcon Pressroom Solutions manufacturer and exporter of high-performance Offset Printing Chemicals. Our comprehensive product portfolio includes fountain solutions, IPA replacement solutions, high-purity IPA, roller and blanket washes, UV washes, plate cleaners, plate protection gums, wash-out solutions, roller deglazers, calcium removers, dampening system cleaners, color change pastes, specialty pressroom cleaners, and a wide range of pressroom maintenance chemicals.
+            </p>
+            <p>
+              Every product is engineered to improve print quality, reduce downtime, extend equipment life, and enhance overall pressroom efficiency. Falcon proudly supplies customers across South Asia, the Gulf region, and East Africa, including Tanzania, and is continually expanding its national and international footprint.
+            </p>
+            <p>
+              In addition to our own Falcon brand, we are a preferred manufacturing partner for private label and contract manufacturing services. Several national and international companies rely on us to develop, manufacture, and package customized pressroom chemicals under strict confidentiality.
+            </p>
+            <p>
+              Our lean manufacturing practices, rigorous quality control, and flexible production capabilities enable us to support both emerging brands and established global distributors.
+            </p>
+          </div>
           <Link href="/about" className="mt-8 inline-flex items-center gap-2 bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#3f7624]">
             Learn More About Us
             <ArrowRight className="h-4 w-4" />
@@ -93,7 +101,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className="relative overflow-hidden bg-[#06294A]">
+      <section className="relative overflow-hidden bg-[#F8F5EF]">
         <div className="bg-white px-6 py-8 text-center md:py-12">
           <p className="mb-3 text-xs font-extrabold uppercase tracking-[0.28em] text-[#4B8B2B]">Product & Services</p>
           <h2 className="text-4xl font-extrabold tracking-tight text-[#004B8D] md:text-6xl">
