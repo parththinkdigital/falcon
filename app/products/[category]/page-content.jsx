@@ -102,7 +102,7 @@ export default function ProductCategoryContent({ category }) {
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link href="/contact" className="inline-flex items-center gap-2 border border-[#004B8D] px-5 py-3 text-sm font-bold text-[#004B8D] transition hover:bg-[#004B8D] hover:text-white">
-                  Request Sample
+                  Refer MSDS
                 </Link>
               </div>
             </article>

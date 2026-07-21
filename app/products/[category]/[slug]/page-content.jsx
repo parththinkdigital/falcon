@@ -13,6 +13,29 @@ const categoryImages = {
 
 const productPlaceholder = '/product-placholders.png'
 
+const sheetfedTdsFiles = {
+  '201': '201-FOUNT MARSHAL NEW - COMPRESSED.pdf',
+  '202': '202-PRESS COMMAND NEW - COMPRESSED.pdf',
+  '203': '203-FORMULA 1 NEW - COMPRESSED.pdf',
+  '211': '211-ROLFOUNT NEW - COMPRESSED.pdf',
+  '217': '217-BLU FOUNT NEW - COMPRESSED.pdf',
+  '220': '220-ALCOSTOP NEW - COMPRESSED.pdf',
+  '221': '221-EZY FOUNT NEW - COMPRESSED.pdf',
+  '222': '222-STABIFOUNT SOFT NEW - COMPRESSED.pdf',
+  '223': '223-STABIFOUNT HARD - COMPRESSED.pdf',
+  '224': '224-STABIFOUNT UV - COMPRESSED.pdf',
+  '226': '226 STABIFOUNT M NEW - COMPRESSED.pdf',
+  '234': '234-AF 9000 PLUS - COMPRESSED.pdf',
+  '235': '235-AF 8000 PLUS - COMPRESSED.pdf',
+}
+
+function getTdsHref(product) {
+  if (product.category.id !== 'sheetfed-fountain-solutions') return '/contact'
+
+  const file = sheetfedTdsFiles[product.code]
+  return file ? `/TDS/Falcon-Fountain-Solutions/${file}` : '/contact'
+}
+
 export default function ProductDetailContent({ slug }) {
   const product = getProductByCode(slug)
 
@@ -30,6 +53,8 @@ export default function ProductDetailContent({ slug }) {
 
   const related = getRelatedProducts(product.category.id, product.code, 3)
   const heroImage = categoryImages[product.category.id] || '/new-banners/PRODUCT_AND_SERVICES_BANNERS/1-SHEETFED-BANNER-1920X1080.png'
+  const tdsHref = getTdsHref(product)
+  const hasTdsPdf = tdsHref.endsWith('.pdf')
 
   return (
     <>
@@ -63,12 +88,12 @@ export default function ProductDetailContent({ slug }) {
           <h2 className="mt-5 text-4xl font-extrabold leading-tight text-[#071F3D] md:text-5xl">{product.name}</h2>
           <p className="mt-6 leading-8 text-slate-700">{product.description}</p>
           <div className="mt-8 flex flex-wrap gap-3">
-            <Link href="/contact" className="inline-flex items-center gap-2 bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#3f7624]">
-              Request Quote
+            <Link href={tdsHref} target={hasTdsPdf ? '_blank' : undefined} rel={hasTdsPdf ? 'noopener noreferrer' : undefined} className="inline-flex items-center gap-2 bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white transition hover:bg-[#3f7624]">
+              Refer TDS
               <ArrowRight className="h-4 w-4" />
             </Link>
             <Link href="/contact" className="inline-flex items-center gap-2 border border-[#004B8D] px-6 py-3 text-sm font-bold text-[#004B8D] transition hover:bg-[#004B8D] hover:text-white">
-              Request Sample
+              Refer MSDS
             </Link>
           </div>
         </div>
