@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
-import { categories } from '@/lib/products-data'
+import { categories, compareProductsByCode } from '@/lib/products-data'
 import { productServiceBanners } from '@/lib/product-service-banners'
 
 const categoryImages = {
@@ -62,19 +62,19 @@ export default function ProductsPage() {
 
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
           {categories.map((cat, index) => (
-            <Link key={cat.id} href={`/products/${cat.id}`} className="block overflow-hidden border border-slate-300 bg-white shadow-[0_10px_25px_rgba(0,0,0,0.18)]">
+            <Link key={cat.id} href={`/products/${cat.id}`} className="flex h-full flex-col overflow-hidden border border-slate-300 bg-white shadow-[0_10px_25px_rgba(0,0,0,0.18)]">
               <div className="overflow-hidden bg-[#06294A]">
-                <img src={categoryImages[cat.id] || productServiceBanners[index % productServiceBanners.length].image} alt={cat.title} className="h-auto w-full" />
+                <img src={categoryImages[cat.id] || productServiceBanners[index % productServiceBanners.length].image} alt={cat.title} className="h-56 w-full object-cover" />
               </div>
-              <div className="p-6 md:p-8">
+              <div className="flex flex-1 flex-col p-6 md:p-8">
                 <div className="mb-4 flex items-center justify-between gap-4">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-[#4B8B2B]">{cat.products.length} Products</span>
                   <ArrowRight className="h-5 w-5 text-[#004B8D]" />
                 </div>
                 <h3 className="text-2xl font-extrabold text-[#004B8D]">{cat.title}</h3>
                 <p className="mt-4 leading-7 text-slate-700">{cat.description}</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  {cat.products.slice(0, 5).map((product) => (
+                <div className="mt-auto flex flex-wrap gap-2 pt-5">
+                  {[...cat.products].sort(compareProductsByCode).slice(0, 5).map((product) => (
                     <span key={product.code} className="bg-[#06294A]/5 px-3 py-1 text-xs font-bold text-[#071F3D]">{product.code}</span>
                   ))}
                   {cat.products.length > 5 && <span className="bg-[#4B8B2B]/10 px-3 py-1 text-xs font-bold text-[#4B8B2B]">+{cat.products.length - 5} more</span>}
