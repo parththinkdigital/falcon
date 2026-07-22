@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import { ArrowRight, CheckCircle2, ChevronRight } from 'lucide-react'
-import { categories, getCategoryById } from '@/lib/products-data'
+import { categories, compareProductsByCode, getCategoryById } from '@/lib/products-data'
 
 const categoryImages = {
   'sheetfed-fountain-solutions': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/1-SHEETFED-BANNER-1920X1080.png',
@@ -29,6 +29,7 @@ export default function ProductCategoryContent({ category }) {
   }
 
   const heroImage = categoryImages[data.id] || '/new-banners/PRODUCT_AND_SERVICES_BANNERS/1-SHEETFED-BANNER-1920X1080.png'
+  const products = [...data.products].sort(compareProductsByCode)
 
   return (
     <>
@@ -77,7 +78,7 @@ export default function ProductCategoryContent({ category }) {
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
-          {data.products.map((product) => (
+          {products.map((product) => (
             <article key={product.code} className="border-t-4 border-[#00B8D9] bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.15)] md:p-8">
               <div className="mb-6 flex items-center justify-center bg-slate-50 p-6">
                 <img src={productPlaceholder} alt={`${product.name} product placeholder`} className="h-40 w-auto object-contain" />

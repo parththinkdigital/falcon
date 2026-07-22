@@ -6,13 +6,23 @@ import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
-import { FiChevronDown, FiArrowRight, FiDroplet, FiWind, FiSun, FiBox, FiZap } from 'react-icons/fi'
+import { FiChevronDown, FiArrowRight, FiDroplet, FiWind, FiSun, FiBox, FiZap, FiSettings, FiShield, FiLayers } from 'react-icons/fi'
+import { HiSparkles } from 'react-icons/hi2'
 import { clsx } from 'clsx'
 import { navCategoryItems } from '@/lib/products-data'
 
 gsap.registerPlugin(useGSAP)
 
-const iconMap = { Droplet: FiDroplet, Wind: FiWind, Sun: FiSun, Box: FiBox, Zap: FiZap }
+const iconMap = {
+  Droplet: FiDroplet,
+  Wind: FiWind,
+  ice: FiLayers,
+  Box: FiBox,
+  Zap: FiZap,
+  Sparkles: HiSparkles,
+  Settings: FiSettings,
+  Shield: FiShield,
+}
 
 const navItems = [
   { label: 'Home', href: '/' },
@@ -41,7 +51,6 @@ export default function Header() {
   const navWrapRef = useRef(null)
   const mobileMenuRef = useRef(null)
   const hamburgerRef = useRef(null)
-  const megaMenuRef = useRef(null)
   const lastScrollY = useRef(0)
 
   useEffect(() => {
@@ -117,18 +126,6 @@ export default function Header() {
   }, { dependencies: [visible], scope: headerRef })
 
   useGSAP(() => {
-    gsap.fromTo(megaMenuRef.current,
-      { opacity: 0, y: 8, scale: 0.98 },
-      {
-        opacity: 1, y: 0, scale: 1, duration: 0.22, ease: 'power3.out',
-        onStart: () => {
-          if (megaMenuRef.current) megaMenuRef.current.style.display = 'block'
-        }
-      }
-    )
-  }, { dependencies: [activeDropdown], scope: headerRef })
-
-  useGSAP(() => {
     if (!mobileOpen) return
     const items = mobileMenuRef.current?.querySelectorAll('.mobile-nav-item')
     if (!items?.length) return
@@ -138,7 +135,7 @@ export default function Header() {
     )
   }, { scope: mobileMenuRef, dependencies: [mobileOpen] })
 
-  const displayCategory = activeCategory || (activeDropdown === 'Products' ? navCategoryItems[0] : null)
+  const displayCategory = activeCategory || navCategoryItems[0]
   const isActiveItem = (href) => href === '/' ? pathname === '/' : pathname === href || pathname.startsWith(`${href}/`)
   const totalProductCount = navCategoryItems.reduce((total, cat) => total + cat.products.length, 0)
 
@@ -171,7 +168,7 @@ export default function Header() {
               {navItems.map((item) => (
                 <div
                   key={item.href}
-                  className="relative nav-link"
+                  className={clsx('nav-link', !item.mega && 'relative')}
                   onMouseEnter={() => { setActiveDropdown(item.label); setActiveCategory(navCategoryItems[0]) }}
                   onMouseLeave={() => { setActiveDropdown(null); setActiveCategory(null) }}
                 >
@@ -193,110 +190,137 @@ export default function Header() {
                     )}
                   </Link>
 
-                  {item.mega && activeDropdown === item.label && (
+                  {item.mega && (
                     <div
-                      ref={megaMenuRef}
-                      className="absolute left-1/2 top-full z-50 w-[620px] -translate-x-1/2 pt-2"
-                      style={{ display: 'none', opacity: 0 }}
+                      className={clsx(
+                        "absolute left-1/2 top-full z-50 w-[920px] -translate-x-1/2 pt-3 transition-all duration-300 ease-out",
+                        activeDropdown === item.label
+                          ? "opacity-100 translate-y-0 scale-100 pointer-events-auto"
+                          : "opacity-0 -translate-y-2 scale-[0.98] pointer-events-none"
+                      )}
                       onMouseEnter={() => setActiveDropdown(item.label)}
                       onMouseLeave={() => { setActiveDropdown(null); setActiveCategory(null) }}
                     >
-                      <div className="overflow-hidden rounded-2xl border border-white/70 bg-white shadow-[0_18px_55px_rgba(2,41,74,0.18)] ring-1 ring-[#00B8D9]/10">
-                        <div className="relative overflow-hidden bg-[#06294A] px-5 py-4 text-white">
-                          <div className="absolute -right-8 -top-10 h-28 w-28 rounded-full bg-[#00B8D9]/25 blur-2xl" />
-                          <div className="absolute bottom-0 right-14 h-16 w-16 rounded-full bg-[#9BD36A]/20 blur-xl" />
-                          <div className="relative flex items-center justify-between gap-5">
+                      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-[0_20px_50px_rgba(2,41,74,0.18)]">
+                        <div className="bg-gradient-to-r from-[#06294A] via-[#004B8D] to-[#06294A] px-6 py-4 text-white">
+                          <div className="flex items-center justify-between gap-4">
                             <div>
-                              <span className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#9BD36A]">Product Navigator</span>
-                              <h2 className="mt-1 text-xl font-extrabold tracking-tight">Pressroom Chemistry Catalog</h2>
+                              <span className="text-[10px] font-extrabold uppercase tracking-[0.25em] text-[#00B8D9]">Pressroom Chemistry Solutions</span>
+                              <h2 className="mt-1 text-lg font-extrabold tracking-tight text-white">
+                                Falcon Product Catalog
+                              </h2>
                             </div>
-                            <div className="rounded-xl border border-white/15 bg-white/10 px-3 py-2 text-right backdrop-blur">
-                              <span className="block text-xl font-extrabold leading-none">{totalProductCount}</span>
-                              <span className="text-[10px] font-bold uppercase tracking-widest text-white/60">Products</span>
+                            <div className="rounded-xl bg-white/10 px-3.5 py-1.5 text-right backdrop-blur-md border border-white/15">
+                              <span className="block text-base font-black leading-none text-[#9BD36A]">{totalProductCount}</span>
+                              <span className="text-[8px] font-bold uppercase tracking-widest text-white/70">Formulations</span>
                             </div>
                           </div>
                         </div>
 
-                        <div className="grid min-h-[330px] grid-cols-[230px_1fr] bg-white">
-                          <div className="bg-gradient-to-b from-slate-50 to-white p-3">
-                            <div>
-                              <span className="mb-2 block px-2.5 text-[10px] font-bold uppercase tracking-[0.18em] text-slate-400">Categories</span>
+                        <div className="grid h-[460px] grid-cols-[280px_1fr] bg-white">
+                          <div className="border-r border-slate-100 bg-[#F8FAFC] p-3 overflow-y-auto [scrollbar-width:thin] [scrollbar-color:#CBD5E1_transparent] hover:[scrollbar-color:#94A3B8_transparent]">
+                            <span className="mb-2 block px-2.5 text-[9px] font-black uppercase tracking-[0.22em] text-slate-400">Categories</span>
+                            <div className="space-y-1">
                               {item.mega.map((cat) => {
                                 const Icon = iconMap[cat.icon] || FiDroplet
+                                const isSelected = activeCategory?.label === cat.label
                                 return (
                                   <button
                                     key={cat.href}
                                     onMouseEnter={() => setActiveCategory(cat)}
                                     className={clsx(
-                                      'group mb-1 flex w-full items-center gap-2.5 rounded-xl px-2.5 py-2.5 text-left text-xs font-bold transition-[background,box-shadow,transform,color] duration-150 active:scale-[0.98]',
-                                      activeCategory?.label === cat.label
-                                        ? 'translate-x-0.5 bg-white text-[#004B8D] shadow-[0_10px_22px_rgba(15,23,42,0.08)] ring-1 ring-[#00B8D9]/15'
-                                        : 'text-slate-700 hover:bg-white/80 hover:text-[#004B8D] hover:shadow-sm'
+                                      'flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left transition-all duration-200 active:scale-[0.98]',
+                                      isSelected
+                                        ? 'bg-white text-[#004B8D] shadow-md shadow-slate-200/50 ring-1 ring-slate-200/40'
+                                        : 'text-slate-600 hover:bg-white/50 hover:text-[#004B8D]'
                                     )}
                                   >
                                     <span className={clsx(
-                                      'flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors',
-                                      activeCategory?.label === cat.label ? 'bg-[#004B8D] text-white' : 'bg-slate-200/70 text-slate-500 group-hover:bg-[#EAF6FF] group-hover:text-[#004B8D]'
+                                      'flex h-9 w-9 shrink-0 items-center justify-center rounded-xl transition-all duration-200',
+                                      isSelected
+                                        ? 'bg-gradient-to-br from-[#004B8D] to-[#06294A] text-white shadow-sm shadow-[#004B8D]/20 scale-105'
+                                        : 'bg-slate-100 text-slate-500 group-hover:bg-slate-200'
                                     )}>
-                                      <Icon className="h-3.5 w-3.5" />
+                                      <Icon className="h-4 w-4" />
                                     </span>
                                     <span className="min-w-0 flex-1">
-                                      <span className="block truncate">{cat.label}</span>
+                                      <span className={clsx(
+                                        'block text-xs font-bold leading-tight',
+                                        isSelected ? 'text-[#071F3D]' : 'text-slate-700'
+                                      )}>{cat.label}</span>
                                       <span className="mt-0.5 block text-[10px] font-semibold text-slate-400">{cat.products.length} products</span>
                                     </span>
-                                    <FiArrowRight className={clsx(
-                                      'h-3.5 w-3.5 shrink-0 transition-all',
-                                      activeCategory?.label === cat.label ? 'translate-x-0 text-[#4B8B2B]' : '-translate-x-1 opacity-0 group-hover:translate-x-0 group-hover:opacity-100'
-                                    )} />
                                   </button>
                                 )
                               })}
                             </div>
                           </div>
 
-                          <div className="border-l border-slate-100 p-4">
-                            <div className="mb-3 flex items-center justify-between gap-4">
-                              <div>
-                                <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#4B8B2B]">Products in</span>
+                          <div className="flex min-h-0 flex-col bg-white p-5">
+                            <div className="mb-4 flex items-start justify-between gap-4 border-b border-slate-100 pb-3">
+                              <div className="max-w-[420px]">
+                                <span className="text-[9px] font-extrabold uppercase tracking-[0.2em] text-[#4B8B2B]">Active Range</span>
                                 <h3 className="mt-0.5 text-base font-extrabold text-[#071F3D]">{displayCategory?.label}</h3>
+                                <p className="mt-1 text-[11px] leading-relaxed text-slate-500 font-medium line-clamp-2">
+                                  {displayCategory?.description}
+                                </p>
                               </div>
                               <Link
                                 href={displayCategory?.href || '/products'}
-                                className="rounded-full border border-[#004B8D]/15 px-3 py-1.5 text-[11px] font-bold text-[#004B8D] transition hover:bg-[#004B8D] hover:text-white active:scale-[0.97]"
+                                className="shrink-0 flex items-center gap-1.5 rounded-full bg-[#EAF6FF] px-3.5 py-2 text-xs font-bold text-[#004B8D] transition-all hover:bg-[#004B8D] hover:text-white hover:shadow-md hover:shadow-[#004B8D]/15 active:scale-[0.97]"
                               >
                                 View Range
+                                <FiArrowRight className="h-3 w-3" />
                               </Link>
                             </div>
-                            <div className="grid max-h-[242px] grid-cols-2 gap-1.5 overflow-y-auto pr-1">
+
+                            <div className="grid flex-1 grid-cols-2 content-start gap-3 overflow-y-auto pr-1.5 [scrollbar-width:thin] [scrollbar-color:#E2E8F0_transparent] hover:[scrollbar-color:#CBD5E1_transparent]">
                               {(displayCategory?.products || []).map((p) => (
                                 <Link
                                   key={p.href}
                                   href={p.href}
-                                  className="group rounded-xl border border-slate-100 bg-white p-2.5 transition-[border-color,background,box-shadow,transform] duration-150 hover:-translate-y-0.5 hover:border-[#00B8D9]/35 hover:bg-[#F8FCFF] hover:shadow-[0_8px_18px_rgba(15,23,42,0.07)] active:scale-[0.98]"
+                                  className="group flex flex-col justify-between rounded-xl border border-slate-100 bg-[#F8FAFC]/40 p-3.5 transition-all duration-200 hover:border-[#00B8D9]/40 hover:bg-white hover:shadow-[0_8px_20px_rgba(0,184,217,0.06)] active:scale-[0.98]"
                                 >
-                                  <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#004B8D]/55">SKU {p.href.split('/').pop()}</span>
-                                  <span className="mt-1 line-clamp-2 block text-xs font-bold leading-4 text-slate-700 group-hover:text-[#004B8D]">{p.label}</span>
-                                  <span className="mt-2 inline-flex items-center gap-1 text-[11px] font-bold text-[#4B8B2B] opacity-0 transition-all duration-150 group-hover:opacity-100">
-                                    Details
-                                    <FiArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-0.5" />
-                                  </span>
+                                  <div>
+                                    <div className="flex items-center justify-between gap-2">
+                                      <span className="text-[9px] font-black uppercase tracking-widest text-[#00B8D9]">CODE {p.href.split('/').pop()}</span>
+                                      <span className="opacity-0 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0.5 text-[#004B8D]">
+                                        <FiArrowRight className="h-3.5 w-3.5" />
+                                      </span>
+                                    </div>
+                                    <span className="mt-1.5 block text-xs font-extrabold leading-snug text-slate-800 transition-colors group-hover:text-[#004B8D]">
+                                      {p.label}
+                                    </span>
+                                    {p.description && (
+                                      <p className="mt-1 block text-[10px] font-medium leading-normal text-slate-400 group-hover:text-slate-500 line-clamp-2">
+                                        {p.description}
+                                      </p>
+                                    )}
+                                  </div>
                                 </Link>
                               ))}
                             </div>
                           </div>
                         </div>
 
-                        <div className="border-t border-slate-100 bg-gradient-to-r from-[#F6FAFF] via-white to-[#F4FAF0] px-4 py-3">
+                        <div className="border-t border-slate-100 bg-[#F8FAFC] px-5 py-4">
                           <Link
                             href="/products"
-                            className="group flex items-center justify-between rounded-xl bg-[#06294A] px-4 py-2.5 transition-[background,transform] duration-150 hover:bg-[#004B8D] active:scale-[0.98]"
+                            className="group flex items-center justify-between rounded-xl bg-gradient-to-r from-[#06294A] to-[#004B8D] px-5 py-3 transition-all duration-300 hover:shadow-[0_8px_25px_rgba(0,75,141,0.25)] hover:brightness-110 active:scale-[0.98]"
                           >
-                            <div>
-                              <span className="text-sm font-extrabold text-white">Browse Complete Catalog</span>
-                              <p className="mt-0.5 text-xs font-medium text-white/55">{totalProductCount} products across {navCategoryItems.length} categories</p>
+                            <div className="flex items-center gap-3">
+                              <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-white/10 text-[#9BD36A] backdrop-blur-sm border border-white/10">
+                                <FiBox className="h-4.5 w-4.5" />
+                              </span>
+                              <div>
+                                <span className="text-sm font-extrabold text-white tracking-wide block">Browse Complete Product Catalog</span>
+                                <p className="mt-0.5 text-[11px] font-semibold text-white/60">
+                                  Access technical spec sheets, compliance certificates, and safety guidelines for all formulations
+                                </p>
+                              </div>
                             </div>
-                            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-white transition group-hover:bg-white/20">
-                              <FiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+                            <span className="flex h-8 w-8 items-center justify-center rounded-full bg-white/15 text-white transition group-hover:bg-white/25">
+                              <FiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                             </span>
                           </Link>
                         </div>
