@@ -24,7 +24,7 @@ export default function ProductsPage() {
 
         <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((cat, index) => (
-            <Link key={cat.id} href={`/products/${cat.id}`} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-300 bg-white transition-all duration-300 hover:border-[#00B8D9]/50">
+            <Link key={cat.id} href={`/products/${cat.id}`} className="group flex h-full flex-col overflow-hidden border border-slate-300 bg-white transition-all duration-300 hover:border-[#00B8D9]/50">
               <div className="relative overflow-hidden bg-[#C5E4F9] aspect-[16/9]">
                 <img
                   src={categoryImages[cat.id] || productServiceBanners[index % productServiceBanners.length].image}

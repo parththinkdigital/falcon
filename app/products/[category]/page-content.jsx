@@ -100,7 +100,7 @@ export default function ProductCategoryContent({ category }) {
           {products.map((product) => (
             <Link key={product.code} href={`/products/${data.id}/${product.code}`} className="group relative block overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors duration-300 hover:border-[#00B8D9]/50">
               <div className="h-1 w-full bg-gradient-to-r from-[#004B8D] via-[#00B8D9] to-[#004B8D]" />
-              <div className="aspect-[3/2] relative bg-[#C5E4F9]">
+              <div className="aspect-[3/1.8] relative bg-white">
                 <img src={getProductImage(data.id, product.code)} alt={product.name} className="absolute inset-0 h-full w-full object-contain px-2 py-1" />
               </div>
               <div className="flex items-center justify-center bg-gradient-to-r from-[#06294A] via-[#004B8D] to-[#06294A] px-4 py-3">
