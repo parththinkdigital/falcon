@@ -11,7 +11,26 @@ const categoryImages = {
   'offset-plate-cleaners': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/6-SPECIALITY CLEANERS.png',
 }
 
+const categoryFolderMap = {
+  'sheetfed-fountain-solutions': 'SHEETFED-FOUNTAIN-SOLUTION',
+  'ipa-replacements': 'IPA-REPLACEMENTS',
+  'coldset-fountain-concentrates': 'COLDSET-FOUNTAIN-CONCENTRATES',
+  'offset-plate-cleaners': 'OFFSET-PLATE-CLEANERS',
+  'roller-blanket-washes': 'ROLLER-BLANKET-WASHES',
+  'speciality-cleaners': 'SPECIALITY-CLEANERS',
+  'offset-press-sundries': 'OFFSET-PRESS-SUNDRIES',
+  'plate-protection-gums': 'PLATE-PROTECTION-GUMS',
+}
+
 const productPlaceholder = '/product-placholders.png'
+
+function getProductImage(categoryId, productCode) {
+  const folder = categoryFolderMap[categoryId]
+  if (folder) {
+    return `/products/${folder}/${productCode}.png`
+  }
+  return productPlaceholder
+}
 
 export default function ProductCategoryContent({ category }) {
   const data = getCategoryById(category)  
@@ -77,36 +96,20 @@ export default function ProductCategoryContent({ category }) {
           <p className="font-bold text-[#004B8D]">{data.products.length} products available</p>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
-            <article key={product.code} className="border-t-4 border-[#00B8D9] bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.15)] md:p-8">
-              <div className="mb-6 flex items-center justify-center bg-slate-50 p-6">
-                <img src={productPlaceholder} alt={`${product.name} product placeholder`} className="h-40 w-auto object-contain" />
+            <Link key={product.code} href={`/products/${data.id}/${product.code}`} className="group relative block overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors duration-300 hover:border-[#00B8D9]/50">
+              <div className="h-1 w-full bg-gradient-to-r from-[#004B8D] via-[#00B8D9] to-[#004B8D]" />
+              <div className="aspect-[3/2] relative bg-[#C5E4F9]">
+                <img src={getProductImage(data.id, product.code)} alt={product.name} className="absolute inset-0 h-full w-full object-contain px-2 py-1" />
               </div>
-              <div className="mb-5 flex items-center justify-between gap-4">
-                <span className="bg-[#06294A] px-3 py-1 text-xs font-extrabold tracking-widest text-white">{product.code}</span>
-                <span className="text-xs font-bold uppercase tracking-widest text-[#4B8B2B]">{data.shortTitle}</span>
-              </div>
-              <h3 className="text-2xl font-extrabold text-[#004B8D]">{product.name}</h3>
-              <p className="mt-4 line-clamp-3 leading-7 text-slate-700">{product.description}</p>
-              <ul className="mt-5 space-y-2">
-                {product.features.slice(0, 3).map((feature) => (
-                  <li key={feature} className="flex gap-3 text-sm font-medium text-slate-700">
-                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-[#4B8B2B]" />
-                    <span>{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <div className="mt-7 flex flex-wrap gap-3">
-                <Link href={`/products/${data.id}/${product.code}`} className="inline-flex items-center gap-2 bg-[#4B8B2B] px-5 py-3 text-sm font-bold text-white transition hover:bg-[#3f7624]">
+              <div className="flex items-center justify-center bg-gradient-to-r from-[#06294A] via-[#004B8D] to-[#06294A] px-4 py-3">
+                <span className="inline-flex items-center gap-2 text-sm font-bold text-white tracking-wide">
                   View Details
                   <ArrowRight className="h-4 w-4" />
-                </Link>
-                <Link href="/contact" className="inline-flex items-center gap-2 border border-[#004B8D] px-5 py-3 text-sm font-bold text-[#004B8D] transition hover:bg-[#004B8D] hover:text-white">
-                  Refer MSDS
-                </Link>
+                </span>
               </div>
-            </article>
+            </Link>
           ))}
         </div>
       </section>

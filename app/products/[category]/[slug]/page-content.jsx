@@ -11,7 +11,26 @@ const categoryImages = {
   'offset-plate-cleaners': '/new-banners/PRODUCT_AND_SERVICES_BANNERS/6-SPECIALITY CLEANERS.png',
 }
 
+const categoryFolderMap = {
+  'sheetfed-fountain-solutions': 'SHEETFED-FOUNTAIN-SOLUTION',
+  'ipa-replacements': 'IPA-REPLACEMENTS',
+  'coldset-fountain-concentrates': 'COLDSET-FOUNTAIN-CONCENTRATES',
+  'offset-plate-cleaners': 'OFFSET-PLATE-CLEANERS',
+  'roller-blanket-washes': 'ROLLER-BLANKET-WASHES',
+  'speciality-cleaners': 'SPECIALITY-CLEANERS',
+  'offset-press-sundries': 'OFFSET-PRESS-SUNDRIES',
+  'plate-protection-gums': 'PLATE-PROTECTION-GUMS',
+}
+
 const productPlaceholder = '/product-placholders.png'
+
+function getProductImage(categoryId, productCode) {
+  const folder = categoryFolderMap[categoryId]
+  if (folder) {
+    return `/products/${folder}/${productCode}.png`
+  }
+  return productPlaceholder
+}
 
 const tdsFiles = {
   '201': ['SHEETFED FOUNTAIN SOLUTIONS', '201-FOUNT MARSHAL NEW.pdf'],
@@ -114,7 +133,7 @@ export default function ProductDetailContent({ slug }) {
       <section className="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-6 py-16 md:grid-cols-[0.9fr_1.1fr] md:px-10 lg:py-24">
         <div className="border-t-4 border-[#00B8D9] bg-white p-8 shadow-[0_10px_25px_rgba(0,0,0,0.15)]">
           <div className="mb-8 flex items-center justify-center bg-slate-50 p-8">
-            <img src={productPlaceholder} alt={`${product.name} product placeholder`} className="h-64 w-auto object-contain" />
+            <img src={getProductImage(product.category.id, product.code)} alt={product.name} className="h-64 w-auto object-contain" />
           </div>
           <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">Product Overview</p>
           <h2 className="mt-5 text-4xl font-extrabold leading-tight text-[#071F3D] md:text-5xl">{product.name}</h2>
@@ -174,17 +193,17 @@ export default function ProductDetailContent({ slug }) {
           <h2 className="mt-5 text-4xl font-extrabold leading-tight text-[#071F3D] md:text-6xl">Other Products in This Range</h2>
           <div className="mt-12 grid grid-cols-1 gap-8 md:grid-cols-3">
             {related.map((item) => (
-              <Link key={item.code} href={`/products/${item.category.id}/${item.code}`} className="group border-t-4 border-[#00B8D9] bg-white p-6 shadow-[0_10px_25px_rgba(0,0,0,0.12)] transition hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(0,0,0,0.18)]">
-                <div className="mb-5 flex items-center justify-center bg-slate-50 p-5">
-                  <img src={productPlaceholder} alt={`${item.name} product placeholder`} className="h-32 w-auto object-contain" />
+              <Link key={item.code} href={`/products/${item.category.id}/${item.code}`} className="group relative block overflow-hidden rounded-2xl border border-slate-200 bg-white transition-colors duration-300 hover:border-[#00B8D9]/50">
+                <div className="h-1 w-full bg-gradient-to-r from-[#004B8D] via-[#00B8D9] to-[#004B8D]" />
+                <div className="aspect-[4/3] relative bg-[#C5E4F9]">
+                  <img src={getProductImage(item.category.id, item.code)} alt={item.name} className="absolute inset-0 h-full w-full object-contain px-2 py-1" />
                 </div>
-                <span className="bg-[#06294A] px-3 py-1 text-xs font-extrabold tracking-widest text-white">{item.code}</span>
-                <h3 className="mt-5 text-xl font-extrabold text-[#004B8D]">{item.name}</h3>
-                <p className="mt-4 line-clamp-3 leading-7 text-slate-700">{item.description}</p>
-                <span className="mt-6 inline-flex items-center gap-2 text-sm font-bold text-[#4B8B2B]">
-                  View Details
-                  <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-                </span>
+                <div className="flex items-center justify-center bg-gradient-to-r from-[#06294A] via-[#004B8D] to-[#06294A] px-4 py-3">
+                  <span className="inline-flex items-center gap-2 text-sm font-bold text-white tracking-wide">
+                    View Details
+                    <ArrowRight className="h-4 w-4" />
+                  </span>
+                </div>
               </Link>
             ))}
           </div>

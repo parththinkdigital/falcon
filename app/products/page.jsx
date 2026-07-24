@@ -16,68 +16,38 @@ export default function ProductsPage() {
 
   return (
     <>
-      <section className="relative min-h-screen overflow-hidden bg-[#06294A]">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#031E37] via-[#004B8D] to-[#06294A]" />
-        <div className="absolute -right-40 top-1/4 h-96 w-96 rounded-full bg-[#00B8D9]/15 blur-[120px]" />
-        <div className="absolute -left-40 bottom-1/4 h-96 w-96 rounded-full bg-[#4B8B2B]/20 blur-[120px]" />
-
-        <div className="relative mx-auto grid min-h-screen max-w-7xl grid-cols-1 items-center gap-12 px-6 py-28 md:px-10 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="max-w-4xl text-white">
-            <p className="mb-5 text-sm font-extrabold uppercase tracking-widest text-[#9BD36A]">Product Range</p>
-            <h1 className="text-5xl font-extrabold leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
-              Complete
-              <span className="block text-[#00B8D9]">Pressroom Chemistry</span>
-            </h1>
-            <p className="mt-8 max-w-2xl text-lg font-medium leading-8 text-white/85">
-              Specialized chemistry engineered for sheetfed, heatset, coldset, cleaning, IPA replacement, and specialty pressroom applications.
-            </p>
-            <Link href="#categories" className="mt-8 inline-flex items-center gap-2 bg-[#4B8B2B] px-6 py-3 text-sm font-bold text-white">
-              Browse Categories
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-3 border border-white/20 bg-white/10 text-white backdrop-blur-sm">
-            <div className="border-r border-white/15 p-5 md:p-6">
-              <div className="text-3xl font-extrabold md:text-5xl">{categories.length}</div>
-              <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-white/70">Product Families</p>
-            </div>
-            <div className="border-r border-white/15 p-5 md:p-6">
-              <div className="text-3xl font-extrabold md:text-5xl">{productCount}</div>
-              <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-white/70">Products</p>
-            </div>
-            <div className="p-5 md:p-6">
-              <div className="text-3xl font-extrabold md:text-5xl">50+</div>
-              <p className="mt-2 text-[10px] font-bold uppercase tracking-widest text-white/70">Countries</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       <section id="categories" className="mx-auto max-w-7xl px-6 py-16 md:px-10 lg:py-24">
         <p className="text-sm font-extrabold uppercase tracking-widest text-[#4B8B2B]">Categories</p>
         <h2 className="mt-5 max-w-4xl text-4xl font-extrabold leading-tight text-[#071F3D] md:text-6xl">
           Solutions Built for <span className="text-[#004B8D]">Every Pressroom</span>
         </h2>
 
-        <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div className="mt-14 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((cat, index) => (
-            <Link key={cat.id} href={`/products/${cat.id}`} className="flex h-full flex-col overflow-hidden border border-slate-300 bg-white shadow-[0_10px_25px_rgba(0,0,0,0.18)]">
-              <div className="overflow-hidden bg-[#06294A]">
-                <img src={categoryImages[cat.id] || productServiceBanners[index % productServiceBanners.length].image} alt={cat.title} className="h-56 w-full object-cover" />
+            <Link key={cat.id} href={`/products/${cat.id}`} className="group flex h-full flex-col overflow-hidden rounded-2xl border border-slate-300 bg-white transition-all duration-300 hover:border-[#00B8D9]/50">
+              <div className="relative overflow-hidden bg-[#C5E4F9] aspect-[16/9]">
+                <img
+                  src={categoryImages[cat.id] || productServiceBanners[index % productServiceBanners.length].image}
+                  alt={cat.title}
+                  className="absolute inset-0 h-full w-full object-contain"
+                />
               </div>
-              <div className="flex flex-1 flex-col p-6 md:p-8">
-                <div className="mb-4 flex items-center justify-between gap-4">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-[#4B8B2B]">{cat.products.length} Products</span>
-                  <ArrowRight className="h-5 w-5 text-[#004B8D]" />
-                </div>
-                <h3 className="text-2xl font-extrabold text-[#004B8D]">{cat.title}</h3>
-                <p className="mt-4 leading-7 text-slate-700">{cat.description}</p>
-                <div className="mt-auto flex flex-wrap gap-2 pt-5">
-                  {[...cat.products].sort(compareProductsByCode).slice(0, 5).map((product) => (
-                    <span key={product.code} className="bg-[#06294A]/5 px-3 py-1 text-xs font-bold text-[#071F3D]">{product.code}</span>
-                  ))}
-                  {cat.products.length > 5 && <span className="bg-[#4B8B2B]/10 px-3 py-1 text-xs font-bold text-[#4B8B2B]">+{cat.products.length - 5} more</span>}
+              <div className="flex flex-1 flex-col p-6 pt-4">
+                <span className="text-[11px] font-extrabold uppercase tracking-wider text-[#4B8B2B]">{cat.products.length} Products</span>
+                <h3 className="mt-1 text-xl font-extrabold leading-tight text-[#071F3D] transition-colors group-hover:text-[#004B8D]">{cat.title}</h3>
+                <div className="mt-auto pt-4">
+                  <div className="flex flex-wrap gap-1.5 mb-4">
+                    {[...cat.products].sort(compareProductsByCode).slice(0, 5).map((product) => (
+                      <span key={product.code} className="rounded-md bg-[#EAF6FF] px-2.5 py-1 text-[10px] font-bold text-[#004B8D]">{product.code}</span>
+                    ))}
+                    {cat.products.length > 5 && (
+                      <span className="rounded-md bg-[#4B8B2B]/10 px-2.5 py-1 text-[10px] font-bold text-[#4B8B2B]">+{cat.products.length - 5}</span>
+                    )}
+                  </div>
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[#06294A] px-5 py-2.5 text-xs font-bold text-white transition-all duration-300 group-hover:bg-[#004B8D]">
+                    View Products
+                    <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
                 </div>
               </div>
             </Link>
